@@ -1,0 +1,10 @@
+name: OrbRPG
+version: '${project.version}'
+main: orbrpg.OrbRPG
+api-version: 1.18
+depend:
+  - ProtocolLib
+  - Vault
+commands:
+  get:
+    description: Get an item

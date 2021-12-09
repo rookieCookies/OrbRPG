@@ -1,0 +1,25 @@
+language_file: "lang_default"
+items_file: "items"
+items_database_file: "items_database"
+attack_cooldown: 12
+times:
+  sun_rise:
+    start: 23000
+    end: 24000
+  day:
+    start: 0
+    end: 12000
+  sun_set:
+    start: 12000
+    end: 13000
+  night:
+    start: 13000
+    end: 23000
+regeneration: # Percent
+  health: 3
+  tex: 5
+base_stats:
+  maximum_health: 10
+  maximum_tex: 5
+  defense: 5
+  speed: 5

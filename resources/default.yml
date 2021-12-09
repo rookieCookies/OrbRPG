@@ -1,0 +1,48 @@
+scoreboard:
+  bottom_text: "&9 /discord to join our discord"
+  balance: "&7Silver: "
+  level: "&7Level: "
+  time_based:
+    separator:
+      sun_rise: "&e ——————— &6&l☀ &e——————— "
+      day: "&e ——————— &6&l☀ &e——————— "
+      sun_set: "&b ——————— &9&l☀ &b——————— "
+      night: "&b ——————— &9&l☀ &b——————— "
+    title:
+      sun_rise: "&7 >> &e&lOrb&6&lRPG &7<<"
+      day: "&7 >> &e&lOrb&6&lRPG &7<<"
+      sun_set: "&7 >> &b&lOrb&9&lRPG &7<<"
+      night: "&7 >> &b&lOrb&9&lRPG &7<<"
+messages:
+  level_up: "&6Level up! &e%player% &3leveled up from &8%old_level%% &3» &bLevel %level%"
+texts:
+  damage_indicator: "&4%damage%❤"
+command_messages:
+  errors:
+    not_enough_arguments: "&7[&4&l!&7] You are missing one or more arguments that are required to execute this command!"
+    incorrect_sender: "&7[&4&l!&7] You can't run this command!"
+    incorrect_item: "&7[&4&l!&7] This item does not exist!"
+  success:
+    item_received: "&7[&a&l!&7] You received an item!!"
+rarities:
+  default:
+    lore: "&7&lDEFAULT"
+    color_id: "&7"
+  common:
+    lore: "&f&lCOMMON"
+    color_id: "&f"
+  uncommon:
+    lore: "&a&lUNCOMMON"
+    color_id: "&a"
+  rare:
+    lore: "&9&lRARE"
+    color_id: "&9"
+  epic:
+    lore: "&5&lEPIC"
+    color_id: "&5"
+  legendary:
+    lore: "&6&lLEGENDARY"
+    color_id: "&6"
+  special:
+    lore: "&d&lSPECIAL"
+    color_id: "&5&l"
