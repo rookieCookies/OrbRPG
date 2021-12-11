@@ -1,15 +1,8 @@
 package orbrpg;
 
 import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
 
@@ -48,7 +41,7 @@ public class Misc {
     public static String getMessage(String path) {
         String message = OrbRPG.getInstance().getLanguageFile().getString(path);
         if (message == null) {
-            OrbRPG.getInstance().getLogger().warning("There is a message missing in the language file! Path: " + path.replaceAll(".", " > "));
+            OrbRPG.getInstance().getLogger().warning("There is a message missing in the language file! Path: " + path.replace(".", " > "));
             return "";
         }
         return Misc.coloured(message);

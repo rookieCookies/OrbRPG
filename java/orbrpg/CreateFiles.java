@@ -22,7 +22,6 @@ public class CreateFiles {
             instance.saveConfig();
         }
         languageFilePath += ".yml";
-        instance.logger.info(languageFilePath);
         File languageFile = new File(instance.getDataFolder(), languageFilePath);
         if (!languageFile.exists()) {
             instance.saveResource("default.yml", false);
@@ -38,16 +37,16 @@ public class CreateFiles {
             instance.languageFileConfiguration.load(languageFile);
             instance.getLogger().info("Successfully loaded the language file! (If a message is in the language file it will throw an error when that message is needed!)");
         } catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
+        instance.languageFile = languageFile;
     }
     void createItemsFile() {
-        String filePath = instance.getConfig().getString("item_file");
+        String filePath = instance.getConfig().getString("items_file");
         if (filePath == null) {
-            instance.getConfig().set("item_file", "items");
-            filePath = instance.getConfig().getString("item_file");
+            instance.getConfig().set("items_file", "items");
+            filePath = instance.getConfig().getString("items_file");
             instance.saveConfig();
         }
         filePath += ".yml";
-        instance.logger.info(filePath);
         File languageFile = new File(instance.getDataFolder(), filePath);
         if (!languageFile.exists()) {
             instance.saveResource("items.yml", false);
@@ -73,11 +72,8 @@ public class CreateFiles {
             instance.saveConfig();
         }
         filePath += ".yml";
-        instance.logger.info(filePath);
         File languageFile = new File(instance.getDataFolder(), filePath);
-        if (languageFile.exists()) {
-            languageFile.delete();
-        }
+        if (languageFile.exists()) languageFile.delete();
         instance.saveResource("items_database.yml", false);
         File defaultFile = new File(instance.getDataFolder(), "items_database.yml");
         boolean f = defaultFile.renameTo(languageFile);
