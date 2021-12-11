@@ -26,5 +26,16 @@ public class IncreaseStats {
         data.setFloat("current_health", currentHealth);
         data.setFloat("current_tex", currentTex);
         OrbRPG.getInstance().getItemDatabase().set(String.valueOf(p.displayName()), p);
+        OrbRPG.getInstance().saveItemDatabase();
+    }
+    public void max() {
+        PlayerData data = new PlayerData(p);
+        ConfigurationSection config = OrbRPG.getInstance().getConfig();
+        float maximumHealth = data.getFloat("maximum_health");
+        float maximumTex = data.getFloat("maximum_tex");
+        data.setFloat("current_health", maximumHealth);
+        data.setFloat("current_tex", maximumTex);
+        OrbRPG.getInstance().getItemDatabase().set(p.getName(), p.toString());
+        OrbRPG.getInstance().saveItemDatabase();
     }
 }
