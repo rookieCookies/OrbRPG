@@ -44,9 +44,13 @@ public class RegisterItems {
             itemMeta.setUnbreakable(true);
             PersistentDataContainer data = itemMeta.getPersistentDataContainer();
             String itemRarity = itemsFile.getString(path + ".rarity");
-            if (OrbRPG.getInstance().getLanguageFile().getString("rarities." + itemRarity) != null) itemRarity = "default";
+            System.out.println(itemRarity);
+            if (OrbRPG.getInstance().getLanguageFile().getString("rarities." + itemRarity + ".lore") == null) itemRarity = "default";
+            System.out.println(itemRarity);
             String rarityLore = Misc.getMessage("rarities." + itemRarity + ".lore");
             String rarityColor = Misc.getMessage("rarities." + itemRarity + ".color_id");
+            System.out.println(rarityLore);
+            System.out.println(rarityColor);
             String displayName = Misc.coloured(rarityColor + itemsFile.getString(path + ".display_name"));
             String type = itemsFile.getString(path + ".type");
             if (type == null) continue;
@@ -63,12 +67,17 @@ public class RegisterItems {
                     float damage2 = (float) (baseDamage * (1 + damageDifference));
                     data.set(new NamespacedKey(OrbRPG.getInstance(), "weapon_damage_1"), PersistentDataType.FLOAT, damage1);
                     data.set(new NamespacedKey(OrbRPG.getInstance(), "weapon_damage_2"), PersistentDataType.FLOAT, damage2);
-                    loreList.add(Misc.coloured("&7Damage: &c" + damage1 + "-" + damage2));
+                    loreList.add(Misc.coloured("&7Damage: &c" + damage1 + "↔" + damage2));
                 } else {
                     data.set(new NamespacedKey(OrbRPG.getInstance(), "damage"), PersistentDataType.FLOAT, baseDamage);
                     loreList.add(Misc.coloured("&7Damage: &c" + baseDamage));
                 }
                 loreList.add(" ");
+            }
+            float cooldown = (float) itemsFile.getDouble(path + ".stats.cooldown");
+            if (cooldown != 0 && type.equals("bow")) {
+                data.set(new NamespacedKey(OrbRPG.getInstance(), "bow_cooldown"), PersistentDataType.FLOAT, cooldown);
+                loreList.add(Misc.coloured("&7Cooldown: &a" + cooldown / 20 + "s"));
             }
             float speed = (float) itemsFile.getDouble(path + ".stats.speed");
             if (speed != 0) {
@@ -85,7 +94,7 @@ public class RegisterItems {
                 data.set(new NamespacedKey(OrbRPG.getInstance(), "tex"), PersistentDataType.FLOAT, tex);
                 loreList.add(Misc.coloured("&7Tex: &a" + tex));
             }
-            if (lifeSteal != 0 || speed != 0 || tex != 0)
+            if (lifeSteal != 0 || speed != 0 || tex != 0 || cooldown != 0)
                 loreList.add(" ");
 
             float health = (float) itemsFile.getDouble(path + ".stats.health");
@@ -101,7 +110,7 @@ public class RegisterItems {
             if (health != 0 || defense != 0)
                 loreList.add(" ");
 
-            loreList.add(Misc.coloured(rarityLore));
+            loreList.add(rarityLore);
             item.setItemMeta(itemMeta);
             item.setLore(loreList);
             itemDataBase.set(path, item);
