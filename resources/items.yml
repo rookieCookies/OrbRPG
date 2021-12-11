@@ -1,9 +1,9 @@
-example_item:
+example_sword:
   enabled: true
-  type: sword
+  type: weapon
   material: wooden_sword
   display_name: "Example Sword"
-  rarity: default
+  rarity: common
   stats:
     difference: 0.3 # This will be ignored unless the type is sword!!
     base_damage: 3
@@ -12,3 +12,43 @@ example_item:
     tex: 50
     health: 25
     defense: 80
+example_item:
+  enabled: true
+  type: item
+  display_name: "Example Item"
+  rarity: uncommon
+  stats:
+    base_damage: 5
+    life_steal: 3
+    speed: -90
+    defense: 300
+example_bow:
+  enabled: true
+  type: bow
+  material: lead
+  display_name: "Example Bow"
+  rarity: rare
+  stats:
+    base_damage: 5
+    life_steal: 3
+    speed: -3
+    defense: 3
+    cooldown: 32 # Only works on bows
+example_helmet:
+  enabled: true
+  type: armor
+  material: diamond_helmet
+  display_name: "Example Helmet"
+  rarity: legendary
+  stats:
+    base_damage: 3
+    life_steal: 2
+    speed: 30
+    health: 4
+    defense: 1
+example_quest_item:
+  enabled: true
+  type: quest_item
+  material: hopper
+  display_name: "Example Quest Item"
+  rarity: special

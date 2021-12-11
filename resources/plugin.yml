@@ -2,9 +2,30 @@ name: OrbRPG
 version: '${project.version}'
 main: orbrpg.OrbRPG
 api-version: 1.18
+description: The plugin that operates the whole of OrbRPG, everything operates under this plugin!
+load: POSTWORLD
+author: OrbRPG_Development_Team
+website: https://discord.gg/Estv5zVAGT
+prefix: Server
 depend:
   - ProtocolLib
   - Vault
 commands:
   get:
-    description: Get an item
+    description: Get a custom generated item
+    permission: orbrpg.commands.getitem
+    aliases: [g, getitem, item, rpgitem]
+permissions:
+  orbrpg.*:
+    description: Allows the player to use anything
+    default: op
+    children:
+      orbrpg.commands.*: true
+  orbrpg.commands.*:
+    description: Allows the player to use any command!
+    default: op
+    children:
+      orbrpg.commands.getitem: true
+  orbrpg.commands.getitem:
+    description: Allows the player to use /getitem
+    default: op
