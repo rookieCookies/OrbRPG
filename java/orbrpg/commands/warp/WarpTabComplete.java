@@ -25,7 +25,7 @@ public class WarpTabComplete implements TabCompleter {
         for (Object a : sec.values()) {
             String path = a.toString();
             path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
-            path = path.substring(path.indexOf("warp." + 5));
+            path = path.substring(path.indexOf("warps." + 5));
             if ((
                     !sender.hasPermission("orbrpg.warp." + path) &&
                             !sender.hasPermission("orbrpg.warp.*")) ||
