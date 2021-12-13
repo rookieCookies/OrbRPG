@@ -5,10 +5,11 @@ import org.bukkit.ChatColor;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
 public class Misc {
     private static final TreeMap<Integer, String> ROMAN_NUMERALS = new TreeMap<>();
-
+    Misc() { throw new IllegalStateException("Utility class"); }
     static {
         ROMAN_NUMERALS.put(1000, "M");
         ROMAN_NUMERALS.put(900, "CM");
@@ -41,7 +42,9 @@ public class Misc {
     public static String getMessage(String path) {
         String message = OrbRPG.getInstance().getLanguageFile().getString(path);
         if (message == null) {
-            OrbRPG.getInstance().getLogger().warning("There is a message missing in the language file! Path: " + path.replace(".", " > "));
+            OrbRPG.getInstance().getLogger().log(Level.WARNING,
+                    "There is a message missing in the language file! Path: {0}",
+                    path.replace(".", " > "));
             return "";
         }
         return Misc.coloured(message);

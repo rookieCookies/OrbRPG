@@ -12,9 +12,13 @@ public class PlayerUpdateHealth {
     }
     public void run() {
         PlayerData data = new PlayerData(p);
-        float health = data.getFloat("current_health") / data.getFloat("maximum_health") * 20;
-        if (health < 1) health = 1;
-        else if (health > 20) health = 20;
-        p.setHealth(health);
+        double health = data.getCurrentHealth() / data.getMaximumHealth() * 20;
+        if (health < 1)
+            health = 1;
+        else if (health > 20)
+            health = 20;
+        else health = Math.round(health); // We need to round it up since we need an integer to assign as health level
+        p.setHealth((int) health);
+
     }
 }

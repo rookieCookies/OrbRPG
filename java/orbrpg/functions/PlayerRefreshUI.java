@@ -9,7 +9,7 @@ public class PlayerRefreshUI {
         run();
     }
     public void run() {
-        new PlayerRefreshStats(p).ReCalculate();
+        new PlayerRefreshStats(p).reCalculate();
         new SendActionBar(p);
         new PlayerUpdateHealth(p);
         new PlayerUpdateTex(p);

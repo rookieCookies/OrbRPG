@@ -58,12 +58,17 @@ public class Scoreboard {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!Bukkit.getOnlinePlayers().contains(p)) cancel();
+                if (!Bukkit.getOnlinePlayers().contains(p))
+                    cancel();
                 PlayerData data = new PlayerData(p);
                 ConfigurationSection config = OrbRPG.getInstance().getConfig();
                 long time = p.getWorld().getTime();
-                balance.suffix(Component.text(String.valueOf(OrbRPG.getEconomy().getBalance(p))));
-                level.suffix(Component.text(Misc.coloured("&a" + Misc.formatNumber(data.getInt("level")) + " &7» &8" + Misc.formatNumber(data.getInt("level") + 1) + " &7(" + data.getFloat("current_exp") / data.getFloat("required_exp") + "&7%)")));
+                balance.suffix(Component.text(String.valueOf(OrbRPG.getInstance().getEconomy().getBalance(p))));
+                int levelInt = data.getLevel();
+                int levelNext = levelInt + 1;
+                level.suffix(Component.text(Misc.coloured("&a" + Misc.formatNumber(levelInt) +
+                        " &7» &8" + Misc.formatNumber(levelNext) +
+                        " &7(" + data.getCurrentExp() / data.getMaximumExp() + "&7%)")));
                 String line = "";
                 if (config.getInt("times.sun_rise.start") < time && time < config.getInt("times.sun_rise.end")) {
                     line = Misc.getMessage("scoreboard.time_based.separator.sun_rise");
@@ -80,7 +85,12 @@ public class Scoreboard {
                 else if (config.getInt("times.night.start") < time && time < config.getInt("times.night.end")) {
                     line = Misc.getMessage("scoreboard.time_based.separator.night");
                     obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.night")));
-                }
+                } else
+                    // The time spans are editable in the config.yml file,
+                    // so when the night ends or an invalid time gets entered
+                    // there is not much we can do other than reset the time
+                    p.getWorld().setFullTime(config.getInt("times.sun_rise.start"));
+
                 separator.suffix(Component.text(line));
             }
         }.runTaskTimer(OrbRPG.getInstance(), 0, 10);

@@ -15,17 +15,19 @@ commands:
     description: Get a custom generated item
     permission: orbrpg.commands.getitem
     aliases: [g, getitem, item, rpgitem]
+  warp:
+    description: Warp to a location
+    aliases: w
 permissions:
   orbrpg.*:
     description: Allows the player to use anything
     default: op
     children:
       orbrpg.commands.*: true
+      orbrpg.warp.*: true
   orbrpg.commands.*:
     description: Allows the player to use any command!
-    default: op
     children:
       orbrpg.commands.getitem: true
   orbrpg.commands.getitem:
     description: Allows the player to use /getitem
-    default: op
