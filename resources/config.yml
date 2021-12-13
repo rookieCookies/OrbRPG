@@ -2,6 +2,24 @@ language_file: "lang_default"
 items_file: "items"
 items_database_file: "items_database"
 attack_cooldown: 12
+damage_indicator:
+  enabled: true
+  format_number: true
+regeneration: # Percent
+  health: 3
+  tex: 5
+base_stats:
+  maximum_health: 10
+  maximum_tex: 5
+  defense: 5
+  speed: 5
+  exp: 30
+warps:
+  spawn:
+    x: 0
+    y: 255
+    z: 0
+    w: world
 times:
   sun_rise:
     start: 23000
@@ -15,11 +33,71 @@ times:
   night:
     start: 13000
     end: 23000
-regeneration: # Percent
-  health: 3
-  tex: 5
-base_stats:
-  maximum_health: 10
-  maximum_tex: 5
-  defense: 5
-  speed: 5
+data_ids: # DO NOT EDIT UNLESS YOU KNOW WHAT YOU ARE DOING!!! A MISSING VALUE CAN DESTROY EVERYTHING!
+  player:
+    cooldowns:
+      attack_cooldown: attack_cooldown
+      bow_cooldown: bow_cooldown
+    stats:
+      maximum_health: maximum_health
+      current_health: current_health
+      maximum_tex: maximum_tex
+      current_tex: current_tex
+      defense: defense
+      damage: final_damage
+      speed: speed
+      life_steal: life_steal
+      leveling:
+        level: level
+        maximum_exp: maximum_exp
+        current_exp: current_exp
+debug:
+  commands:
+    get_item:
+      command: true
+      tab_complete: true
+    warp:
+      command: true
+      tab_complete: true
+  events:
+    projectile_hit: true
+    player:
+      attack_entity: true
+      attacked_by_entity: true
+      shoot_bow: true
+      craft_item: true
+      change_held_item: true
+      change_armor: true
+      interact: true
+      drop_item: true
+      join: true
+  functions:
+    increase_stats: true
+    recalculate_stats: true
+    refresh_ui: true
+    update_health_bar: true
+    update_tex_bar: true
+    register_items: true
+    register_broadcasts: true
+    register_scoreboard: true
+    send_actionbar: true
+  systems:
+    leveling_system:
+      level_up: true
+      get_exp: true
+  other:
+    create_files: true
+    access_items: true
+    access_misc: true
+    player_data:
+      access: true
+      set:
+        string: true
+        float: true
+        int: true
+        bool: true
+      get:
+        string: true
+        float: true
+        int: true
+        bool: true

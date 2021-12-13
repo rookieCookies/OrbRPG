@@ -12,9 +12,13 @@ public class PlayerUpdateTex {
     }
     public void run() {
         PlayerData data = new PlayerData(p);
-        float tex = data.getFloat("current_tex") / data.getFloat("maximum_tex") * 20;
-        if (tex < 1) tex = 1;
-        else if (tex > 20) tex = 20;
+        double tex = data.getCurrentTex() / data.getMaximumTex() * 20;
+        if (tex < 1)
+            tex = 1;
+        else if (tex > 20)
+            tex = 20;
+        else tex = Math.round(tex); // We need to round it up since we need an integer to assign as food level
         p.setFoodLevel((int) tex);
+
     }
 }
