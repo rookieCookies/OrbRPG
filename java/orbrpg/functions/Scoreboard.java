@@ -68,7 +68,7 @@ public class Scoreboard {
                 int levelNext = levelInt + 1;
                 level.suffix(Component.text(Misc.coloured("&a" + Misc.formatNumber(levelInt) +
                         " &7» &8" + Misc.formatNumber(levelNext) +
-                        " &7(" + data.getCurrentExp() / data.getMaximumExp() + "&7%)")));
+                        " &7(" + Math.round(data.getCurrentExp() / data.getMaximumExp() * 10000) / 100 + "&7%)")));
                 String line = "";
                 if (config.getInt("times.sun_rise.start") < time && time < config.getInt("times.sun_rise.end")) {
                     line = Misc.getMessage("scoreboard.time_based.separator.sun_rise");

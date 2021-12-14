@@ -18,6 +18,10 @@ commands:
   warp:
     description: Warp to a location
     aliases: w
+  info:
+    description: Get the info of an item
+    permission: orbrpg.commands.info
+    aliases: i
 permissions:
   orbrpg.*:
     description: Allows the player to use anything
@@ -29,5 +33,8 @@ permissions:
     description: Allows the player to use any command!
     children:
       orbrpg.commands.getitem: true
+      orbrpg.commands.info: true
   orbrpg.commands.getitem:
     description: Allows the player to use /getitem
+  orbrpg.commands.info:
+    description: Allows the player to use /info

@@ -27,6 +27,8 @@ command_messages:
   success:
     item_received: "&7[&a&l!&7] You received an item!"
     reload_complete: "&7[&a&l!&7] Reload complete!"
+  info:
+    item_info: "&7[&e&l!&7] The creator of this item is &a%creator% &7and their discord is &b%creator_discord%&7!"
 rarities:
   default:
     lore: "&7&lDEFAULT"

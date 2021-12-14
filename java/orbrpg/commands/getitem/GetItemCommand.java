@@ -50,6 +50,10 @@ public class GetItemCommand implements CommandExecutor {
             }
             return true;
         }
+        if (!OrbRPG.getInstance().getItemDatabase().contains(args[0])) {
+            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));
+            return false;
+        }
         @CheckForNull
         ItemStack item = OrbRPG.getInstance().getItemDatabase().getItemStack(args[0]);
         item.setAmount(loop);

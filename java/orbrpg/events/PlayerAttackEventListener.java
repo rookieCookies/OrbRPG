@@ -30,6 +30,7 @@ public class PlayerAttackEventListener implements Listener {
         e.setCancelled(true);
         Player p = (Player) e.getDamager();
         if (e.getDamager() instanceof Arrow) {
+            System.out.println(((Arrow) e.getDamager()).getShooter());
             p = (Player) ((Arrow) e.getDamager()).getShooter();
         }
         PlayerData data = new PlayerData(p);
@@ -79,7 +80,7 @@ public class PlayerAttackEventListener implements Listener {
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: {0} attacked an entity successfully",
-                    p.displayName()
+                    p.getName()
             );
     }
     @EventHandler
@@ -102,7 +103,7 @@ public class PlayerAttackEventListener implements Listener {
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: {0} got attacked by an entity!",
-                    p.displayName()
+                    p.getName()
             );
     }
 }

@@ -3,6 +3,8 @@ package orbrpg;
 import net.milkbowl.vault.economy.Economy;
 import orbrpg.commands.getitem.GetItemCommand;
 import orbrpg.commands.getitem.GetItemTabComplete;
+import orbrpg.commands.info.InfoCommand;
+import orbrpg.commands.info.InfoTabComplete;
 import orbrpg.commands.warp.WarpCommand;
 import orbrpg.commands.warp.WarpTabComplete;
 import orbrpg.events.*;
@@ -55,10 +57,6 @@ public final class OrbRPG extends JavaPlugin {
             getLogger().log(Level.SEVERE, economySetupMessage);
             getServer().getPluginManager().disablePlugin(this);
         }
-        Objects.requireNonNull(this.getCommand("get")).setExecutor(new GetItemCommand());
-        Objects.requireNonNull(this.getCommand("get")).setTabCompleter(new GetItemTabComplete());
-        Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand());
-        Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new WarpTabComplete());
         final int ms = 1000;
         final long fin = System.currentTimeMillis() - start;
         String logMessage = "OrbRPG v" + this.getDescription().getVersion() + " has been successfully " +
@@ -85,6 +83,14 @@ public final class OrbRPG extends JavaPlugin {
         manager.registerEvents(new PlayerEquipmentChangeEventListener(), this);
         manager.registerEvents(new PlayerInteractEventListenerListener(), this);
         manager.registerEvents(new PlayerItemDropEventListener(), this);
+
+        Objects.requireNonNull(this.getCommand("get")).setExecutor(new GetItemCommand());
+        Objects.requireNonNull(this.getCommand("get")).setTabCompleter(new GetItemTabComplete());
+        Objects.requireNonNull(this.getCommand("info")).setExecutor(new InfoCommand());
+        Objects.requireNonNull(this.getCommand("info")).setTabCompleter(new InfoTabComplete());
+        Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand());
+        Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new WarpTabComplete());
+
     }
     public FileConfiguration getLanguageFile() { return this.languageFileConfiguration; }
     public void setLanguageFileConfiguration(FileConfiguration fileConfiguration) {

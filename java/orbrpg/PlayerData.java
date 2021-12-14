@@ -20,12 +20,12 @@ public class PlayerData {
     public PersistentDataContainer getPersistentDataStorage() {
         return p.getPersistentDataContainer();
     }
-    public void setFloat(String nameSpace, float value) {
+    private void setFloat(String nameSpace, float value) {
         PersistentDataContainer container = getPersistentDataStorage();
         NamespacedKey nsk = new NamespacedKey(i, nameSpace);
         container.set(nsk, PersistentDataType.FLOAT, value);
     }
-    public Float getFloat(String nameSpace) {
+    private Float getFloat(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
         NamespacedKey nsk = new NamespacedKey(i, nameSpace);
         Float returnValue = container.get(nsk, PersistentDataType.FLOAT);
@@ -59,10 +59,9 @@ public class PlayerData {
     private boolean isTrue(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
         NamespacedKey nsk = new NamespacedKey(i, nameSpace);
-        Object o = container.get(nsk, PersistentDataType.INTEGER);
-        int value = 0;
-        if (o != null)
-            value = (int) o;
+        Integer value = container.get(nsk, PersistentDataType.INTEGER);
+        if (value == null)
+            value = 0;
         return value == 1;
     }
     // Add to data functions
@@ -89,8 +88,8 @@ public class PlayerData {
     // Cooldown
     public void setAttackCooldownTrue() { setTrue(getAttackCooldownID()); }
     public void setAttackCooldownFalse() { setFalse(getAttackCooldownID()); }
-    public void setBowCooldownTrue() { setTrue(getAttackCooldownID()); }
-    public void setBowCooldownFalse() { setFalse(getAttackCooldownID()); }
+    public void setBowCooldownTrue() { setTrue(getBowCooldownID()); }
+    public void setBowCooldownFalse() { setFalse(getBowCooldownID()); }
 
     // Get data functions
     public float getDamage() { return getFloat(getDamageID()); }

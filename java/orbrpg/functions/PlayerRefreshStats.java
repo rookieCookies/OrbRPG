@@ -7,10 +7,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class PlayerRefreshStats {
     private final Player p;
+    private final List<Float> clearList = new ArrayList<>();
+    private List<Float> toolStats = new ArrayList<>();
+    private List<Float> offhandStats = new ArrayList<>();
+    private List<Float> armorStats = new ArrayList<>();
 
     public PlayerRefreshStats(Player p) {
         this.p = p;
@@ -21,39 +27,39 @@ public class PlayerRefreshStats {
         refreshOffhand();
         refreshArmor();
         PlayerData data = new PlayerData(p);
-        final float mainHandHealth = data.getFloat("tool_health");
-        final float mainHandDefense = data.getFloat("tool_defense");
-        final float mainHandTex = data.getFloat("tool_tex");
-        final float mainHandDamage = data.getFloat("tool_damage");
-        final float mainHandSpeed = data.getFloat("tool_speed");
-        final float mainHandLifeSteal = data.getFloat("tool_life_steal");
+        final float mainHandHealth = toolStats.get(0);
+        final float mainHandDefense = toolStats.get(1);
+        final float mainHandDamage = toolStats.get(2);
+        final float mainHandTex = toolStats.get(3);
+        final float mainHandSpeed = toolStats.get(4);
+        final float mainHandLifeSteal = toolStats.get(5);
 
-        final float offhandHealth = data.getFloat("offhand_health");
-        final float offhandDefense = data.getFloat("offhand_defense");
-        final float offhandTex = data.getFloat("offhand_tex");
-        final float offhandDamage = data.getFloat("offhand_damage");
-        final float offhandSpeed = data.getFloat("offhand_speed");
-        final float offhandLifeSteal = data.getFloat("offhand_life_steal");
+        final float offhandHealth = offhandStats.get(0);
+        final float offhandDefense = offhandStats.get(1);
+        final float offhandDamage = offhandStats.get(2);
+        final float offhandTex = offhandStats.get(3);
+        final float offhandSpeed = offhandStats.get(4);
+        final float offhandLifeSteal = offhandStats.get(5);
 
-        final float armorHealth = data.getFloat("armor_health");
-        final float armorDefense = data.getFloat("armor_defense");
-        final float armorTex = data.getFloat("armor_tex");
-        final float armorDamage = data.getFloat("armor_damage");
-        final float armorSpeed = data.getFloat("armor_speed");
-        final float armorLifeSteal = data.getFloat("armor_life_steal");
+        final float armorHealth = armorStats.get(0);
+        final float armorDefense = armorStats.get(1);
+        final float armorDamage = armorStats.get(2);
+        final float armorTex = armorStats.get(3);
+        final float armorSpeed = armorStats.get(4);
+        final float armorLifeSteal = armorStats.get(5);
 
         final float maximumHealth = 10 + mainHandHealth + offhandHealth + armorHealth;
         final float totalDefense = mainHandDefense + offhandDefense + armorDefense;
         final float maximumTex = 5 + mainHandTex + offhandTex + armorTex;
         final float totalDamage = mainHandDamage + offhandDamage + armorDamage;
-        float totalSpeed = mainHandSpeed + offhandSpeed + armorSpeed;
+        float totalSpeed = mainHandSpeed + offhandSpeed + armorSpeed + 100;
         final float totalLifeSteal = mainHandLifeSteal + offhandLifeSteal + armorLifeSteal;
 
         data.setMaximumHealth(maximumHealth);
         data.setDefense(totalDefense);
         data.setMaximumTex(maximumTex);
         data.setDamage(totalDamage);
-        if (totalSpeed > 100)
+        if (totalSpeed > 500)
             totalSpeed = 500;
         p.setWalkSpeed(totalSpeed / 100 * 0.2F);
         data.setSpeed(totalSpeed);
@@ -62,7 +68,6 @@ public class PlayerRefreshStats {
 
     public void refreshMainHand() {
         PlayerInventory playerInventory = p.getInventory();
-        PlayerData playerData = new PlayerData(p);
         ItemStack tool = playerInventory.getItemInMainHand();
         String type = Item.getTypeOfItem(tool);
         float mainHandHealth = 0F;
@@ -86,17 +91,17 @@ public class PlayerRefreshStats {
             mainHandSpeed = Item.getFloatFromItem(tool, "speed");
             mainHandLifeSteal = Item.getFloatFromItem(tool, "life_steal");
         }
-        playerData.setFloat("tool_health", mainHandHealth);
-        playerData.setFloat("tool_defense", mainHandDefense);
-        playerData.setFloat("tool_damage", mainHandDamage);
-        playerData.setFloat("tool_tex", mainHandTex);
-        playerData.setFloat("tool_speed", mainHandSpeed);
-        playerData.setFloat("tool_life_steal", mainHandLifeSteal);
+        toolStats = clearList;
+        toolStats.add(0, mainHandHealth);
+        toolStats.add(1, mainHandDefense);
+        toolStats.add(2, mainHandDamage);
+        toolStats.add(3, mainHandTex);
+        toolStats.add(4, mainHandSpeed);
+        toolStats.add(5, mainHandLifeSteal);
     }
 
     public void refreshOffhand() {
         PlayerInventory playerInventory = p.getInventory();
-        PlayerData playerData = new PlayerData(p);
         ItemStack tool = playerInventory.getItemInOffHand();
         String type = Item.getTypeOfItem(tool);
         float offhandHealth = 0F;
@@ -113,17 +118,17 @@ public class PlayerRefreshStats {
             offhandSpeed = Item.getFloatFromItem(tool, "speed");
             offhandLifeSteal = Item.getFloatFromItem(tool, "life_steal");
         }
-        playerData.setFloat("offhand_health", offhandHealth);
-        playerData.setFloat("offhand_defense", offhandDefense);
-        playerData.setFloat("offhand_damage", offhandDamage);
-        playerData.setFloat("offhand_tex", offhandTex);
-        playerData.setFloat("offhand_speed", offhandSpeed);
-        playerData.setFloat("offhand_life_steal", offhandLifeSteal);
+        offhandStats = clearList;
+        offhandStats.add(0, offhandHealth);
+        offhandStats.add(1, offhandDefense);
+        offhandStats.add(2, offhandDamage);
+        offhandStats.add(3, offhandTex);
+        offhandStats.add(4, offhandSpeed);
+        offhandStats.add(5, offhandLifeSteal);
     }
 
     public void refreshArmor() {
         PlayerInventory playerInventory = p.getInventory();
-        PlayerData playerData = new PlayerData(p);
         float armorHealth = 0F;
         float armorDefense = 0F;
         float armorDamage = 0F;
@@ -133,17 +138,13 @@ public class PlayerRefreshStats {
         for (int i = 1; i < 4; i++) {
             ItemStack armorItem;
             switch (i) {
-                case 1:
-                    armorItem = playerInventory.getHelmet();
+                case 1: armorItem = playerInventory.getHelmet();
                     break;
-                case 2:
-                    armorItem = playerInventory.getChestplate();
+                case 2: armorItem = playerInventory.getChestplate();
                     break;
-                case 3:
-                    armorItem = playerInventory.getLeggings();
+                case 3: armorItem = playerInventory.getLeggings();
                     break;
-                default:
-                    armorItem = playerInventory.getBoots();
+                default: armorItem = playerInventory.getBoots();
             }
             if (armorItem == null)
                 continue;
@@ -154,11 +155,12 @@ public class PlayerRefreshStats {
             armorSpeed += Item.getFloatFromItem(armorItem, "speed");
             armorLifeSteal += Item.getFloatFromItem(armorItem, "life_steal");
         }
-        playerData.setFloat("armor_health", armorHealth);
-        playerData.setFloat("armor_defense", armorDefense);
-        playerData.setFloat("armor_damage", armorDamage);
-        playerData.setFloat("armor_tex", armorTex);
-        playerData.setFloat("armor_speed", armorSpeed);
-        playerData.setFloat("armor_life_steal", armorLifeSteal);
+        armorStats = clearList;
+        armorStats.add(0, armorHealth);
+        armorStats.add(1, armorDefense);
+        armorStats.add(2, armorDamage);
+        armorStats.add(3, armorTex);
+        armorStats.add(4, armorSpeed);
+        armorStats.add(5, armorLifeSteal);
     }
 }

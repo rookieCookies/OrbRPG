@@ -21,7 +21,7 @@ public class PlayerEquipmentChangeEventListener implements Listener {
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: {0} changed their held item!",
-                    e.getPlayer().displayName()
+                    e.getPlayer().getName()
             );
     }
     @EventHandler
@@ -31,7 +31,7 @@ public class PlayerEquipmentChangeEventListener implements Listener {
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: {0} changed their armor!",
-                    e.getPlayer().displayName()
+                    e.getPlayer().getName()
             );
     }
 }

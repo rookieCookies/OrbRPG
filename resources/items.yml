@@ -22,6 +22,9 @@ example_item:
     life_steal: 3
     speed: -90
     defense: 300
+  info:
+    creator: ExampleUsername
+    discord: ExampleDiscord#0000
 example_bow:
   enabled: true
   type: bow

@@ -121,7 +121,11 @@ public class RegisterItems {
             }
             if (sectionTwo)
                 loreList.add(" ");
-
+            String creator = itemsFile.getString(path + ".info.creator", "Server");
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "creator"), PersistentDataType.STRING, creator);
+            String discordOfCreator = itemsFile.getString(path + ".info.discord", "Server");
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"), PersistentDataType.STRING,
+                    discordOfCreator);
             loreList.add(rarityLore);
             item.setItemMeta(itemMeta);
             item.setLore(loreList);

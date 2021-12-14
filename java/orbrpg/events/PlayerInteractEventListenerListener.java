@@ -22,7 +22,7 @@ public class PlayerInteractEventListenerListener implements Listener {
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: {0} interacted with something!",
-                    e.getPlayer().displayName()
+                    e.getPlayer().getName()
             );
     }
     @EventHandler

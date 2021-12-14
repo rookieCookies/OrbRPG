@@ -6,6 +6,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Item {
     Item() { throw new IllegalStateException("Utility class"); }
     public static ItemStack refreshItem(ItemStack item) {
@@ -45,6 +48,22 @@ public class Item {
             return null;
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         return container.get(new NamespacedKey(OrbRPG.getInstance(), "item_type"), PersistentDataType.STRING);
+    }
+    public static List<String> getInfoFromItem(ItemStack item) {
+        List<String> list = new ArrayList<>();
+        list.add("Server");
+        list.add("Server");
+        if (item == null) {
+            return list;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) {
+            return list;
+        }
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        list.set(0, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator"), PersistentDataType.STRING));
+        list.set(1, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"), PersistentDataType.STRING));
+        return list;
     }
     public static boolean isCustomItem(ItemStack item) {
         if (item == null)

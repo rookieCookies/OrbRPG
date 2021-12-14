@@ -56,6 +56,9 @@ debug:
     get_item:
       command: true
       tab_complete: true
+    info:
+      command: true
+      tab_complete: true
     warp:
       command: true
       tab_complete: true
