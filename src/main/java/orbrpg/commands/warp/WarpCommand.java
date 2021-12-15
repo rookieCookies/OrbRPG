@@ -44,8 +44,7 @@ public class WarpCommand implements CommandExecutor {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} executed the command [/warp] successfully! And teleported to following warp: "
-                            + args[0],
+                    "Debug: ({0}) Command > [/warp] > " + args[0],
                     sender.getName()
             );
         return true;

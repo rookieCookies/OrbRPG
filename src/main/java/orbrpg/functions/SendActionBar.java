@@ -3,12 +3,14 @@ package orbrpg.functions;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import orbrpg.Misc;
+import orbrpg.OrbRPG;
 import orbrpg.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.SplittableRandom;
+import java.util.logging.Level;
 
 public class SendActionBar {
     private final Player p;
@@ -48,5 +50,11 @@ public class SendActionBar {
                 .replace("%tex%", Misc.formatNumber(currentTex))
                 .replace("%defense%", Misc.formatNumber(defense));
         p.sendActionBar(Component.text(message));
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.send_actionbar"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Function > " + getClass().getName(),
+                    p.getName()
+            );
     }
 }

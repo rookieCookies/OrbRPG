@@ -1,17 +1,15 @@
-example_sword:
+
+  # NEVER IN ANY CASE REMOVE THE DEFAULT ITEM!
+
+default:
   enabled: true
-  type: weapon
-  material: wooden_sword
-  display_name: "Example Sword"
+  type: item
+  material: stone
+  display_name: "Unknown Error"
   rarity: common
-  stats:
-    difference: 0.3 # This will be ignored unless the type is sword!!
-    base_damage: 3
-    life_steal: 3
-    speed: 30
-    tex: 50
-    health: 25
-    defense: 80
+
+  # NEVER IN ANY CASE REMOVE THE DEFAULT ITEM!
+
 example_item:
   enabled: true
   type: item

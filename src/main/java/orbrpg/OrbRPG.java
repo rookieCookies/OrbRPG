@@ -81,7 +81,7 @@ public final class OrbRPG extends JavaPlugin {
         manager.registerEvents(new PlayerJoinEventListener(), this);
         manager.registerEvents(new PlayerCraftEventListener(), this);
         manager.registerEvents(new PlayerEquipmentChangeEventListener(), this);
-        manager.registerEvents(new PlayerInteractEventListenerListener(), this);
+        manager.registerEvents(new PlayerInteractEventListener(), this);
         manager.registerEvents(new PlayerItemDropEventListener(), this);
 
         Objects.requireNonNull(this.getCommand("get")).setExecutor(new GetItemCommand());

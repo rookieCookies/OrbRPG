@@ -40,7 +40,7 @@ public class PlayerJoinEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.join"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} joined the server!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     e.getPlayer().getName()
             );
     }

@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
+import java.util.logging.Level;
+
 public class Scoreboard {
     private final Player p;
 
@@ -95,5 +97,12 @@ public class Scoreboard {
             }
         }.runTaskTimer(OrbRPG.getInstance(), 0, 10);
         p.setScoreboard(board);
+
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.register_scoreboard"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Function > " + getClass().getName(),
+                    p.getName()
+            );
     }
 }

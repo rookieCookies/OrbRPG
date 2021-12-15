@@ -1,7 +1,10 @@
 package orbrpg.functions;
 
+import orbrpg.OrbRPG;
 import orbrpg.PlayerData;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 
 public class PlayerUpdateHealth {
     private final Player p;
@@ -19,6 +22,11 @@ public class PlayerUpdateHealth {
             health = 20;
         else health = Math.round(health); // We need to round it up since we need an integer to assign as health level
         p.setHealth((int) health);
-
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.update_health_bar"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Function > " + getClass().getName(),
+                    p.getName()
+            );
     }
 }

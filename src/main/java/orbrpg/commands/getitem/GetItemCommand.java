@@ -62,8 +62,7 @@ public class GetItemCommand implements CommandExecutor {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.getitem.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} executed the command [/getitem] successfully! " +
-                            "And gained the following item: " + item.displayName(),
+                    "Debug: ({0}) Command > [/getitem] > " + item.displayName(),
                     sender.getName()
             );
         return true;

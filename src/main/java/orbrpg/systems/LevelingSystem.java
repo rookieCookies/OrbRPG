@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.logging.Level;
+
 public class LevelingSystem {
     private final Player p;
     private final PlayerData data;
@@ -15,7 +17,6 @@ public class LevelingSystem {
         this.p = p;
         this.data = new PlayerData(p);
     }
-    // TODO: DOESN'T WORK AT ALL!
     public void levelUp() {
         float currentExp = data.getCurrentExp();
         float maximumExp = data.getMaximumExp();
@@ -50,10 +51,23 @@ public class LevelingSystem {
                     .replace("%player%", p.getName())
             );
         }
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.systems.leveling_system.level_up"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Systems > " + getClass().getName() + " > levelUp",
+                    p.getName()
+            );
     }
     public float getEXPRequired(float level) {
         level++;
         float baseExp = (float) OrbRPG.getInstance().getConfig().getDouble("base_stats.exp");
-        return Math.round(baseExp * Math.pow(level, 3) / 5 + 10);
+        final long round = Math.round(baseExp * Math.pow(level, 3) / 5 + 10);
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.systems.leveling_system.get_exp"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Systems > " + getClass().getName() + " > getEXPRequired > " + round,
+                    p.getName()
+            );
+        return round;
     }
 }

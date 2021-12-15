@@ -31,8 +31,11 @@ public class InfoCommand implements CommandExecutor {
         if (doReturn)
             return false;
         ItemStack item;
-        if (args.length < 1) item =  OrbRPG.getInstance().getItemDatabase()
-                .getItemStack(Item.getIDOfItem(((Player) sender).getInventory().getItemInMainHand()));
+        if (args.length < 1)
+            item =  OrbRPG.getInstance().getItemDatabase()
+                .getItemStack(Item.getIDOfItem(((Player) sender)
+                        .getInventory()
+                        .getItemInMainHand()));
         else {
             if (!OrbRPG.getInstance().getItemDatabase().contains(args[0])) {
                 sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));
@@ -48,7 +51,7 @@ public class InfoCommand implements CommandExecutor {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.info.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} executed the command [/info] successfully! ",
+                    "Debug: ({0}) Command > [/info] > " + Item.getIDOfItem(item),
                     sender.getName()
             );
         return true;

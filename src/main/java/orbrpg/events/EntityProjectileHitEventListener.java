@@ -17,7 +17,7 @@ public class EntityProjectileHitEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.projectile_hit"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: Projectile hit event triggered!"
+                    "Debug: Events > " + getClass().getName()
             );
     }
 }

@@ -79,7 +79,7 @@ public class PlayerAttackEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.attack_entity"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} attacked an entity successfully",
+                    "Debug: {0} Events > " + getClass().getName(),
                     p.getName()
             );
     }
@@ -102,7 +102,7 @@ public class PlayerAttackEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.attacked_by_entity"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} got attacked by an entity!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     p.getName()
             );
     }

@@ -19,7 +19,7 @@ public class PlayerItemDropEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.drop_item"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} tried to drop an item!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     e.getPlayer().getName()
             );
     }

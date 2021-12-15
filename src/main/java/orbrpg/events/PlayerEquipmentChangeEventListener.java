@@ -20,7 +20,7 @@ public class PlayerEquipmentChangeEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.change_held_item"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} changed their held item!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     e.getPlayer().getName()
             );
     }
@@ -30,7 +30,7 @@ public class PlayerEquipmentChangeEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.change_armor"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} changed their armor!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     e.getPlayer().getName()
             );
     }

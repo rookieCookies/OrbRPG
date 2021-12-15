@@ -21,7 +21,7 @@ public class PlayerCraftEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.craft_item"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} tried to craft an item!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     e.getWhoClicked().getName()
             );
     }

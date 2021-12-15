@@ -41,7 +41,7 @@ public class GetItemTabComplete implements TabCompleter {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.getitem.tab_complete"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} tab completed the command [/getitem] successfully! The returned value was " + list,
+                    "Debug: ({0}) Command > [/getitem] >" + list,
                     sender.getName()
             );
         return list;

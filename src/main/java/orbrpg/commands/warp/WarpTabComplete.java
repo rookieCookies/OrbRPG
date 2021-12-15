@@ -38,7 +38,7 @@ public class WarpTabComplete implements TabCompleter {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.tab_complete"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} tab completed the command [/warp] successfully! The returned value was " + list,
+                    "Debug: ({0}) Command > [/warp] > " + list,
                     sender.getName()
             );
         return list;

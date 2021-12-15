@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.logging.Level;
 
-public class PlayerInteractEventListenerListener implements Listener {
+public class PlayerInteractEventListener implements Listener {
     @EventHandler
     public void onBlockInteractEvent(PlayerInteractEvent e) {
         if (e.getClickedBlock() != null)
@@ -21,7 +21,7 @@ public class PlayerInteractEventListenerListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.interact"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} interacted with something!",
+                    "Debug: {0} Events > " + getClass().getName(),
                     e.getPlayer().getName()
             );
     }

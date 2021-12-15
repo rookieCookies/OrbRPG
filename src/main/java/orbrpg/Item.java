@@ -33,10 +33,10 @@ public class Item {
     }
     public static String getIDOfItem(ItemStack item) {
         if (item == null)
-            return null;
+            return "default";
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null)
-            return null;
+            return "default";
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         return container.get(new NamespacedKey(OrbRPG.getInstance(), "item_id"), PersistentDataType.STRING);
     }

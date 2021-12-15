@@ -10,6 +10,7 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public class PlayerRefreshStats {
     private final Player p;
@@ -64,6 +65,12 @@ public class PlayerRefreshStats {
         p.setWalkSpeed(totalSpeed / 100 * 0.2F);
         data.setSpeed(totalSpeed);
         data.setLifeSteal(totalLifeSteal);
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.recalculate_stats"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Function > " + getClass().getName(),
+                    p.getName()
+            );
     }
 
     public void refreshMainHand() {

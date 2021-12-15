@@ -5,6 +5,8 @@ import orbrpg.PlayerData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import java.util.logging.Level;
+
 public class IncreaseStats {
     private final Player p;
 
@@ -27,6 +29,12 @@ public class IncreaseStats {
             currentTex = maximumTex;
         data.setCurrentHealth(currentHealth);
         data.setCurrentTex(currentTex);
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.increase_stats"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Function > " + getClass().getName(),
+                    p.getName()
+            );
     }
     public void max() {
         PlayerData data = new PlayerData(p);

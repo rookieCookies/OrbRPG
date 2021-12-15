@@ -40,7 +40,7 @@ public class InfoTabComplete implements TabCompleter {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.info.tab_complete"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} tab completed the command [/info] successfully! The returned value was " + list,
+                    "Debug: ({0}) Command > [/info] > " + list,
                     sender.getName()
             );
         return list;

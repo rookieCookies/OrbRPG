@@ -46,7 +46,7 @@ public class PlayerBowEventListener implements Listener {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.shoot_bow"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: {0} used a bow successfully! Cooldown in ticks: " + cooldown,
+                    "Debug: ({0}) Events > " + getClass().getName() + " > " + cooldown,
                     p.getName()
             );
     }
