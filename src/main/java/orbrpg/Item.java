@@ -1,9 +1,9 @@
 package orbrpg;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -19,13 +19,26 @@ public class Item {
             return item;
         return OrbRPG.getInstance().getItemDatabase().getItemStack(itemID);
     }
+    public static void refreshInventory(Player p) {
+        PlayerInventory inv = p.getInventory();
+        for (var i = 0; i < 35; i++) {
+            if (inv.getItem(i) == null)
+                continue;
+            p.getInventory().setItem(i, refreshItem(inv.getItem(i)));
+        }
+        p.getInventory().setHelmet(refreshItem(inv.getHelmet()));
+        p.getInventory().setChestplate(refreshItem(inv.getChestplate()));
+        p.getInventory().setLeggings(refreshItem(inv.getLeggings()));
+        p.getInventory().setBoots(refreshItem(inv.getBoots()));
+        p.getInventory().setItemInOffHand(refreshItem(inv.getItemInOffHand()));
+    }
     public static float getFloatFromItem(ItemStack item, String nameSpace) {
         if (item == null)
             return 0F;
-        ItemMeta itemMeta = item.getItemMeta();
+        var itemMeta = item.getItemMeta();
         if (itemMeta == null)
             return 0F;
-        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        var container = itemMeta.getPersistentDataContainer();
         Float returnValue = container.get(new NamespacedKey(OrbRPG.getInstance(), nameSpace), PersistentDataType.FLOAT);
         if (returnValue == null)
             returnValue = 0F;
@@ -34,19 +47,19 @@ public class Item {
     public static String getIDOfItem(ItemStack item) {
         if (item == null)
             return "default";
-        ItemMeta itemMeta = item.getItemMeta();
+        var itemMeta = item.getItemMeta();
         if (itemMeta == null)
-            return "default";
-        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+            return "var";
+        var container = itemMeta.getPersistentDataContainer();
         return container.get(new NamespacedKey(OrbRPG.getInstance(), "item_id"), PersistentDataType.STRING);
     }
     public static String getTypeOfItem(ItemStack item) {
         if (item == null)
             return null;
-        ItemMeta itemMeta = item.getItemMeta();
+        var itemMeta = item.getItemMeta();
         if (itemMeta == null)
             return null;
-        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+        var container = itemMeta.getPersistentDataContainer();
         return container.get(new NamespacedKey(OrbRPG.getInstance(), "item_type"), PersistentDataType.STRING);
     }
     public static List<String> getInfoFromItem(ItemStack item) {
@@ -56,13 +69,15 @@ public class Item {
         if (item == null) {
             return list;
         }
-        ItemMeta itemMeta = item.getItemMeta();
+        var itemMeta = item.getItemMeta();
         if (itemMeta == null) {
             return list;
         }
-        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
-        list.set(0, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator"), PersistentDataType.STRING));
-        list.set(1, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"), PersistentDataType.STRING));
+        var container = itemMeta.getPersistentDataContainer();
+        list.set(0, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator"),
+                PersistentDataType.STRING));
+        list.set(1, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"),
+                PersistentDataType.STRING));
         return list;
     }
     public static boolean isCustomItem(ItemStack item) {

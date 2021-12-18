@@ -19,25 +19,25 @@ public class SendActionBar {
         run();
     }
     public void run() {
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         float maximumHealth = data.getMaximumHealth();
         float maximumTex = data.getMaximumTex();
         float currentHealth = data.getCurrentHealth();
         float currentTex = data.getCurrentTex();
         float defense = data.getDefense();
-        String message = "";
+        var message = "";
         if (10 < currentHealth / maximumHealth * 100)
             message += "&4%health%&4/%maximum_health%&4❤ ";
         else {
-            SplittableRandom random = new SplittableRandom();
-            String sub = "";
+            var random = new SplittableRandom();
+            var sub = "";
             if (random.nextInt(1000) == 1)
                 sub = "You're low! So here is a big fucking text to make your life harder! Get Fucked!";
             p.showTitle(Title.title(Component.text(Misc.coloured("&4%health%&4/%maximum_health%&4❤"
                     .replace("%maximum_health%", String.valueOf(Math.round(maximumHealth)))
                     .replace("%health%", String.valueOf(Math.round(currentHealth))))
             ), Component.text(sub)));
-            PotionEffect potion = new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false);
+            var potion = new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false);
             p.addPotionEffect(potion);
         }
         if (defense > 1)

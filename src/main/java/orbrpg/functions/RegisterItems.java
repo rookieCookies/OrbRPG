@@ -8,8 +8,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
@@ -18,35 +16,28 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RegisterItems {
-    public RegisterItems() { run(); }
+    public RegisterItems() {
+        run();
+    }
+
     public void run() {
-        OrbRPG instance = OrbRPG.getInstance();
+        var instance = OrbRPG.getInstance();
         ConfigurationSection itemDataBase = instance.getItemDatabase();
         ConfigurationSection itemsFile = instance.getItemsFile();
         Map<String, Object> sec = instance.getItemsFile().getValues(false);
-        for (Object a : sec.values()){
-            String path = a.toString();
+        for (Object a : sec.values()) {
+            var path = a.toString();
             path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
-            boolean isEnabled = itemsFile.getBoolean(path + ".enabled");
-            if (!isEnabled)
+            if (!itemsFile.getBoolean(path + ".enabled"))
                 continue;
-            String itemMaterialString = itemsFile.getString(path + ".material");
+            var itemMaterialString = itemsFile.getString(path + ".material");
             if (itemMaterialString == null)
                 itemMaterialString = "stone";
-            Material itemMaterial = Material.matchMaterial(itemMaterialString);
-            assert itemMaterial != null;
-            ItemStack item = new ItemStack(itemMaterial);
-            ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-            itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
-            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-            itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-            itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-            itemMeta.setUnbreakable(true);
-            PersistentDataContainer data = itemMeta.getPersistentDataContainer();
-            String itemRarity = itemsFile.getString(path + ".rarity");
+            var itemMaterial = Material.matchMaterial(itemMaterialString);
+            var item = createItem(itemMaterial);
+            var itemMeta = item.getItemMeta();
+            var data = itemMeta.getPersistentDataContainer();
+            var itemRarity = itemsFile.getString(path + ".rarity");
             String itemRarityWithPath = "rarities." + itemRarity;
             if ("".equals(Misc.getMessage(itemRarityWithPath + ".lore"))) {
                 itemRarity = "default";
@@ -55,7 +46,7 @@ public class RegisterItems {
             String rarityLore = Misc.getMessage(itemRarityWithPath + ".lore");
             String rarityColor = Misc.getMessage(itemRarityWithPath + ".color_id");
             String displayName = Misc.coloured(rarityColor + itemsFile.getString(path + ".display_name"));
-            String type = itemsFile.getString(path + ".type", "item");
+            var type = itemsFile.getString(path + ".type", "item");
             data.set(new NamespacedKey(OrbRPG.getInstance(), "item_id"), PersistentDataType.STRING, path);
             data.set(new NamespacedKey(OrbRPG.getInstance(), "item_type"), PersistentDataType.STRING, type);
             itemMeta.displayName(Component.text(displayName));
@@ -64,11 +55,11 @@ public class RegisterItems {
             List<String> loreList = new ArrayList<>();
             if (baseDamage != 0) {
                 if (isWeapon) {
-                    double damageDifference = itemsFile.getDouble(path + ".stats.difference");
+                    var damageDifference = itemsFile.getDouble(path + ".stats.difference");
                     float damage1 = (float) (baseDamage * (1 - damageDifference));
                     float damage2 = (float) (baseDamage * (1 + damageDifference));
-                    NamespacedKey weaponDamage1 = new NamespacedKey(instance, "weapon_damage_1");
-                    NamespacedKey weaponDamage2 = new NamespacedKey(instance, "weapon_damage_2");
+                    var weaponDamage1 = new NamespacedKey(instance, "weapon_damage_1");
+                    var weaponDamage2 = new NamespacedKey(instance, "weapon_damage_2");
                     data.set(weaponDamage1, PersistentDataType.FLOAT, damage1);
                     data.set(weaponDamage2, PersistentDataType.FLOAT, damage2);
                     loreList.add(Misc.coloured("&7Damage: &c" + damage1 + "↔" + damage2));
@@ -78,7 +69,7 @@ public class RegisterItems {
                 }
                 loreList.add(" ");
             }
-            boolean sectionOne = false;
+            var sectionOne = false;
             float cooldown = (float) itemsFile.getDouble(path + ".stats.cooldown");
             if (cooldown != 0 && "bow".equals(type)) {
                 data.set(new NamespacedKey(OrbRPG.getInstance(), "bow_cooldown"), PersistentDataType.FLOAT, cooldown);
@@ -106,7 +97,7 @@ public class RegisterItems {
             if (sectionOne)
                 loreList.add(" ");
 
-            boolean sectionTwo = false;
+            var sectionTwo = false;
             float health = (float) itemsFile.getDouble(path + ".stats.health");
             if (health != 0) {
                 data.set(new NamespacedKey(OrbRPG.getInstance(), "health"), PersistentDataType.FLOAT, health);
@@ -121,9 +112,9 @@ public class RegisterItems {
             }
             if (sectionTwo)
                 loreList.add(" ");
-            String creator = itemsFile.getString(path + ".info.creator", "Server");
+            var creator = itemsFile.getString(path + ".info.creator", "Server");
             data.set(new NamespacedKey(OrbRPG.getInstance(), "creator"), PersistentDataType.STRING, creator);
-            String discordOfCreator = itemsFile.getString(path + ".info.discord", "Server");
+            var discordOfCreator = itemsFile.getString(path + ".info.discord", "Server");
             data.set(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"), PersistentDataType.STRING,
                     discordOfCreator);
             loreList.add(rarityLore);
@@ -132,5 +123,20 @@ public class RegisterItems {
             itemDataBase.set(path, item);
         }
         OrbRPG.getInstance().saveItemDatabase();
+    }
+
+    ItemStack createItem(Material mat) {
+        var item = new ItemStack(mat);
+        var itemMeta = item.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+        itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        itemMeta.setUnbreakable(true);
+        item.setItemMeta(itemMeta);
+        return item;
     }
 }

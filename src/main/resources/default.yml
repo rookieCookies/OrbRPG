@@ -16,6 +16,7 @@ scoreboard:
 messages:
   level_up: "&6Level up! &e%player% &3leveled up from &8%old_level%% &3» &bLevel %level%"
   quest_item: "&7[&4&l!&7] You can't drop this item! You will need it in the future!"
+  player_death: "&7[&4&l!&7] You died!"
 texts:
   damage_indicator: "&4%damage%❤"
 command_messages:
@@ -29,6 +30,9 @@ command_messages:
     reload_complete: "&7[&a&l!&7] Reload complete!"
   info:
     item_info: "&7[&e&l!&7] The creator of this item is &a%creator% &7and their discord is &b%creator_discord%&7!"
+    play_time:
+      no_target: "You have played %time% of OrbRPG"
+      set_target: "%target%&a has played %time% of OrbRPG"
 rarities:
   default:
     lore: "&7&lDEFAULT"

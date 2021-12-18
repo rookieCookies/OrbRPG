@@ -14,7 +14,7 @@ public class PlayerUpdateTex {
         run();
     }
     public void run() {
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         double tex = data.getCurrentTex() / data.getMaximumTex() * 20;
         if (tex < 1)
             tex = 1;

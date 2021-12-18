@@ -10,7 +10,6 @@ import orbrpg.commands.warp.WarpTabComplete;
 import orbrpg.events.*;
 import orbrpg.functions.RegisterItems;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,14 +49,14 @@ public final class OrbRPG extends JavaPlugin {
         new RegisterItems();
         registerEvents();
         if (!setupEconomy() ) {
-            String economySetupMessage = String.format(
+            var economySetupMessage = String.format(
                     "[%s] - Disabled due to no Vault dependency found!",
                     getDescription().getName()
             );
             getLogger().log(Level.SEVERE, economySetupMessage);
             getServer().getPluginManager().disablePlugin(this);
         }
-        final int ms = 1000;
+        final var ms = 1000;
         final long fin = System.currentTimeMillis() - start;
         String logMessage = "OrbRPG v" + this.getDescription().getVersion() + " has been successfully " +
                 "enabled in " + this.decimalFormat.format(fin / ms) + " seconds (" + fin + "ms)";
@@ -74,7 +73,7 @@ public final class OrbRPG extends JavaPlugin {
         return true;
     }
     void registerEvents() {
-        PluginManager manager = getServer().getPluginManager();
+        var manager = getServer().getPluginManager();
         manager.registerEvents(new EntityProjectileHitEventListener(), this);
         manager.registerEvents(new PlayerAttackEventListener(), this);
         manager.registerEvents(new PlayerBowEventListener(), this);

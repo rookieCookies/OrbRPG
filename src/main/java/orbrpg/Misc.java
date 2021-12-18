@@ -36,11 +36,11 @@ public class Misc {
     public static String coloured(String msg) { return ChatColor.translateAlternateColorCodes('&', msg); }
 
     public static String formatNumber(float number) {
-        NumberFormat nf = NumberFormat.getInstance(new Locale("en", "US"));
+        var nf = NumberFormat.getInstance(new Locale("en", "US"));
         return nf.format(Math.round(number));
     }
     public static String getMessage(String path) {
-        String message = OrbRPG.getInstance().getLanguageFile().getString(path);
+        var message = OrbRPG.getInstance().getLanguageFile().getString(path);
         if (message == null) {
             OrbRPG.getInstance().getLogger().log(Level.WARNING,
                     "There is a message missing in the language file! Path: {0}",

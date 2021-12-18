@@ -22,30 +22,30 @@ public class Scoreboard {
     }
 
     public void run() {
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        org.bukkit.scoreboard.Scoreboard board = manager.getNewScoreboard();
-        Objective obj = board.registerNewObjective("Scoreboard", "dummy", "Loading...");
+         var manager = Bukkit.getScoreboardManager();
+        var board = manager.getNewScoreboard();
+        var obj = board.registerNewObjective("Scoreboard", "dummy", "Loading...");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        Team separator = board.registerNewTeam("separator");
-        Team balance = board.registerNewTeam("balance");
-        Team level = board.registerNewTeam("level");
-        String separatorText = "";
+        var separator = board.registerNewTeam("separator");
+        var balance = board.registerNewTeam("balance");
+        var level = board.registerNewTeam("level");
+        var separatorText = "";
         String balanceTxt = Misc.getMessage("scoreboard.balance");
         String levelTxt = Misc.getMessage("scoreboard.level");
         separator.addEntry(separatorText);
         separator.addEntry(separatorText + ChatColor.WHITE);
         level.addEntry(levelTxt);
 
-        Score balanceText = obj.getScore(balanceTxt);
-        Score discordServerMessage = obj.getScore(Misc.getMessage("scoreboard.bottom_text"));
-        Score blankSpace1 = obj.getScore(" ");
-        Score blankSpace2 = obj.getScore("  ");
-        Score blankSpace3 = obj.getScore("   ");
-        Score blankSpace4 = obj.getScore("    ");
-        Score blankSpace5 = obj.getScore("     ");
-        Score separatorText1 = obj.getScore(separatorText);
-        Score separatorText2 = obj.getScore(separatorText + ChatColor.WHITE);
-        Score levelText = obj.getScore(levelTxt);
+        var balanceText = obj.getScore(balanceTxt);
+        var discordServerMessage = obj.getScore(Misc.getMessage("scoreboard.bottom_text"));
+        var blankSpace1 = obj.getScore(" ");
+        var blankSpace2 = obj.getScore("  ");
+        var blankSpace3 = obj.getScore("   ");
+        var blankSpace4 = obj.getScore("    ");
+        var blankSpace5 = obj.getScore("     ");
+        var separatorText1 = obj.getScore(separatorText);
+        var separatorText2 = obj.getScore(separatorText + ChatColor.WHITE);
+        var levelText = obj.getScore(levelTxt);
         balance.addEntry(balanceTxt);
         discordServerMessage.setScore(0);
         blankSpace1.setScore(1);
@@ -62,16 +62,16 @@ public class Scoreboard {
             public void run() {
                 if (!Bukkit.getOnlinePlayers().contains(p))
                     cancel();
-                PlayerData data = new PlayerData(p);
+                var data = new PlayerData(p);
                 ConfigurationSection config = OrbRPG.getInstance().getConfig();
                 long time = p.getWorld().getTime();
                 balance.suffix(Component.text(String.valueOf(OrbRPG.getInstance().getEconomy().getBalance(p))));
-                int levelInt = data.getLevel();
+                var levelInt = data.getLevel();
                 int levelNext = levelInt + 1;
                 level.suffix(Component.text(Misc.coloured("&a" + Misc.formatNumber(levelInt) +
                         " &7» &8" + Misc.formatNumber(levelNext) +
                         " &7(" + Math.round(data.getCurrentExp() / data.getMaximumExp() * 10000) / 100 + "&7%)")));
-                String line = "";
+                var line = "";
                 if (config.getInt("times.sun_rise.start") < time && time < config.getInt("times.sun_rise.end")) {
                     line = Misc.getMessage("scoreboard.time_based.separator.sun_rise");
                     obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.sun_rise")));

@@ -15,7 +15,7 @@ public class IncreaseStats {
         run();
     }
     public void run() {
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
         float maximumHealth = data.getMaximumHealth();
         float maximumTex = data.getMaximumTex();
@@ -37,7 +37,7 @@ public class IncreaseStats {
             );
     }
     public void max() {
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         float maximumHealth = data.getMaximumHealth();
         float maximumTex = data.getMaximumTex();
         data.setCurrentHealth(maximumHealth);

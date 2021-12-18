@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.logging.Level;
@@ -17,15 +16,10 @@ import java.util.logging.Level;
 public class PlayerJoinEventListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        PlayerInventory inv = e.getPlayer().getInventory();
-        for (int i = 0; i < 35; i++) {
-            if (inv.getItem(i) == null)
-                continue;
-            e.getPlayer().getInventory().setItem(i, Item.refreshItem(inv.getItem(i)));
-        }
         new PlayerData(e.getPlayer()).setLevel(0);
         new PlayerData(e.getPlayer()).setCurrentExp(0);
         new PlayerData(e.getPlayer()).setMaximumExp(new LevelingSystem(e.getPlayer()).getEXPRequired(0));
+        Item.refreshInventory(e.getPlayer());
         new IncreaseStats(e.getPlayer()).max();
         new Scoreboard(e.getPlayer());
         new BukkitRunnable() {

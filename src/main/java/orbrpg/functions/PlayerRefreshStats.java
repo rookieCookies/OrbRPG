@@ -5,7 +5,6 @@ import orbrpg.OrbRPG;
 import orbrpg.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.logging.Level;
 
 public class PlayerRefreshStats {
     private final Player p;
-    private final List<Float> clearList = new ArrayList<>();
     private List<Float> toolStats = new ArrayList<>();
     private List<Float> offhandStats = new ArrayList<>();
     private List<Float> armorStats = new ArrayList<>();
@@ -27,7 +25,7 @@ public class PlayerRefreshStats {
         refreshMainHand();
         refreshOffhand();
         refreshArmor();
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         final float mainHandHealth = toolStats.get(0);
         final float mainHandDefense = toolStats.get(1);
         final float mainHandDamage = toolStats.get(2);
@@ -55,7 +53,6 @@ public class PlayerRefreshStats {
         final float totalDamage = mainHandDamage + offhandDamage + armorDamage;
         float totalSpeed = mainHandSpeed + offhandSpeed + armorSpeed + 100;
         final float totalLifeSteal = mainHandLifeSteal + offhandLifeSteal + armorLifeSteal;
-
         data.setMaximumHealth(maximumHealth);
         data.setDefense(totalDefense);
         data.setMaximumTex(maximumTex);
@@ -74,23 +71,23 @@ public class PlayerRefreshStats {
     }
 
     public void refreshMainHand() {
-        PlayerInventory playerInventory = p.getInventory();
+        var playerInventory = p.getInventory();
         ItemStack tool = playerInventory.getItemInMainHand();
         String type = Item.getTypeOfItem(tool);
-        float mainHandHealth = 0F;
-        float mainHandDefense = 0F;
-        float mainHandDamage = 0F;
-        float mainHandSpeed = 0F;
-        float mainHandTex = 0F;
-        float mainHandLifeSteal = 0F;
-        double minWeaponDamage = 1F;
-        double maxWeaponDamage = 1F;
+        var mainHandHealth = 0F;
+        var mainHandDefense = 0F;
+        var mainHandDamage = 0F;
+        var mainHandSpeed = 0F;
+        var mainHandTex = 0F;
+        var mainHandLifeSteal = 0F;
+        var minWeaponDamage = 1F;
+        var maxWeaponDamage = 1F;
         if (!"armor".equals(type)) {
             if ("weapon".equals(type)) {
                 minWeaponDamage = Item.getFloatFromItem(tool, "weapon_damage_1");
                 maxWeaponDamage = Item.getFloatFromItem(tool, "weapon_damage_2");
             }
-            mainHandDamage = (float) (OrbRPG.getInstance().getRand()
+            mainHandDamage = (OrbRPG.getInstance().getRand()
                     .nextFloat() * (maxWeaponDamage - minWeaponDamage) + minWeaponDamage);
             mainHandHealth = Item.getFloatFromItem(tool, "health");
             mainHandDefense = Item.getFloatFromItem(tool, "defense");
@@ -98,7 +95,7 @@ public class PlayerRefreshStats {
             mainHandSpeed = Item.getFloatFromItem(tool, "speed");
             mainHandLifeSteal = Item.getFloatFromItem(tool, "life_steal");
         }
-        toolStats = clearList;
+        toolStats = new ArrayList<>();
         toolStats.add(0, mainHandHealth);
         toolStats.add(1, mainHandDefense);
         toolStats.add(2, mainHandDamage);
@@ -108,15 +105,15 @@ public class PlayerRefreshStats {
     }
 
     public void refreshOffhand() {
-        PlayerInventory playerInventory = p.getInventory();
+        var playerInventory = p.getInventory();
         ItemStack tool = playerInventory.getItemInOffHand();
         String type = Item.getTypeOfItem(tool);
-        float offhandHealth = 0F;
-        float offhandDefense = 0F;
-        float offhandDamage = 0F;
-        float offhandSpeed = 0F;
-        float offhandTex = 0F;
-        float offhandLifeSteal = 0F;
+        var offhandHealth = 0F;
+        var offhandDefense = 0F;
+        var offhandDamage = 0F;
+        var offhandSpeed = 0F;
+        var offhandTex = 0F;
+        var offhandLifeSteal = 0F;
         if (type != null && Objects.equals(type, "offhand")) {
             offhandHealth = Item.getFloatFromItem(tool, "health");
             offhandDefense = Item.getFloatFromItem(tool, "defense");
@@ -125,7 +122,7 @@ public class PlayerRefreshStats {
             offhandSpeed = Item.getFloatFromItem(tool, "speed");
             offhandLifeSteal = Item.getFloatFromItem(tool, "life_steal");
         }
-        offhandStats = clearList;
+        offhandStats = new ArrayList<>();
         offhandStats.add(0, offhandHealth);
         offhandStats.add(1, offhandDefense);
         offhandStats.add(2, offhandDamage);
@@ -135,24 +132,20 @@ public class PlayerRefreshStats {
     }
 
     public void refreshArmor() {
-        PlayerInventory playerInventory = p.getInventory();
-        float armorHealth = 0F;
-        float armorDefense = 0F;
-        float armorDamage = 0F;
-        float armorTex = 0F;
-        float armorSpeed = 0F;
-        float armorLifeSteal = 0F;
-        for (int i = 1; i < 4; i++) {
-            ItemStack armorItem;
-            switch (i) {
-                case 1: armorItem = playerInventory.getHelmet();
-                    break;
-                case 2: armorItem = playerInventory.getChestplate();
-                    break;
-                case 3: armorItem = playerInventory.getLeggings();
-                    break;
-                default: armorItem = playerInventory.getBoots();
-            }
+        var playerInventory = p.getInventory();
+        var armorHealth = 0F;
+        var armorDefense = 0F;
+        var armorDamage = 0F;
+        var armorTex = 0F;
+        var armorSpeed = 0F;
+        var armorLifeSteal = 0F;
+        for (var i = 1; i < 4; i++) {
+            ItemStack armorItem = switch (i) {
+                case 1 -> playerInventory.getHelmet();
+                case 2 -> playerInventory.getChestplate();
+                case 3 -> playerInventory.getLeggings();
+                default -> playerInventory.getBoots();
+            };
             if (armorItem == null)
                 continue;
             armorHealth += Item.getFloatFromItem(armorItem, "health");
@@ -162,7 +155,7 @@ public class PlayerRefreshStats {
             armorSpeed += Item.getFloatFromItem(armorItem, "speed");
             armorLifeSteal += Item.getFloatFromItem(armorItem, "life_steal");
         }
-        armorStats = clearList;
+        armorStats = new ArrayList<>();
         armorStats.add(0, armorHealth);
         armorStats.add(1, armorDefense);
         armorStats.add(2, armorDamage);

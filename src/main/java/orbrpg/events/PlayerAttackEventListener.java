@@ -4,6 +4,7 @@ import orbrpg.Item;
 import orbrpg.Misc;
 import orbrpg.OrbRPG;
 import orbrpg.PlayerData;
+import orbrpg.functions.PlayerDeath;
 import orbrpg.functions.PlayerRefreshUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,9 +17,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
 import java.util.logging.Level;
 
 public class PlayerAttackEventListener implements Listener {
@@ -27,13 +28,12 @@ public class PlayerAttackEventListener implements Listener {
         if (!(e.getDamager() instanceof Player) && !(e.getDamager() instanceof Arrow)) {
             return;
         }
+        Player p;
         e.setCancelled(true);
-        Player p = (Player) e.getDamager();
         if (e.getDamager() instanceof Arrow) {
-            System.out.println(((Arrow) e.getDamager()).getShooter());
             p = (Player) ((Arrow) e.getDamager()).getShooter();
-        }
-        PlayerData data = new PlayerData(p);
+        } else p = (Player) e.getDamager();
+        var data = new PlayerData(p);
         if (data.isAttackCooldownTrue()) {
             return;
         }
@@ -41,33 +41,30 @@ public class PlayerAttackEventListener implements Listener {
         ItemStack tool = p.getInventory().getItemInMainHand();
         String itemType = Item.getTypeOfItem(tool);
         float finalDamage = data.getDamage();
-        EntityDamageEvent.DamageCause damageCause = e.getCause();
-        if (damageCause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+        var damageCause = e.getCause();
+        if (damageCause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
             finalDamage /= 4;
-        }
-        if (damageCause != EntityDamageEvent.DamageCause.PROJECTILE && "bow".equals(itemType)) {
+        if (damageCause != EntityDamageEvent.DamageCause.PROJECTILE && "bow".equals(itemType))
             finalDamage /= 100;
-        }
-
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
         if (config.getBoolean("damage_indicator.enabled")){
-            Location victimLocation = e.getEntity().getLocation();
-            Location loc = new Location(e.getEntity().getWorld(), 0, 0, 0);
-            Random random = OrbRPG.getInstance().getRand();
-            loc.setX(victimLocation.getX() + random.nextFloat());
-            loc.setY(victimLocation.getY() + (random.nextFloat() / 1.2));
-            loc.setZ(victimLocation.getZ() + random.nextFloat());
-            ArmorStand armorstand = (ArmorStand) e.getEntity().getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-            armorstand.setGravity(false);
-            armorstand.setCustomNameVisible(true);
-            armorstand.setInvulnerable(true);
-            armorstand.setMarker(true);
-            armorstand.setVisible(false);
-            String formattedDamage = String.valueOf(finalDamage);
+            var victimLocation = e.getEntity().getLocation();
+            var random = OrbRPG.getInstance().getRand();
+            float xPosition = (float) (victimLocation.getX() + random.nextFloat() - random.nextFloat());
+            float yPosition = (float) (victimLocation.getY() + random.nextFloat() / 1.5 + 1);
+            float zPosition = (float) (victimLocation.getZ() + random.nextFloat() - random.nextFloat());
+            var loc = new Location(e.getEntity().getWorld(), xPosition, yPosition, zPosition);
+            var armorStand = (ArmorStand) e.getEntity().getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
+            armorStand.setGravity(false);
+            armorStand.setCustomNameVisible(true);
+            armorStand.setInvulnerable(true);
+            armorStand.setMarker(true);
+            armorStand.setVisible(false);
+            var formattedDamage = String.valueOf(finalDamage);
             if (config.getBoolean("damage_indicator", true))
                 formattedDamage = Misc.formatNumber(finalDamage);
-            armorstand.setCustomName(Misc.getMessage("texts.damage_indicator").replace("%damage%", formattedDamage));
-            Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), armorstand::remove, 20L);
+            armorStand.setCustomName(Misc.getMessage("texts.damage_indicator").replace("%damage%", formattedDamage));
+            Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), armorStand::remove, 20L);
         }
         e.setCancelled(false);
         e.setDamage(finalDamage);
@@ -76,6 +73,10 @@ public class PlayerAttackEventListener implements Listener {
                 OrbRPG.getInstance(),
                 data::setAttackCooldownFalse,
                 (OrbRPG.getInstance().getConfig().getInt("attack_cooldown")));
+        Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), () -> {
+            if (e.getEntity().isDead())
+                data.addHealth(data.getLifeSteal());
+        }, 1L);
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.attack_entity"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
@@ -85,10 +86,9 @@ public class PlayerAttackEventListener implements Listener {
     }
     @EventHandler
     public void onDamageToPlayer(EntityDamageEvent e) {
-        if (!(e.getEntity() instanceof Player))
+        if (!(e.getEntity() instanceof Player p))
             return;
-        Player p = (Player) e.getEntity();
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         float defense = data.getDefense();
         float damage = (float) e.getDamage() - defense;
         if (damage < 1)
@@ -105,5 +105,6 @@ public class PlayerAttackEventListener implements Listener {
                     "Debug: {0} Events > " + getClass().getName(),
                     p.getName()
             );
+        new PlayerDeath(p);
     }
 }

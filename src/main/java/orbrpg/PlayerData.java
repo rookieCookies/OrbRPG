@@ -1,5 +1,7 @@
 package orbrpg;
 
+import orbrpg.functions.PlayerRefreshUI;
+import orbrpg.functions.PlayerUpdateHealth;
 import orbrpg.systems.LevelingSystem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -22,12 +24,12 @@ public class PlayerData {
     }
     private void setFloat(String nameSpace, float value) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         container.set(nsk, PersistentDataType.FLOAT, value);
     }
     private Float getFloat(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         Float returnValue = container.get(nsk, PersistentDataType.FLOAT);
         if (returnValue == null)
             returnValue = 0F;
@@ -35,12 +37,12 @@ public class PlayerData {
     }
     private void setInt(String nameSpace, int value) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         container.set(nsk, PersistentDataType.INTEGER, value);
     }
     private Integer getInt(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         Integer returnValue = container.get(nsk, PersistentDataType.INTEGER);
         if (returnValue == null)
             returnValue = 0;
@@ -48,17 +50,17 @@ public class PlayerData {
     }
     private void setTrue(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         container.set(nsk, PersistentDataType.INTEGER, 1);
     }
     private void setFalse(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         container.set(nsk, PersistentDataType.INTEGER, 0);
     }
     private boolean isTrue(String nameSpace) {
         PersistentDataContainer container = getPersistentDataStorage();
-        NamespacedKey nsk = new NamespacedKey(i, nameSpace);
+        var nsk = new NamespacedKey(i, nameSpace);
         Integer value = container.get(nsk, PersistentDataType.INTEGER);
         if (value == null)
             value = 0;
@@ -70,12 +72,24 @@ public class PlayerData {
         p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1F, 1F);
         new LevelingSystem(p).levelUp();
     }
+    public void addHealth(float amount) {
+        setCurrentHealth(getCurrentHealth() + amount);
+        new PlayerRefreshUI(p);
+    }
 
     // Set data functions
     public void setDamage(float value) { setFloat(getDamageID(), value); }
-    public void setCurrentHealth(float value) { setFloat(getCurrentHealthID(), value); }
+    public void setCurrentHealth(float value) {
+        if (value > getMaximumHealth())
+            value = getMaximumHealth();
+        setFloat(getCurrentHealthID(), value);
+    }
     public void setMaximumHealth(float value) { setFloat(getMaximumHealthID(), value); }
-    public void setCurrentTex(float value) { setFloat(getCurrentTexID(), value); }
+    public void setCurrentTex(float value) {
+        if (value > getMaximumTex())
+            value = getMaximumTex();
+        setFloat(getCurrentTexID(), value);
+    }
     public void setMaximumTex(float value) { setFloat(getMaximumTexID(), value); }
     public void setDefense(float value) { setFloat(getDefenseID(), value); }
     public void setSpeed(float value) { setFloat(getSpeedID(), value); }
@@ -128,7 +142,7 @@ public class PlayerData {
 
     // General functions
     private String getDataID(String path) {
-        String message = i.getConfig().getString(path);
+        var message = i.getConfig().getString(path);
         if (message == null) {
             i.getLogger().log(Level.WARNING,
                     "There is a data ID missing in the config file! Path: {0}",

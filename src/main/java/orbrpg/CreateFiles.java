@@ -16,18 +16,18 @@ public class CreateFiles {
     }
 
     void createLanguageFile() {
-        String languageFilePathInConfig = "language_file";
-        String languageFilePath = instance.getConfig().getString(languageFilePathInConfig);
+        var languageFilePathInConfig = "language_file";
+        var languageFilePath = instance.getConfig().getString(languageFilePathInConfig);
         if (languageFilePath == null) {
             instance.getConfig().set(languageFilePathInConfig, "lang_default");
             languageFilePath = instance.getConfig().getString(languageFilePathInConfig);
             instance.saveConfig();
         }
         languageFilePath += ".yml";
-        File languageFile = new File(instance.getDataFolder(), languageFilePath);
+        var languageFile = new File(instance.getDataFolder(), languageFilePath);
         if (!languageFile.exists()) {
             instance.saveResource("default.yml", false);
-            File defaultFile = new File(instance.getDataFolder(), "default.yml");
+            var defaultFile = new File(instance.getDataFolder(), "default.yml");
             boolean f = defaultFile.renameTo(languageFile);
             if (!f) {
                 createLanguageFile();
@@ -42,18 +42,18 @@ public class CreateFiles {
         instance.setMainLanguageFile(languageFile);
     }
     void createItemsFile() {
-        String itemsFilePathInConfig = "items_file";
-        String filePath = instance.getConfig().getString(itemsFilePathInConfig);
+        var itemsFilePathInConfig = "items_file";
+        var filePath = instance.getConfig().getString(itemsFilePathInConfig);
         if (filePath == null) {
             instance.getConfig().set(itemsFilePathInConfig, "items");
             filePath = instance.getConfig().getString(itemsFilePathInConfig);
             instance.saveConfig();
         }
         filePath += ".yml";
-        File itemsFile = new File(instance.getDataFolder(), filePath);
+        var itemsFile = new File(instance.getDataFolder(), filePath);
         if (!itemsFile.exists()) {
             instance.saveResource("items.yml", false);
-            File defaultFile = new File(instance.getDataFolder(), "items.yml");
+            var defaultFile = new File(instance.getDataFolder(), "items.yml");
             boolean f = defaultFile.renameTo(itemsFile);
             if (!f) {
                 createItemsFile();
@@ -67,21 +67,21 @@ public class CreateFiles {
         } catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
     }
     void createItemDataBase() {
-        String itemsDataBasePathInConfig = "items_database_file";
-        String filePath = instance.getConfig().getString(itemsDataBasePathInConfig);
+        var itemsDataBasePathInConfig = "items_database_file";
+        var filePath = instance.getConfig().getString(itemsDataBasePathInConfig);
         if (filePath == null) {
             instance.getConfig().set(itemsDataBasePathInConfig, "items_database");
             filePath = instance.getConfig().getString(itemsDataBasePathInConfig);
             instance.saveConfig();
         }
         filePath += ".yml";
-        File databaseFile = new File(instance.getDataFolder(), filePath);
+        var databaseFile = new File(instance.getDataFolder(), filePath);
         if (databaseFile.exists() && !databaseFile.delete()) {
             createItemDataBase();
             return;
         }
         instance.saveResource("items_database.yml", false);
-        File defaultFile = new File(instance.getDataFolder(), "items_database.yml");
+        var defaultFile = new File(instance.getDataFolder(), "items_database.yml");
         boolean f = defaultFile.renameTo(databaseFile);
         if (!f) {
             createLanguageFile();

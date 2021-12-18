@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,22 +20,22 @@ public class PlayerBowEventListener implements Listener {
         if (e.getItem() == null || e.getItem().getType() != Material.LEAD) {
             return;
         }
-        Player p = e.getPlayer();
-        PlayerData data = new PlayerData(p);
+        var p = e.getPlayer();
+        var data = new PlayerData(p);
         if (!e.getAction().isLeftClick() || data.isBowCooldownTrue()) {
             return;
         }
         e.setCancelled(true);
         data.setBowCooldownTrue();
         Vector playerDirection = p.getLocation().getDirection();
-        Arrow arrow = p.launchProjectile(Arrow.class, playerDirection);
+        var arrow = p.launchProjectile(Arrow.class, playerDirection);
         arrow.setVelocity(new Vector(
                 arrow.getVelocity().getX() * 2,
                 arrow.getVelocity().getY() * 2,
                 arrow.getVelocity().getZ() * 2
         ));
         arrow.setPickupStatus(AbstractArrow.PickupStatus.DISALLOWED);
-        float cooldown = Item.getFloatFromItem(e.getItem(), "bow_cooldown");
+        var cooldown = Item.getFloatFromItem(e.getItem(), "bow_cooldown");
         Bukkit.getScheduler().runTaskLater(
                 OrbRPG.getInstance(),
                 data::setBowCooldownFalse,
