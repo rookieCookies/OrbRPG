@@ -1,19 +1,16 @@
 package orbrpg.commands.info;
 
-import orbrpg.Item;
-import orbrpg.Misc;
+import utils.Item;
+import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.CheckForNull;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 public class InfoCommand implements CommandExecutor {
@@ -33,9 +30,10 @@ public class InfoCommand implements CommandExecutor {
         ItemStack item;
         if (args.length < 1)
             item =  OrbRPG.getInstance().getItemDatabase()
-                .getItemStack(Item.getIDOfItem(((Player) sender)
-                        .getInventory()
-                        .getItemInMainHand()));
+                    .getItemStack(
+                            Item.getIDOfItem(((Player) sender)
+                                    .getInventory()
+                                    .getItemInMainHand()));
         else {
             if (!OrbRPG.getInstance().getItemDatabase().contains(args[0])) {
                 sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));

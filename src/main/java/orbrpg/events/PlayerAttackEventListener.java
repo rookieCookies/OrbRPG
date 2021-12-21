@@ -1,9 +1,9 @@
 package orbrpg.events;
 
-import orbrpg.Item;
-import orbrpg.Misc;
+import utils.Item;
+import utils.Misc;
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import orbrpg.functions.PlayerDeath;
 import orbrpg.functions.PlayerRefreshUI;
 import org.bukkit.Bukkit;
@@ -17,7 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.logging.Level;

@@ -1,9 +1,9 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
-import orbrpg.Misc;
+import utils.Misc;
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;

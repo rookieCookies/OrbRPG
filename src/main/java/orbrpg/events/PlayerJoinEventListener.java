@@ -1,8 +1,8 @@
 package orbrpg.events;
 
-import orbrpg.Item;
+import utils.Item;
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import orbrpg.functions.*;
 import orbrpg.systems.LevelingSystem;
 import org.bukkit.Bukkit;

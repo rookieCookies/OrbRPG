@@ -1,5 +1,8 @@
-package orbrpg;
+package utils;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import orbrpg.OrbRPG;
 import org.bukkit.ChatColor;
 
 import java.text.NumberFormat;
@@ -34,6 +37,7 @@ public class Misc {
         return ROMAN_NUMERALS.get(l) + toRoman(number - l);
     }
     public static String coloured(String msg) { return ChatColor.translateAlternateColorCodes('&', msg); }
+    public static TextComponent component(String msg) { return Component.text(coloured(msg)); }
 
     public static String formatNumber(float number) {
         var nf = NumberFormat.getInstance(new Locale("en", "US"));

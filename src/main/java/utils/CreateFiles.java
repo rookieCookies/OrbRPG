@@ -1,5 +1,6 @@
-package orbrpg;
+package utils;
 
+import orbrpg.OrbRPG;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -9,7 +10,7 @@ import java.util.logging.Level;
 
 public class CreateFiles {
     private final OrbRPG instance = OrbRPG.getInstance();
-    CreateFiles() {
+    public CreateFiles() {
         createLanguageFile();
         createItemsFile();
         createItemDataBase();

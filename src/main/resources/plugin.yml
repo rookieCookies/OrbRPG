@@ -17,23 +17,35 @@ commands:
     aliases: [g, getitem, item, rpgitem]
   warp:
     description: Warp to a location
+    permission: orbrpg.commands.warp
     aliases: w
+  setwarp:
+    description: Set the location of a warp
+    permission: orbrpg.commands.setwarp
+    aliases: sw
   info:
     description: Get the info of an item
     permission: orbrpg.commands.info
     aliases: i
+  playtime:
+    description: Get the total play time of a player
+    permission: orbrpg.commands.playtime
+    aliases: pt
 permissions:
   orbrpg.*:
     description: Allows the player to use anything
     default: op
     children:
       orbrpg.commands.*: true
-      orbrpg.warp.*: true
   orbrpg.commands.*:
     description: Allows the player to use any command!
     children:
       orbrpg.commands.getitem: true
       orbrpg.commands.info: true
+      orbrpg.commands.warp: true
+      orbrpg.commands.warp.*: true
+      orbrpg.commands.setwarp: true
+      orbrpg.commands.playtime: true
   orbrpg.commands.getitem:
     description: Allows the player to use /getitem
   orbrpg.commands.info:

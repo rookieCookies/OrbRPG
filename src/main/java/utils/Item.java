@@ -1,5 +1,6 @@
-package orbrpg;
+package utils;
 
+import orbrpg.OrbRPG;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

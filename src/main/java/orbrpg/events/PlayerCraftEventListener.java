@@ -1,7 +1,7 @@
 package orbrpg.events;
 
-import orbrpg.Item;
-import orbrpg.Misc;
+import utils.Item;
+import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

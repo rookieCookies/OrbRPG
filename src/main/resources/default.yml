@@ -25,9 +25,11 @@ command_messages:
     not_enough_arguments: "&7[&4&l!&7] You are missing one or more arguments that are required to execute this command!"
     incorrect_sender: "&7[&4&l!&7] You can't run this command!"
     incorrect_item: "&7[&4&l!&7] This item does not exist!"
+    incorrect_argument: "&7[&4&l!&7] You need to enter a valid argument!"
   success:
     item_received: "&7[&a&l!&7] You received an item!"
     reload_complete: "&7[&a&l!&7] Reload complete!"
+    warp_set: "&7[&a&l!&7] You have set %warp_name% to your current location!"
   info:
     item_info: "&7[&e&l!&7] The creator of this item is &a%creator% &7and their discord is &b%creator_discord%&7!"
     play_time:

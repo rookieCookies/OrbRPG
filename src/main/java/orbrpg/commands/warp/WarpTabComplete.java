@@ -23,7 +23,7 @@ public class WarpTabComplete implements TabCompleter {
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
         Map<String, Object> sec = config.getConfigurationSection("warps").getValues(false);
         for (Object a : sec.values()) {
-            String path = a.toString();
+            var path = a.toString();
             path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
             path = path.substring(path.indexOf("warps.") + 6);
             if ((
@@ -38,7 +38,7 @@ public class WarpTabComplete implements TabCompleter {
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.tab_complete"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
-                    "Debug: ({0}) Command > [/warp] > " + list,
+                    "Debug: ({0}) TabComplete > [/warp] > " + list,
                     sender.getName()
             );
         return list;

@@ -1,6 +1,6 @@
 package orbrpg.commands.getitem;
 
-import orbrpg.Misc;
+import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

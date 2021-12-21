@@ -1,7 +1,7 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
-import orbrpg.Misc;
+import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;

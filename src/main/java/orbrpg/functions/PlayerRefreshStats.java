@@ -1,8 +1,8 @@
 package orbrpg.functions;
 
-import orbrpg.Item;
+import utils.Item;
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

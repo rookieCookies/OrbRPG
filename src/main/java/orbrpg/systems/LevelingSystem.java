@@ -1,8 +1,8 @@
 package orbrpg.systems;
 
-import orbrpg.Misc;
+import utils.Misc;
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import orbrpg.functions.PlayerRefreshUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -20,9 +20,8 @@ public class LevelingSystem {
     public void levelUp() {
         float currentExp = data.getCurrentExp();
         float maximumExp = data.getMaximumExp();
-        if (currentExp < maximumExp) {
+        if (currentExp < maximumExp)
             return;
-        }
         int currentLevel = data.getLevel();
         currentLevel++;
         currentExp -= maximumExp;

@@ -1,7 +1,7 @@
 package orbrpg.events;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
-import orbrpg.Item;
+import utils.Item;
 import orbrpg.OrbRPG;
 import orbrpg.functions.PlayerRefreshUI;
 import org.bukkit.Bukkit;

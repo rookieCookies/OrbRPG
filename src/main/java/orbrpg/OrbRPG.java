@@ -5,6 +5,10 @@ import orbrpg.commands.getitem.GetItemCommand;
 import orbrpg.commands.getitem.GetItemTabComplete;
 import orbrpg.commands.info.InfoCommand;
 import orbrpg.commands.info.InfoTabComplete;
+import orbrpg.commands.playtime.PlayTimeTabComplete;
+import orbrpg.commands.playtime.PlaytimeCommand;
+import orbrpg.commands.setwarp.SetWarpCommand;
+import orbrpg.commands.setwarp.SetWarpTabComplete;
 import orbrpg.commands.warp.WarpCommand;
 import orbrpg.commands.warp.WarpTabComplete;
 import orbrpg.events.*;
@@ -12,6 +16,7 @@ import orbrpg.functions.RegisterItems;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import utils.CreateFiles;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +53,7 @@ public final class OrbRPG extends JavaPlugin {
         new CreateFiles();
         new RegisterItems();
         registerEvents();
+        System.out.println(getDescription().getPermissions());
         if (!setupEconomy() ) {
             var economySetupMessage = String.format(
                     "[%s] - Disabled due to no Vault dependency found!",
@@ -89,6 +95,10 @@ public final class OrbRPG extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("info")).setTabCompleter(new InfoTabComplete());
         Objects.requireNonNull(this.getCommand("warp")).setExecutor(new WarpCommand());
         Objects.requireNonNull(this.getCommand("warp")).setTabCompleter(new WarpTabComplete());
+        Objects.requireNonNull(this.getCommand("setwarp")).setExecutor(new SetWarpCommand());
+        Objects.requireNonNull(this.getCommand("setwarp")).setTabCompleter(new SetWarpTabComplete());
+        Objects.requireNonNull(this.getCommand("playtime")).setExecutor(new PlaytimeCommand());
+        Objects.requireNonNull(this.getCommand("playtime")).setTabCompleter(new PlayTimeTabComplete());
 
     }
     public FileConfiguration getLanguageFile() { return this.languageFileConfiguration; }

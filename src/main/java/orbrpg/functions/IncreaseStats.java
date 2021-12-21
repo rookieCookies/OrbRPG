@@ -1,7 +1,7 @@
 package orbrpg.functions;
 
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

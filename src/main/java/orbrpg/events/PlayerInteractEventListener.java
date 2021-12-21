@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -30,6 +31,11 @@ public class PlayerInteractEventListener implements Listener {
         if (e.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
         e.setCancelled(true);
-
+    }
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getPlayer().getGameMode() == GameMode.CREATIVE)
+            return;
+        e.setCancelled(true);
     }
 }

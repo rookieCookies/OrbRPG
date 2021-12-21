@@ -1,7 +1,7 @@
 package orbrpg.functions;
 
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Level;

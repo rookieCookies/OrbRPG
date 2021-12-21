@@ -2,9 +2,9 @@ package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
-import orbrpg.Misc;
+import utils.Misc;
 import orbrpg.OrbRPG;
-import orbrpg.PlayerData;
+import utils.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
