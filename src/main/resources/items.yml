@@ -1,5 +1,5 @@
 
-  # NEVER IN ANY CASE REMOVE THE DEFAULT ITEM!
+# NEVER IN ANY CASE REMOVE THE DEFAULT ITEM!
 
 default:
   enabled: true
@@ -9,7 +9,12 @@ default:
   rarity: common
 
   # NEVER IN ANY CASE REMOVE THE DEFAULT ITEM!
-
+menu:
+  enabled: true
+  type: item
+  display_name: "Menu"
+  rarity: menu
+  material: item_frame
 example_item:
   enabled: true
   type: item
@@ -20,9 +25,6 @@ example_item:
     life_steal: 3
     speed: -90
     defense: 300
-  info:
-    creator: ExampleUsername
-    discord: ExampleDiscord#0000
 example_bow:
   enabled: true
   type: bow
@@ -43,6 +45,31 @@ example_helmet:
   rarity: legendary
   stats:
     base_damage: 3
+    life_steal: 2
+    speed: 300
+    health: 4
+    defense: 1
+example_helmet2:
+  enabled: true
+  type: armor
+  material: iron_chestplate
+  display_name: "Example Chestplate"
+  rarity: special
+  stats:
+    base_damage: 30
+    life_steal: 20
+    speed: 300
+    health: 40
+    defense: 10
+example_sword:
+  enabled: true
+  type: weapon
+  material: stick
+  display_name: "Example Stick"
+  rarity: legendary
+  stats:
+    base_damage: 3
+    difference: 0.5
     life_steal: 2
     speed: 30
     health: 4

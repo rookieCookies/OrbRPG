@@ -3,7 +3,14 @@ package utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import orbrpg.OrbRPG;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -52,5 +59,20 @@ public class Misc {
             return "";
         }
         return Misc.coloured(message);
+    }
+
+    public static boolean warpPlayer(Player p, String warpID) {
+        ConfigurationSection config = OrbRPG.getInstance().getConfig();
+        var w = config.getString("warps."+warpID+".w");
+        if (w == null || Bukkit.getWorld(w) == null)
+            return false;
+        var x = config.getDouble("warps."+warpID+".x");
+        var y = config.getDouble("warps."+warpID+".y");
+        var z = config.getDouble("warps."+warpID+".z");
+        var yaw = p.getLocation().getYaw();
+        var pitch = p.getLocation().getPitch();
+        var loc = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
+        p.teleportAsync(loc);
+        return true;
     }
 }

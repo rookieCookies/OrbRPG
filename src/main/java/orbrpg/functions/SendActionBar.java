@@ -2,12 +2,12 @@ package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
-import utils.Misc;
 import orbrpg.OrbRPG;
-import utils.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import utils.Misc;
+import utils.PlayerData;
 
 import java.util.SplittableRandom;
 import java.util.logging.Level;
@@ -26,17 +26,18 @@ public class SendActionBar {
         float currentTex = data.getCurrentTex();
         float defense = data.getDefense();
         var message = "";
-        if (10 < currentHealth / maximumHealth * 100)
+        if (10 < currentHealth / maximumHealth * 100 && currentHealth > 0)
             message += "&4%health%&4/%maximum_health%&4❤ ";
         else {
             var random = new SplittableRandom();
             var sub = "";
             if (random.nextInt(1000) == 1)
                 sub = "You're low! So here is a big fucking text to make your life harder! Get Fucked!";
-            p.showTitle(Title.title(Component.text(Misc.coloured("&4%health%&4/%maximum_health%&4❤"
-                    .replace("%maximum_health%", String.valueOf(Math.round(maximumHealth)))
-                    .replace("%health%", String.valueOf(Math.round(currentHealth))))
-            ), Component.text(sub)));
+            if (currentHealth > 0)
+                p.showTitle(Title.title(Component.text(Misc.coloured("&4%health%&4/%maximum_health%&4❤"
+                        .replace("%maximum_health%", String.valueOf(Math.round(maximumHealth)))
+                        .replace("%health%", String.valueOf(Math.round(currentHealth))))
+                ), Component.text(sub)));
             var potion = new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false);
             p.addPotionEffect(potion);
         }

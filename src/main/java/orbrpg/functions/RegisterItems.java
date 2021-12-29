@@ -1,7 +1,6 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
-import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,6 +8,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import utils.Item;
+import utils.Misc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,9 @@ public class RegisterItems {
             if (itemMaterialString == null)
                 itemMaterialString = "stone";
             var itemMaterial = Material.matchMaterial(itemMaterialString);
-            var item = createItem(itemMaterial);
+            assert itemMaterial != null;
+            var item = new ItemStack(itemMaterial);
+            Item.hideAttributes(item);
             var itemMeta = item.getItemMeta();
             var data = itemMeta.getPersistentDataContainer();
             var itemRarity = itemsFile.getString(path + ".rarity");
@@ -70,6 +73,12 @@ public class RegisterItems {
                 loreList.add(" ");
             }
             var sectionOne = false;
+            float breakPower = (float) itemsFile.getDouble(path + ".stats.break_power");
+            if (breakPower != 0) {
+                data.set(new NamespacedKey(OrbRPG.getInstance(), "break_power"), PersistentDataType.FLOAT, breakPower);
+                loreList.add(Misc.coloured("&7Break Power: &a" + breakPower));
+                sectionOne = true;
+            }
             float cooldown = (float) itemsFile.getDouble(path + ".stats.cooldown");
             if (cooldown != 0 && "bow".equals(type)) {
                 data.set(new NamespacedKey(OrbRPG.getInstance(), "bow_cooldown"), PersistentDataType.FLOAT, cooldown);
@@ -123,20 +132,5 @@ public class RegisterItems {
             itemDataBase.set(path, item);
         }
         OrbRPG.getInstance().saveItemDatabase();
-    }
-
-    ItemStack createItem(Material mat) {
-        var item = new ItemStack(mat);
-        var itemMeta = item.getItemMeta();
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-        itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-        itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        itemMeta.setUnbreakable(true);
-        item.setItemMeta(itemMeta);
-        return item;
     }
 }

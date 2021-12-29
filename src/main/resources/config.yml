@@ -1,6 +1,8 @@
 language_file: "lang_default"
 items_file: "items"
 items_database_file: "items_database"
+storage: "storage"
+discord_link: "https://discord.gg/Estv5zVAGT"
 attack_cooldown: 12
 damage_indicator:
   enabled: true
@@ -19,7 +21,7 @@ warps:
     x: 0.0
     y: 255.0
     z: 0.0
-    w: world
+    w: overworld
 times:
   sun_rise:
     start: 23000
@@ -59,9 +61,19 @@ debug: # Debug will only show if the plugin did something successfully
     info:
       command: false
       tab_complete: false
+    rpg:
+      command: false
+      tab_complete: false
+    playtime:
+      command: false
+      tab_complete: false
+    set_warp:
+      command: false
+      tab_complete: false
     warp:
       command: false
       tab_complete: false
+    discord: false
   events:
     projectile_hit: false
     player:
@@ -76,6 +88,7 @@ debug: # Debug will only show if the plugin did something successfully
       join: false
   functions:
     increase_stats: false
+    player_death: false
     recalculate_stats: false
     refresh_ui: false
     update_health_bar: false

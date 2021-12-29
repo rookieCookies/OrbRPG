@@ -15,7 +15,7 @@ import java.util.logging.Level;
 public class PlayerInteractEventListener implements Listener {
     @EventHandler
     public void onBlockInteractEvent(PlayerInteractEvent e) {
-        if (e.getClickedBlock() != null)
+        if (e.getClickedBlock() == null)
             return;
         if (e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType() == Material.FARMLAND)
             e.setCancelled(true);

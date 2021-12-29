@@ -1,8 +1,6 @@
 package orbrpg.commands.setwarp;
 
 import orbrpg.OrbRPG;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,7 +34,9 @@ public class SetWarpCommand implements CommandExecutor {
         config.set("warps." + args[0] + ".y", loc.getY());
         config.set("warps." + args[0] + ".z", loc.getZ());
         config.set("warps." + args[0] + ".w", loc.getWorld().getName());
-        if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.command"))
+        sender.sendMessage(Misc.getMessage("command_messages.success.warp_set").replace("%warp_name%", args[0]));
+        OrbRPG.getInstance().saveConfig();
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.set_warp.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: ({0}) Command > [/setwarp] > " + args[0] + loc,

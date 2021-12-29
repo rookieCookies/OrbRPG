@@ -11,6 +11,9 @@ depend:
   - ProtocolLib
   - Vault
 commands:
+  rpg:
+    description: Main command of OrbRPG plugin
+    permission: orbrpg.commands.main
   get:
     description: Get a custom generated item
     permission: orbrpg.commands.getitem
@@ -31,6 +34,18 @@ commands:
     description: Get the total play time of a player
     permission: orbrpg.commands.playtime
     aliases: pt
+  discord:
+    description: Display the discord server of this server
+    permission: orbrpg.commands.discord
+    aliases: dc
+  spawn:
+    description: Warp to spawn
+    permission: orbrpg.commands.spawn
+    aliases: hub
+  staffchat:
+    description: A special chat for staff to chat on
+    permission: orbrpg.admin.staffchat
+    aliases: sc
 permissions:
   orbrpg.*:
     description: Allows the player to use anything
@@ -40,13 +55,13 @@ permissions:
   orbrpg.commands.*:
     description: Allows the player to use any command!
     children:
+      orbrpg.commands.main: true
       orbrpg.commands.getitem: true
       orbrpg.commands.info: true
       orbrpg.commands.warp: true
       orbrpg.commands.warp.*: true
       orbrpg.commands.setwarp: true
       orbrpg.commands.playtime: true
-  orbrpg.commands.getitem:
-    description: Allows the player to use /getitem
-  orbrpg.commands.info:
-    description: Allows the player to use /info
+      orbrpg.commands.discord: true
+      orbrpg.commands.spawn: true
+      orbrpg.admin.staffchat: true

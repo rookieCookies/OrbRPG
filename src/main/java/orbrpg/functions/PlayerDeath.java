@@ -1,51 +1,51 @@
 package orbrpg.functions;
 
-import utils.Misc;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import orbrpg.OrbRPG;
-import utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
-import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import utils.Misc;
+import utils.PlayerData;
+
+import java.util.logging.Level;
 
 public class PlayerDeath {
     private final Player player;
-    private boolean wasKilled;
 
     public PlayerDeath(Player p) {
         this.player = p;
+        if (!Bukkit.getOnlinePlayers().contains(p))
+            return;
         var data = new PlayerData(p);
         new PlayerRefreshUI(p);
         if (data.getCurrentHealth() > 0)
             return;
-        wasKilled = force();
+        force();
     }
-    public boolean force() {
+    public void force() {
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
-        var w = config.getString("warps.spawn.world");
-        if (w == null || Bukkit.getWorld(w) == null)
-            return false;
-        var x = config.getDouble("warps.spawn.x");
-        var y = config.getDouble("warps.spawn.y");
-        var z = config.getDouble("warps.spawn.z");
-        var loc = new Location(Bukkit.getWorld(w), x, y, z);
-        player.teleport(loc);
+        Misc.warpPlayer(player, "spawn");
         new IncreaseStats(player).max();
-        Misc.getMessage("messages.player_death");
-        if (OrbRPG.getInstance().getConfig().getBoolean("features.on_death.totem_effect"))
+        player.sendMessage(Misc.getMessage("messages.player_death"));
+        if (config.getBoolean("features.on_death.totem_effect"))
             player.playEffect(EntityEffect.TOTEM_RESURRECT);
-        if (OrbRPG.getInstance().getConfig().getBoolean("features.on_death.clear_potions"))
+        if (config.getBoolean("features.on_death.clear_potions"))
             for (PotionEffect effect : player.getActivePotionEffects()) {
                 player.removePotionEffect(effect.getType());
             }
         var potion = new PotionEffect(PotionEffectType.HUNGER, 200_000, 100, false, false, false);
         player.addPotionEffect(potion);
-        return true;
-    }
-    public boolean wasKilled() {
-        return wasKilled;
+        player.showTitle(Title.title(Component.text(Misc.coloured("&4&lYou died!")), Component.text("")));
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.player_death"))
+            OrbRPG.getInstance().getLogger().log(
+                    Level.INFO,
+                    "Debug: ({0}) Function > " + getClass().getName(),
+                    player.getName()
+            );
     }
 }

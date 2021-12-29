@@ -1,30 +1,27 @@
 package orbrpg.events;
 
-import utils.Item;
-import utils.Misc;
 import orbrpg.OrbRPG;
-import utils.PlayerData;
 import orbrpg.functions.PlayerDeath;
 import orbrpg.functions.PlayerRefreshUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import utils.Item;
+import utils.Misc;
+import utils.PlayerData;
 
 import java.util.logging.Level;
 
 public class PlayerAttackEventListener implements Listener {
     @EventHandler
     public void onDamageByPlayer(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof Player) && !(e.getDamager() instanceof Arrow)) {
+        if ((!(e.getDamager() instanceof Player) && !(e.getDamager() instanceof Arrow)) || e.getEntity() instanceof HumanEntity) {
             return;
         }
         Player p;

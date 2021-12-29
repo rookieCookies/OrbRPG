@@ -1,10 +1,10 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
-import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+import utils.Misc;
 
 public class RegisterLoopCycles {
     public RegisterLoopCycles() {

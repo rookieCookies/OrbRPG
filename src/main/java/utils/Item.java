@@ -1,19 +1,27 @@
 package utils;
 
+import net.kyori.adventure.text.Component;
 import orbrpg.OrbRPG;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Item {
     Item() { throw new IllegalStateException("Utility class"); }
+    public static ItemStack getItem(String str) {
+        return OrbRPG.getInstance().getItemDatabase().getItemStack(str);
+    }
     public static ItemStack refreshItem(ItemStack item) {
-        if (item == null)
+        if (item == null || item.getType().isAir())
             return null;
         String itemID = getIDOfItem(item);
         if (itemID == null)
@@ -50,7 +58,7 @@ public class Item {
             return "default";
         var itemMeta = item.getItemMeta();
         if (itemMeta == null)
-            return "var";
+            return "default";
         var container = itemMeta.getPersistentDataContainer();
         return container.get(new NamespacedKey(OrbRPG.getInstance(), "item_id"), PersistentDataType.STRING);
     }
@@ -88,5 +96,32 @@ public class Item {
         if (itemID == null)
             return false;
         return OrbRPG.getInstance().getItemDatabase().contains(itemID);
+    }
+
+    public static ItemStack hideAttributes(ItemStack item) {
+        ItemStack newItem;
+        newItem = item;
+        var itemMeta = newItem.getItemMeta();
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+        itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        itemMeta.setUnbreakable(true);
+        newItem.setItemMeta(itemMeta);
+        return newItem;
+    }
+    public static @NotNull ItemStack createGuiItem(final Material material, final String name, final String... lore) {
+        var item = new ItemStack(material, 1);
+        final var meta = item.getItemMeta();
+        meta.displayName(Component.text(Misc.coloured(name)));
+        var colouredLore = new ArrayList<String>();
+        for (String l : lore)
+            colouredLore.add(Misc.coloured(l));
+        meta.setLore(colouredLore);
+        item.setItemMeta(meta);
+        return hideAttributes(item);
     }
 }

@@ -1,7 +1,5 @@
 package orbrpg.commands.info;
 
-import utils.Item;
-import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import utils.Item;
+import utils.Misc;
 
 import java.util.List;
 import java.util.logging.Level;

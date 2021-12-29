@@ -1,15 +1,15 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
-import utils.Misc;
 import orbrpg.OrbRPG;
-import utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.*;
+import org.bukkit.scoreboard.DisplaySlot;
+import utils.Misc;
+import utils.PlayerData;
 
 import java.util.logging.Level;
 

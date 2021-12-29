@@ -1,13 +1,13 @@
 package orbrpg.events;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
-import utils.Item;
 import orbrpg.OrbRPG;
 import orbrpg.functions.PlayerRefreshUI;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import utils.Item;
 
 import java.util.logging.Level;
 

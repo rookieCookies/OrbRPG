@@ -1,0 +1,3 @@
+stone:
+  durability: 3
+  chance: 30 # Break chance in percentages

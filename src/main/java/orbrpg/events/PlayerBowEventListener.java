@@ -1,8 +1,6 @@
 package orbrpg.events;
 
-import utils.Item;
 import orbrpg.OrbRPG;
-import utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.AbstractArrow;
@@ -11,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
+import utils.Item;
+import utils.PlayerData;
 
 import java.util.logging.Level;
 

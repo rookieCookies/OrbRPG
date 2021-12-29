@@ -28,7 +28,7 @@ public class SetWarpTabComplete implements TabCompleter {
             path = path.substring(path.indexOf("warps.") + 6);
             list.add(path);
         }
-        if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.tab_complete"))
+        if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.set_warp.tab_complete"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
                     "Debug: ({0}) TabComplete > [/setwarp] > " + list,

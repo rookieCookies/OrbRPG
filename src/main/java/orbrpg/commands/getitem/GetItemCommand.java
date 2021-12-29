@@ -1,6 +1,5 @@
 package orbrpg.commands.getitem;
 
-import utils.Misc;
 import orbrpg.OrbRPG;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +8,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import utils.Item;
+import utils.Misc;
 
 import javax.annotation.CheckForNull;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class GetItemCommand implements CommandExecutor {
                 String path = a.toString();
                 path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
                 @CheckForNull
-                ItemStack item = itemDataBase.getItemStack(path);
+                ItemStack item = Item.getItem(path);
                 item.setAmount(loop);
                 player.getInventory().addItem(item);
                 sender.sendMessage(Misc.getMessage("command_messages.success.item_received"));

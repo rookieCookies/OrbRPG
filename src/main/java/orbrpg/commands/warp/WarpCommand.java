@@ -1,15 +1,13 @@
 package orbrpg.commands.warp;
 
-import utils.Misc;
 import orbrpg.OrbRPG;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import utils.Misc;
 
 import java.util.logging.Level;
 
@@ -31,17 +29,10 @@ public class WarpCommand implements CommandExecutor {
             doReturn = true;
         } else if (config.get("warps." + args[0] + ".w") == null)
             doReturn = true;
-        else System.out.println(0);
         if (doReturn)
             return false;
         var player = (Player) sender;
-        var l = new Location(
-                Bukkit.getWorld(config.getString("warps." + args[0] + ".w", "world")),
-                config.getDouble("warps." + args[0] + ".x"),
-                config.getDouble("warps." + args[0] + ".y"),
-                config.getDouble("warps." + args[0] + ".z")
-        );
-        player.teleportAsync(l);
+        Misc.warpPlayer(player, args[0]);
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
