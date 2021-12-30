@@ -30,6 +30,7 @@ public class MenuGUI implements Listener {
     private Inventory inv;
     private ItemStack closeButton = GUI.getCloseItem();
     private ItemStack enderChestButton = Item.createGuiItem(Material.ENDER_CHEST, "&aEnder Chest", "&eClick to view!");
+    private ItemStack craftingTableButton = Item.createGuiItem(Material.CRAFTING_TABLE, "&aCrafting Table", "&eClick to view!");
     private ItemStack skillTreeButton = Item.createGuiItem(Material.DEAD_BUSH, "&aSkill Tree", "&eClick to view!");
     private ItemStack statsButton = Item.createGuiItem(Material.PLAYER_HEAD, "&aPlayer Stats", "&eClick to view!");
 
@@ -46,6 +47,7 @@ public class MenuGUI implements Listener {
         inv.setItem(23, enderChestButton);
         inv.setItem(21, skillTreeButton);
         inv.setItem(22, statsButton);
+        inv.setItem(31, craftingTableButton);
     }
 
     public void openInventory(final Player ent) {
@@ -56,7 +58,7 @@ public class MenuGUI implements Listener {
         lore.add(Misc.coloured("&eClick to view!"));
         meta.setLore(lore);
         statsButton.setItemMeta(meta);
-        inv.setItem(22, statsButton);
+        inv.setItem(13, statsButton);
         ent.openInventory(inv);
         OrbRPG.getInstance().getServer().getPluginManager().registerEvents(this, OrbRPG.getInstance());
     }
@@ -79,6 +81,8 @@ public class MenuGUI implements Listener {
             // TODO: Skill tree menu
         else if (enderChestButton.equals(clickedItem))
             p.openInventory(p.getEnderChest());
+        else if (craftingTableButton.equals(clickedItem))
+            p.openWorkbench(null, true);
     }
 
     // Cancel dragging in our inventory

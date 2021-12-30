@@ -1,3 +1,9 @@
 stone:
-  durability: 3
-  chance: 30 # Break chance in percentages
+  enabled: true
+  gold: 0
+  exp: 3
+  level_requirement: 1
+  respawn_time: 3
+  change_block: air
+  item_drop: default
+  item_drop_chance: 50

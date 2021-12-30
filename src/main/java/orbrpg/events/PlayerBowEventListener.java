@@ -17,7 +17,7 @@ import java.util.logging.Level;
 public class PlayerBowEventListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.getItem() == null || e.getItem().getType() != Material.LEAD) {
+        if (!"bow".equals(Item.getTypeOfItem(e.getItem()))) {
             return;
         }
         var p = e.getPlayer();

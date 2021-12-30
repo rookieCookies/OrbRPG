@@ -87,9 +87,9 @@ public class StatsGUI implements Listener {
         lore.add(Misc.getMessage("scoreboard.balance") + Misc.coloured("&6" + OrbRPG.getInstance().getEconomy().getBalance(p)));
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured(Misc.getMessage("scoreboard.level") + "&a" + data.getLevel()));
-        lore.add(Misc.coloured("&7Exp: &a" + Math.round(data.getCurrentExp())));
-        lore.add(Misc.coloured("&7Exp Required: &a" + Math.round(data.getMaximumExp())));
-        lore.add(Misc.coloured("&7Level Progress: &a" + Math.round(data.getCurrentExp() / data.getMaximumExp() * 100) + "%"));
+        lore.add(Misc.coloured("&7Exp: &a" + Misc.formatNumber(data.getCurrentExp())));
+        lore.add(Misc.coloured("&7Exp Required: &a" + Misc.formatNumber(data.getMaximumExp())));
+        lore.add(Misc.coloured("&7Level Progress: &a" + Misc.formatNumber(data.getCurrentExp() / data.getMaximumExp() * 100) + "%"));
         lore.add(Misc.coloured(""));
         meta.setLore(lore);
         playerHead.setItemMeta(meta);
@@ -98,7 +98,7 @@ public class StatsGUI implements Listener {
         List<String> lore = new ArrayList<>();
         var meta = statHealth.getItemMeta();
         var data = new PlayerData(p);
-        meta.displayName(Component.text(Misc.coloured("&cHealth (" + Math.round(data.getCurrentHealth()) +"/"+ Math.round(data.getMaximumHealth()) + ")")));
+        meta.displayName(Component.text(Misc.coloured("&cHealth (" + Misc.formatNumber(data.getCurrentHealth()) +"/"+ Misc.formatNumber(data.getMaximumHealth()) + ")")));
 
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured("&7Health &c= &4&l0&c =&7 bad."));
@@ -111,7 +111,7 @@ public class StatsGUI implements Listener {
         List<String> lore = new ArrayList<>();
         var meta = statDefense.getItemMeta();
         var data = new PlayerData(p);
-        meta.displayName(Component.text(Misc.coloured("&aDefense (" + Math.round(data.getDefense()) + ")")));
+        meta.displayName(Component.text(Misc.coloured("&aDefense (" + Misc.formatNumber(data.getDefense()) + ")")));
 
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured("&7Every defense value you"));
@@ -125,7 +125,7 @@ public class StatsGUI implements Listener {
         List<String> lore = new ArrayList<>();
         var meta = statTex.getItemMeta();
         var data = new PlayerData(p);
-        meta.displayName(Component.text(Misc.coloured("&6Tex (" + Math.round(data.getCurrentTex()) +"/"+ Math.round(data.getMaximumTex()) + ")")));
+        meta.displayName(Component.text(Misc.coloured("&6Tex (" + Misc.formatNumber(data.getCurrentTex()) +"/"+ Misc.formatNumber(data.getMaximumTex()) + ")")));
 
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured("&7Tex is a custom stat that is almost"));

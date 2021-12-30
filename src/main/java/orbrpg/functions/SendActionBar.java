@@ -1,6 +1,7 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.title.Title;
 import orbrpg.OrbRPG;
 import org.bukkit.entity.Player;
@@ -34,14 +35,15 @@ public class SendActionBar {
             if (random.nextInt(1000) == 1)
                 sub = "You're low! So here is a big fucking text to make your life harder! Get Fucked!";
             if (currentHealth > 0)
-                p.showTitle(Title.title(Component.text(Misc.coloured("&4%health%&4/%maximum_health%&4❤"
-                        .replace("%maximum_health%", String.valueOf(Math.round(maximumHealth)))
-                        .replace("%health%", String.valueOf(Math.round(currentHealth))))
-                ), Component.text(sub)));
+                p.showTitle(Title.title(Component.text(
+                        Misc.coloured("&4%health%&4/%maximum_health%&4❤"
+                                .replace("%maximum_health%", String.valueOf(Misc.fixDouble(maximumHealth)))
+                                .replace("%health%", String.valueOf(Misc.fixDouble(currentHealth)))
+                        )), Component.text(sub)));
             var potion = new PotionEffect(PotionEffectType.BLINDNESS, 40, 1, false, false, false);
             p.addPotionEffect(potion);
         }
-        if (defense > 1)
+        if (defense > 0)
             message += "&2%defense%&2\uD83D\uDEE1 ";
         message += "&6%tex%&6/%maximum_tex%&6✎";
         message = Misc.coloured(message)

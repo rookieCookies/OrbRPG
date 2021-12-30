@@ -139,12 +139,13 @@ public class PlayerRefreshStats {
         var armorTex = 0F;
         var armorSpeed = 0F;
         var armorLifeSteal = 0F;
-        for (var i = 1; i < 4; i++) {
+        for (var i = 1; i < 5; i++) {
             ItemStack armorItem = switch (i) {
                 case 1 -> playerInventory.getHelmet();
                 case 2 -> playerInventory.getChestplate();
                 case 3 -> playerInventory.getLeggings();
-                default -> playerInventory.getBoots();
+                case 4 -> playerInventory.getBoots();
+                default -> throw new IllegalStateException("Unexpected value: " + i);
             };
             if (armorItem == null)
                 continue;

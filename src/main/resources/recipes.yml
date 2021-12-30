@@ -1,0 +1,15 @@
+example_recipe:
+  enabled: true
+  result_amount: 1
+  shapeless: true
+  result: default
+  recipe:
+    1: stone
+    2: air
+    3: air
+    4: air
+    5: air
+    6: air
+    7: air
+    8: air
+    9: air

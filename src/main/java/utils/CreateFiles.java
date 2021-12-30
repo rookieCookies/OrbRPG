@@ -13,6 +13,8 @@ public class CreateFiles {
     public CreateFiles() {
         createLanguageFile();
         createItemsFile();
+        createBlocksFile();
+        createRecipesFile();
         createItemDataBase();
     }
 
@@ -65,6 +67,56 @@ public class CreateFiles {
         try {
             instance.getItemsFile().load(itemsFile);
             instance.getLogger().log(Level.INFO, "Successfully loaded the items file!");
+        } catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
+    }
+    void createBlocksFile() {
+        var blocksFilePathInConfig = "blocks_file";
+        var filePath = instance.getConfig().getString(blocksFilePathInConfig);
+        if (filePath == null) {
+            instance.getConfig().set(blocksFilePathInConfig, "blocks");
+            filePath = instance.getConfig().getString(blocksFilePathInConfig);
+            instance.saveConfig();
+        }
+        filePath += ".yml";
+        var itemsFile = new File(instance.getDataFolder(), filePath);
+        if (!itemsFile.exists()) {
+            instance.saveResource("blocks.yml", false);
+            var defaultFile = new File(instance.getDataFolder(), "blocks.yml");
+            boolean f = defaultFile.renameTo(itemsFile);
+            if (!f) {
+                createBlocksFile();
+                return;
+            }
+        }
+        instance.setBlocksFileConfiguration(new YamlConfiguration());
+        try {
+            instance.getBlocksFile().load(itemsFile);
+            instance.getLogger().log(Level.INFO, "Successfully loaded the blocks file!");
+        } catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
+    }
+    void createRecipesFile() {
+        var recipesFilePathInConfig = "recipes_file";
+        var filePath = instance.getConfig().getString(recipesFilePathInConfig);
+        if (filePath == null) {
+            instance.getConfig().set(recipesFilePathInConfig, "recipes");
+            filePath = instance.getConfig().getString(recipesFilePathInConfig);
+            instance.saveConfig();
+        }
+        filePath += ".yml";
+        var itemsFile = new File(instance.getDataFolder(), filePath);
+        if (!itemsFile.exists()) {
+            instance.saveResource("recipes.yml", false);
+            var defaultFile = new File(instance.getDataFolder(), "recipes.yml");
+            boolean f = defaultFile.renameTo(itemsFile);
+            if (!f) {
+                createBlocksFile();
+                return;
+            }
+        }
+        instance.setRecipesFileConfiguration(new YamlConfiguration());
+        try {
+            instance.getRecipesFile().load(itemsFile);
+            instance.getLogger().log(Level.INFO, "Successfully loaded the recipes file!");
         } catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
     }
     void createItemDataBase() {

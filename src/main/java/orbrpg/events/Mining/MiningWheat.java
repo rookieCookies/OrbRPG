@@ -1,8 +1,7 @@
-package orbrpg.events.Mining.Farming;
+package orbrpg.events.Mining;
 
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
-import org.bukkit.CropState;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.Crops;
 import org.jetbrains.annotations.NotNull;
 import utils.PlayerData;
 
@@ -22,17 +20,17 @@ public class MiningWheat implements Listener {
             return;
         if (e.getBlock().getType() != Material.WHEAT)
             return;
+        Ageable age = (Ageable) e.getBlock().getBlockData();
+        if (age.getAge() == 0)
+            return;
         var chance = 5;
         var exp = Math.random() * 3;
-        ItemStack drop;
-        var crop = (Crops) e.getBlock();
-        if (crop.getState().equals(CropState.RIPE))
+        ItemStack drop = new ItemStack(Material.WHEAT_SEEDS, (int) Math.ceil(Math.random() * 2));;
+        Ageable crop = (Ageable) e.getBlock().getBlockData();
+        if (crop.getAge() == 7)
             chance = 75;
-        if (Math.random() * 100 <= 25)
+        if (Math.random() * 100 <= chance)
             drop = new ItemStack(Material.WHEAT, 1);
-        else
-            drop = new ItemStack(Material.WHEAT_SEEDS, (int) Math.round(Math.random() * 2));
-        e.getBlock().setType(Material.AIR);
         var dropLoc = e.getBlock().getLocation();
         dropLoc.setY(dropLoc.getY() + 0.5);
         PlayerData data = new PlayerData(e.getPlayer());
@@ -40,20 +38,32 @@ public class MiningWheat implements Listener {
             data.addExp((float) exp);
             dropLoc.getWorld().dropItem(dropLoc, drop);
         }
-        updateStage(e.getBlock(), 5, 0);
-        updateStage(e.getBlock(), (long) (5 + Math.random() * 3), 1);
-        updateStage(e.getBlock(), (long) (8 + Math.random() * 4), 1);
-        updateStage(e.getBlock(), (long) (12 + Math.random() * 5), 2);
-        updateStage(e.getBlock(), (long) (15 + Math.random() * 6), 3);
+        var timeOne = 5;
+        var timeTwo = timeOne + Math.round(Math.random() * 40 / 20);
+        var timeThree = timeTwo + Math.round(Math.random() * 50 / 20);
+        var timeFour = timeThree + Math.round(Math.random() * 55 / 20);
+        var timeFive = timeFour + Math.round(Math.random() * 60 / 20);
+        var timeSix = timeFive + Math.round(Math.random() * 70 / 20);
+        var timeSeven = timeSix + Math.round(Math.random() * 120 / 20);
+        e.getBlock().setType(Material.WHEAT);
+        age.setAge(0);
+        e.getBlock().setBlockData(age);
+        updateStage(e.getBlock(), timeOne, 0);
+        updateStage(e.getBlock(), timeTwo, 1);
+        updateStage(e.getBlock(), timeThree, 2);
+        updateStage(e.getBlock(), timeFour, 3);
+        updateStage(e.getBlock(), timeFive, 4);
+        updateStage(e.getBlock(), timeSix, 5);
+        updateStage(e.getBlock(), timeSeven, 6);
     }
     public void updateStage(@NotNull Block block, long time, int oldAge) {
         var blockLoc = block.getLocation();
         Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), () -> {
             var b = blockLoc.getBlock();
-            if (b.getType() == Material.AIR)
+            if (b.getType() == Material.AIR && oldAge != 0)
                 return;
             Ageable age = (Ageable) b.getBlockData();
-            if (age.getAge() == oldAge)
+            if (age.getAge() != oldAge)
                 return;
             age.setAge(age.getAge() + 1);
             b.setBlockData(age);

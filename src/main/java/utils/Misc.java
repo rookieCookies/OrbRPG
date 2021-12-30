@@ -48,7 +48,7 @@ public class Misc {
 
     public static String formatNumber(float number) {
         var nf = NumberFormat.getInstance(new Locale("en", "US"));
-        return nf.format(Math.round(number));
+        return nf.format(fixDouble(number));
     }
     public static String getMessage(String path) {
         var message = OrbRPG.getInstance().getLanguageFile().getString(path);
@@ -74,5 +74,12 @@ public class Misc {
         var loc = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
         p.teleportAsync(loc);
         return true;
+    }
+
+    public static double fixDouble(double i) {
+        i *= Math.pow(10, 2);
+        i = Math.round(i);
+        i /= Math.pow(10, 2);
+        return i;
     }
 }

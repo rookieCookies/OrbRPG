@@ -17,9 +17,9 @@ import orbrpg.commands.warp.WarpCommand;
 import orbrpg.commands.warp.WarpSpawn;
 import orbrpg.commands.warp.WarpTabComplete;
 import orbrpg.events.*;
+import orbrpg.functions.RegisterMining;
 import orbrpg.functions.RegisterItems;
-import orbrpg.guis.MenuGUI;
-import orbrpg.guis.StatsGUI;
+import orbrpg.functions.RegisterRecipes;
 import orbrpg.items.MenuItem;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -37,10 +37,14 @@ import java.util.logging.Logger;
 public final class OrbRPG extends JavaPlugin {
     private static OrbRPG instance;
     private FileConfiguration languageFileConfiguration;
-    private File languageFile;
     private FileConfiguration itemsFileConfiguration;
-    private File itemsFile;
+    private FileConfiguration blocksFileConfiguration;
+    private FileConfiguration recipesFileConfiguration;
     private FileConfiguration itemsDataBaseFileConfiguration;
+    private File languageFile;
+    private File itemsFile;
+    private File blocksFile;
+    private File recipesFile;
     private File itemsDataBaseFile;
     private Economy economy;
     private final Logger pluginLogger;
@@ -59,7 +63,6 @@ public final class OrbRPG extends JavaPlugin {
 
         saveDefaultConfig();
         new CreateFiles();
-        new RegisterItems();
         registerEvents();
         if (!setupEconomy() ) {
             var economySetupMessage = String.format(
@@ -92,7 +95,6 @@ public final class OrbRPG extends JavaPlugin {
         manager.registerEvents(new PlayerBowEventListener(), this);
         manager.registerEvents(new PlayerJoinEventListener(), this);
         manager.registerEvents(new PlayerDeathEventListener(), this);
-        manager.registerEvents(new PlayerCraftEventListener(), this);
         manager.registerEvents(new PlayerEquipmentChangeEventListener(), this);
         manager.registerEvents(new PlayerInteractEventListener(), this);
         manager.registerEvents(new PlayerItemDropEventListener(), this);
@@ -115,6 +117,9 @@ public final class OrbRPG extends JavaPlugin {
 
         manager.registerEvents(new MenuItem(), this);
 
+        new RegisterItems();
+        new RegisterMining();
+        new RegisterRecipes();
     }
 
     public FileConfiguration getLanguageFile() { return this.languageFileConfiguration; }
@@ -129,6 +134,14 @@ public final class OrbRPG extends JavaPlugin {
     public FileConfiguration getItemsFile() { return this.itemsFileConfiguration; }
     public void setItemsFileConfiguration(FileConfiguration fileConfiguration) {
         itemsFileConfiguration = fileConfiguration;
+    }
+    public FileConfiguration getBlocksFile() { return this.blocksFileConfiguration; }
+    public void setBlocksFileConfiguration(FileConfiguration fileConfiguration) {
+        blocksFileConfiguration = fileConfiguration;
+    }
+    public FileConfiguration getRecipesFile() { return this.recipesFileConfiguration; }
+    public void setRecipesFileConfiguration(FileConfiguration fileConfiguration) {
+        recipesFileConfiguration = fileConfiguration;
     }
     public File getMainItemsFile() { return this.itemsFile; }
     public void setMainItemsFile(File file) {

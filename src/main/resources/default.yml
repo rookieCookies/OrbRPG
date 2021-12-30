@@ -17,6 +17,7 @@ messages:
   level_up: "&6Level up! &e%player% &3leveled up from &8%old_level% &3» &bLevel %level%"
   quest_item: "&7[&4&l!&7] You can't drop this item! You will need it in the future!"
   player_death: "&7[&4&l!&7] You died!"
+  block_level_requirement: "&7[&4&l!&7] You need to be over &a%level%&7 to break this block!"
 texts:
   damage_indicator: "&4%damage%❤"
 guis:
