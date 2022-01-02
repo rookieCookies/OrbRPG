@@ -29,11 +29,11 @@ public class PlaytimeCommand implements CommandExecutor {
         var target = Bukkit.getOfflinePlayerIfCached(args[0]);
         if (target == null) {
             sender.sendMessage(Misc.getMessage("command_messages.error.incorrect_argument"));
-            return false;
         }
-        sender.sendMessage(Misc.getMessage("command_messages.info.play_time.set_target")
-                .replace("%time%", ((Player) sender).getStatistic(Statistic.PLAY_ONE_MINUTE) / 20 / 60 + " minutes")
-                .replace("%target%", args[0]));
+        else
+            sender.sendMessage(Misc.getMessage("command_messages.info.play_time.set_target")
+                    .replace("%time%", ((Player) sender).getStatistic(Statistic.PLAY_ONE_MINUTE) / 20 / 60 + " minutes")
+                    .replace("%target%", args[0]));
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.playtime.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,

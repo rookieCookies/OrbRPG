@@ -14,7 +14,7 @@ public class PlayerUpdateHealth {
         run();
     }
     public void run() {
-        PlayerData data = new PlayerData(p);
+        var data = new PlayerData(p);
         double health = data.getCurrentHealth() / data.getMaximumHealth() * 20;
         if (health < 1)
             health = 1;

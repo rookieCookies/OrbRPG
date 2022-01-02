@@ -2,7 +2,6 @@ package utils;
 
 import orbrpg.OrbRPG;
 import orbrpg.functions.PlayerRefreshUI;
-import orbrpg.functions.PlayerUpdateHealth;
 import orbrpg.systems.LevelingSystem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;

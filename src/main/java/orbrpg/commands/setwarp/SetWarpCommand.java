@@ -16,7 +16,6 @@ public class SetWarpCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
         var doReturn = false;
-        ConfigurationSection config = OrbRPG.getInstance().getConfig();
         if (!(sender instanceof Player)) {
             sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
@@ -30,6 +29,7 @@ public class SetWarpCommand implements CommandExecutor {
         if (doReturn)
             return false;
         var loc = ((Player) sender).getLocation();
+        ConfigurationSection config = OrbRPG.getInstance().getConfig();
         config.set("warps." + args[0] + ".x", loc.getX());
         config.set("warps." + args[0] + ".y", loc.getY());
         config.set("warps." + args[0] + ".z", loc.getZ());

@@ -14,7 +14,7 @@ public class MainCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
-        boolean doReturn = false;
+        var doReturn = false;
         if (!(sender instanceof Player) && args.length < 1) {
             sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
@@ -24,10 +24,9 @@ public class MainCommand implements CommandExecutor {
         }
         if (doReturn)
             return false;
-        switch (args[0]) {
-            case "reload":
-                OrbRPG.getInstance().reloadConfig();
-                sender.sendMessage(Misc.coloured("&aReload complete!"));
+        if ("reload".equals(args[0])) {
+            OrbRPG.getInstance().reloadConfig();
+            sender.sendMessage(Misc.coloured("&aReload complete!"));
         }
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.rpg.command"))
             OrbRPG.getInstance().getLogger().log(

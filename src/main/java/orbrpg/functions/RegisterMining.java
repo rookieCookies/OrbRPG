@@ -1,8 +1,8 @@
 package orbrpg.functions;
 
 import orbrpg.OrbRPG;
-import orbrpg.events.Mining.BlockMining;
-import orbrpg.events.Mining.MiningWheat;
+import orbrpg.events.mining.BlockMining;
+import orbrpg.events.mining.MiningWheat;
 
 public class RegisterMining {
     public RegisterMining() {

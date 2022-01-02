@@ -42,7 +42,6 @@ public class CreateFiles {
             instance.getLanguageFile().load(languageFile);
             instance.getLogger().log(Level.INFO, "Successfully loaded the language file!");
         } catch (IOException | InvalidConfigurationException e) { e.printStackTrace(); }
-        instance.setMainLanguageFile(languageFile);
     }
     void createItemsFile() {
         var itemsFilePathInConfig = "items_file";

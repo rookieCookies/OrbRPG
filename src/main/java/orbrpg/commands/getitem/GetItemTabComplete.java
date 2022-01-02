@@ -22,7 +22,7 @@ public class GetItemTabComplete implements TabCompleter {
             return list;
         }
         if (args.length == 2)
-            for (int i = 0; i < 9; i++)
+            for (var i = 0; i < 9; i++)
                 list.add(String.valueOf(i + 1));
         if (args.length > 1)
             return list;
@@ -31,7 +31,7 @@ public class GetItemTabComplete implements TabCompleter {
         ConfigurationSection itemsFile = OrbRPG.getInstance().getItemsFile();
         Map<String, Object> sec = itemsFile.getValues(false);
         for (Object a : sec.values()) {
-            String path = a.toString();
+            var path = a.toString();
             path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
             if (!itemDataBase.contains(path) ||
                     (!"".equals(args[0]) && !path.startsWith(args[0])))

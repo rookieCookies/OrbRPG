@@ -1,7 +1,6 @@
 package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.title.Title;
 import orbrpg.OrbRPG;
 import org.bukkit.entity.Player;
