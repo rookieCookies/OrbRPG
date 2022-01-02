@@ -1,0 +1,18 @@
+{
+	"youtube.002": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "youtube/002",
+				"stream": false
+			}]
+	},
+	"oyun.001": {
+		"category": "master",
+		"sounds": [
+			{
+				"name": "oyun/001",
+				"stream": false
+			}]
+	}
+}
