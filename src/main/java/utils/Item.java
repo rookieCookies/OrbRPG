@@ -8,16 +8,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Item {
     Item() { throw new IllegalStateException("Utility class"); }
     public static ItemStack getItem(String str) {
+        if (!OrbRPG.getInstance().getItemDatabase().contains(str))
+            str = "default";
         return OrbRPG.getInstance().getItemDatabase().getItemStack(str);
     }
     public static ItemStack refreshItem(ItemStack item) {
@@ -26,7 +28,9 @@ public class Item {
         String itemID = getIDOfItem(item);
         if (itemID == null)
             return item;
-        return OrbRPG.getInstance().getItemDatabase().getItemStack(itemID);
+        var newItem = OrbRPG.getInstance().getItemDatabase().getItemStack(itemID, item);
+        newItem.setAmount(item.getAmount());
+        return newItem;
     }
     public static void refreshInventory(Player p) {
         PlayerInventory inv = p.getInventory();
@@ -70,6 +74,25 @@ public class Item {
             return null;
         var container = itemMeta.getPersistentDataContainer();
         return container.get(new NamespacedKey(OrbRPG.getInstance(), "item_type"), PersistentDataType.STRING);
+    }
+    public static PersistentDataContainer getDataOfItem(ItemStack item) {
+        if (item == null)
+            return null;
+        var itemMeta = item.getItemMeta();
+        if (itemMeta == null)
+            return null;
+        return itemMeta.getPersistentDataContainer();
+    }
+    public static ItemStack setTypeOfItem(ItemStack item, String type) {
+        if (item == null)
+            return item;
+        var itemMeta = item.getItemMeta();
+        if (itemMeta == null)
+            return item;
+        var container = itemMeta.getPersistentDataContainer();
+        container.set(new NamespacedKey(OrbRPG.getInstance(), "item_type"), PersistentDataType.STRING, type);
+        item.setItemMeta(itemMeta);
+        return item;
     }
     public static List<String> getInfoFromItem(ItemStack item) {
         List<String> list = new ArrayList<>();

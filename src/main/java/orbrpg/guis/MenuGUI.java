@@ -4,26 +4,19 @@ import net.kyori.adventure.text.Component;
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.SkullType;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.jetbrains.annotations.NotNull;
 import utils.GUI;
 import utils.Item;
 import utils.Misc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MenuGUI implements Listener {
@@ -46,8 +39,8 @@ public class MenuGUI implements Listener {
         inv.setItem(49, closeButton);
         inv.setItem(23, enderChestButton);
         inv.setItem(21, skillTreeButton);
-        inv.setItem(22, statsButton);
-        inv.setItem(31, craftingTableButton);
+        inv.setItem(13, statsButton);
+        inv.setItem(22, craftingTableButton);
     }
 
     public void openInventory(final Player ent) {
@@ -77,7 +70,6 @@ public class MenuGUI implements Listener {
             p.closeInventory();
         else if (statsButton.equals(clickedItem))
             new StatsGUI().openInventory(p);
-//        else if (skillTreeButton.equals(clickedItem));
             // TODO: Skill tree menu
         else if (enderChestButton.equals(clickedItem))
             p.openInventory(p.getEnderChest());

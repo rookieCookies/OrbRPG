@@ -1,14 +1,12 @@
-package orbrpg.events.Mining;
+package orbrpg.events.mining;
 
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.util.Vector;
 import utils.Item;
 import utils.Misc;
 import utils.PlayerData;
@@ -30,20 +28,29 @@ public class BlockMining implements Listener {
             return;
         }
         var dropItemID = blocksFile.getString(blockID + ".item_drop", "default");
-        var dropItemChance = blocksFile.getDouble(blockID + ".item_drop_chance", 100);
+        var dropItem = Item.getItem(dropItemID);
+        if (dropItem == null)
+            return;
         var goldDrop = blocksFile.getDouble(blockID + ".gold", 0);
-        var expDrop = blocksFile.getDouble(blockID + ".exp", 0);
-        var oldMaterial = e.getBlock().getType();
-        var changeMaterial = Material.valueOf(blocksFile.getString(blockID + ".change_block", "AIR").toUpperCase());
-        var respawnTime = blocksFile.getDouble(blockID + ".respawn_time", 1);
         OrbRPG.getInstance().getEconomy().depositPlayer(e.getPlayer(), goldDrop);
+        var expDrop = blocksFile.getDouble(blockID + ".exp", 0);
         data.addExp((float) expDrop);
-        e.getBlock().setType(changeMaterial);
-        Location dropLoc = e.getBlock().getLocation();
+        dropItem.setAmount(1);
+        var dropItemChance = blocksFile.getDouble(blockID + ".item_drop_chance", 100);
+        var dropLoc = e.getBlock().getLocation();
         dropLoc.setY(dropLoc.getY() + 0.5);
+        var oldMaterial = e.getBlock().getType();
+        var oldBlockData = e.getBlock().getBlockData();
+        var changeMaterial = Material.valueOf(blocksFile.getString(blockID + ".change_block", "AIR").toUpperCase(Locale.ENGLISH));
+        e.getBlock().setType(changeMaterial);
         if (Math.random() * 100 < dropItemChance)
-            e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), Item.getItem(dropItemID));
-        if (respawnTime != -1)
-            Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), () -> e.getBlock().setType(oldMaterial), (long) (20L * respawnTime));
+            e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), dropItem);
+        var respawnTime = blocksFile.getDouble(blockID + ".respawn_time", 1);
+        if (respawnTime != -1) {
+            Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), () -> {
+                e.getBlock().setType(oldMaterial);
+                e.getBlock().setBlockData(oldBlockData);
+            }, (long) (20L * respawnTime));
+        }
     }
 }

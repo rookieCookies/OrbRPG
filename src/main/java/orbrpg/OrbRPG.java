@@ -41,10 +41,6 @@ public final class OrbRPG extends JavaPlugin {
     private FileConfiguration blocksFileConfiguration;
     private FileConfiguration recipesFileConfiguration;
     private FileConfiguration itemsDataBaseFileConfiguration;
-    private File languageFile;
-    private File itemsFile;
-    private File blocksFile;
-    private File recipesFile;
     private File itemsDataBaseFile;
     private Economy economy;
     private final Logger pluginLogger;
@@ -64,6 +60,7 @@ public final class OrbRPG extends JavaPlugin {
         saveDefaultConfig();
         new CreateFiles();
         registerEvents();
+        new ProtocolLib(this);
         if (!setupEconomy() ) {
             var economySetupMessage = String.format(
                     "[%s] - Disabled due to no Vault dependency found!",
@@ -126,10 +123,6 @@ public final class OrbRPG extends JavaPlugin {
     public void setLanguageFileConfiguration(FileConfiguration fileConfiguration) {
         languageFileConfiguration = fileConfiguration;
     }
-    public File getMainLanguageFile() { return this.languageFile; }
-    public void setMainLanguageFile(File file) {
-        languageFile = file;
-    }
 
     public FileConfiguration getItemsFile() { return this.itemsFileConfiguration; }
     public void setItemsFileConfiguration(FileConfiguration fileConfiguration) {
@@ -143,16 +136,11 @@ public final class OrbRPG extends JavaPlugin {
     public void setRecipesFileConfiguration(FileConfiguration fileConfiguration) {
         recipesFileConfiguration = fileConfiguration;
     }
-    public File getMainItemsFile() { return this.itemsFile; }
-    public void setMainItemsFile(File file) {
-        itemsFile = file;
-    }
 
     public FileConfiguration getItemDatabase() { return this.itemsDataBaseFileConfiguration; }
     public void setItemsDataBaseFileConfiguration(FileConfiguration fileConfiguration) {
         itemsDataBaseFileConfiguration = fileConfiguration;
     }
-    public File getMainItemDatabaseFile() { return this.itemsDataBaseFile; }
     public void setMainItemDatabaseFile(File file) {
         itemsDataBaseFile = file;
     }

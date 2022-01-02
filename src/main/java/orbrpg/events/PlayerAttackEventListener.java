@@ -41,7 +41,7 @@ public class PlayerAttackEventListener implements Listener {
         if (damageCause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
             finalDamage /= 4;
         if (damageCause != EntityDamageEvent.DamageCause.PROJECTILE && "bow".equals(itemType))
-            finalDamage /= 100;
+            finalDamage /= 95;
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
         if (config.getBoolean("damage_indicator.enabled")){
             var victimLocation = e.getEntity().getLocation();

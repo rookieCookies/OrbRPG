@@ -2,7 +2,6 @@ package orbrpg.events;
 
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
@@ -17,14 +16,12 @@ import java.util.logging.Level;
 public class PlayerBowEventListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (!"bow".equals(Item.getTypeOfItem(e.getItem()))) {
+        if (!"bow".equals(Item.getTypeOfItem(e.getItem())))
             return;
-        }
         var p = e.getPlayer();
         var data = new PlayerData(p);
-        if (!e.getAction().isLeftClick() || data.isBowCooldownTrue()) {
+        if (!e.getAction().isLeftClick() || data.isBowCooldownTrue())
             return;
-        }
         e.setCancelled(true);
         data.setBowCooldownTrue();
         Vector playerDirection = p.getLocation().getDirection();

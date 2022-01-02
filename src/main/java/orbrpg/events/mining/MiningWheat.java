@@ -1,4 +1,4 @@
-package orbrpg.events.Mining;
+package orbrpg.events.mining;
 
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;
@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import utils.Item;
 import utils.PlayerData;
 
 public class MiningWheat implements Listener {
@@ -25,17 +26,18 @@ public class MiningWheat implements Listener {
             return;
         var chance = 5;
         var exp = Math.random() * 3;
-        ItemStack drop = new ItemStack(Material.WHEAT_SEEDS, (int) Math.ceil(Math.random() * 2));;
+        ItemStack drop = Item.getItem("seeds");
         Ageable crop = (Ageable) e.getBlock().getBlockData();
         if (crop.getAge() == 7)
             chance = 75;
         if (Math.random() * 100 <= chance)
-            drop = new ItemStack(Material.WHEAT, 1);
+            drop = Item.getItem("wheat");
         var dropLoc = e.getBlock().getLocation();
         dropLoc.setY(dropLoc.getY() + 0.5);
-        PlayerData data = new PlayerData(e.getPlayer());
+        var data = new PlayerData(e.getPlayer());
         if (Math.random() * 100 < chance) {
             data.addExp((float) exp);
+            drop.setAmount(1);
             dropLoc.getWorld().dropItem(dropLoc, drop);
         }
         var timeOne = 5;

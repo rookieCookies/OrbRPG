@@ -2,21 +2,17 @@ package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
 import orbrpg.OrbRPG;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.material.Colorable;
 import org.bukkit.persistence.PersistentDataType;
 import utils.Item;
 import utils.Misc;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -64,7 +60,7 @@ public class RegisterItems {
                     var weaponDamage2 = new NamespacedKey(instance, "weapon_damage_2");
                     data.set(weaponDamage1, PersistentDataType.FLOAT, damage1);
                     data.set(weaponDamage2, PersistentDataType.FLOAT, damage2);
-                    loreList.add(Misc.coloured("&7Damage: &c" + Misc.formatNumber(damage1) + "↔" + Misc.formatNumber(damage2)));
+                    loreList.add(Misc.coloured("&7Damage: &c" + Misc.formatNumber(damage1) + "━" + Misc.formatNumber(damage2)));
                 } else {
                     data.set(new NamespacedKey(OrbRPG.getInstance(), "damage"), PersistentDataType.FLOAT, baseDamage);
                     loreList.add(Misc.coloured("&7Damage: &c" + Misc.formatNumber(baseDamage)));
@@ -131,6 +127,8 @@ public class RegisterItems {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"), PersistentDataType.STRING,
                     discordOfCreator);
             loreList.add(rarityLore);
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "rarity"), PersistentDataType.STRING, itemRarity);
+            itemMeta.setCustomModelData(itemsFile.getInt(path + ".custom_model_data", itemsFile.getInt(path + ".cmd", 0)));
             item.setItemMeta(itemMeta);
             item.setLore(loreList);
             if (item.getType() == Material.LEATHER_HELMET ||

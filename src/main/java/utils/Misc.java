@@ -1,20 +1,12 @@
 package utils;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import orbrpg.OrbRPG;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
-import java.util.Locale;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.logging.Level;
 
 public class Misc {
@@ -44,7 +36,6 @@ public class Misc {
         return ROMAN_NUMERALS.get(l) + toRoman(number - l);
     }
     public static String coloured(String msg) { return ChatColor.translateAlternateColorCodes('&', msg); }
-    public static TextComponent component(String msg) { return Component.text(coloured(msg)); }
 
     public static String formatNumber(float number) {
         var nf = NumberFormat.getInstance(new Locale("en", "US"));
@@ -61,11 +52,11 @@ public class Misc {
         return Misc.coloured(message);
     }
 
-    public static boolean warpPlayer(Player p, String warpID) {
+    public static void warpPlayer(Player p, String warpID) {
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
         var w = config.getString("warps."+warpID+".w");
         if (w == null || Bukkit.getWorld(w) == null)
-            return false;
+            return;
         var x = config.getDouble("warps."+warpID+".x");
         var y = config.getDouble("warps."+warpID+".y");
         var z = config.getDouble("warps."+warpID+".z");
@@ -73,7 +64,6 @@ public class Misc {
         var pitch = p.getLocation().getPitch();
         var loc = new Location(Bukkit.getWorld(w), x, y, z, yaw, pitch);
         p.teleportAsync(loc);
-        return true;
     }
 
     public static double fixDouble(double i) {

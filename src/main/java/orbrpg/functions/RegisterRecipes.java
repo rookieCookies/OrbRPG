@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.jetbrains.annotations.NotNull;
 import utils.Item;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class RegisterRecipes {
         }
         for (NamespacedKey key : l)
             Bukkit.removeRecipe(key);
-        OrbRPG.getInstance().getLogger().info("Cleared all vanilla recipes!");
         for (Object a : sec.values()) {
             var path = a.toString();
             path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
@@ -52,14 +52,13 @@ public class RegisterRecipes {
             Bukkit.addRecipe(recipe);
         }
     }
-    Recipe registerShapedRecipe(String path, ItemStack item) {
+    Recipe registerShapedRecipe(String path, @NotNull ItemStack item) {
         ConfigurationSection recipesFile = OrbRPG.getInstance().getRecipesFile();
         var key = new NamespacedKey(OrbRPG.getInstance(), path);
         item.setAmount(recipesFile.getInt(path + ".result_amount", 0));
         var recipe = new ShapedRecipe(key, item);
         recipe.shape("ABC", "DEF", "GHJ");
         String str = "ABCDEFGHJ";
-        System.out.println(path);
         for (var i = 1; i < 10; i++) {
             var ingItemID = recipesFile.getString(path + ".recipe." + i);
             var ingItem = Item.getItem(ingItemID);
@@ -71,10 +70,9 @@ public class RegisterRecipes {
     }
     Recipe registerShapelessRecipe(String path, ItemStack item) {
         ConfigurationSection recipesFile = OrbRPG.getInstance().getRecipesFile();
-//        item.setAmount(recipesFile.getInt(path + ".result_amount", 0));
+        item.setAmount(recipesFile.getInt(path + ".result_amount", 0));
         var key = new NamespacedKey(OrbRPG.getInstance(), path);
         var recipe = new ShapelessRecipe(key, item);
-        System.out.println(path);
         for (var i = 1; i < 10; i++) {
             if (recipe.getIngredientList().size() > 9)
                 return recipe;
@@ -82,7 +80,7 @@ public class RegisterRecipes {
             if ("air".equals(ingItemID))
                 continue;
             if (ingItemID == null)
-                OrbRPG.getInstance().getLogger().info("Item missing in recipes! " + path + " > recipe > " + i);
+                OrbRPG.getInstance().getLogger().info(String.format("Item missing in recipes! %s > recipe > " + i, path));
             else {
                 var ingItem = Item.getItem(ingItemID);
                 recipe.addIngredient(ingItem);

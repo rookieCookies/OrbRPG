@@ -19,7 +19,7 @@ public class GetItemCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
-        boolean doReturn = false;
+        var doReturn = false;
         if (!(sender instanceof Player)) {
             sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
@@ -29,34 +29,35 @@ public class GetItemCommand implements CommandExecutor {
         } else if (args.length < 1) {
             sender.sendMessage(Misc.getMessage("command_messages.errors.not_enough_arguments"));
             doReturn = true;
+        } else if (!OrbRPG.getInstance().getItemDatabase().contains(args[0]) &&
+                !"*".equals(args[0])) {
+            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));
+            doReturn = true;
         }
         if (doReturn)
             return false;
-        int loop = 1;
+        var loop = 1;
         if (args.length == 2 && !"0".equals(args[1]))
             loop = Integer.parseInt(args[1]);
-        Player player = (Player) sender;
+        var player = (Player) sender;
         if ("*".equals(args[0])) {
-            ConfigurationSection itemDataBase = OrbRPG.getInstance().getItemDatabase();
             ConfigurationSection itemsFile = OrbRPG.getInstance().getItemsFile();
             Map<String, Object> sec = itemsFile.getValues(false);
             for (Object a : sec.values()) {
-                String path = a.toString();
+                var path = a.toString();
                 path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
                 @CheckForNull
                 ItemStack item = Item.getItem(path);
+                assert item != null;
                 item.setAmount(loop);
                 player.getInventory().addItem(item);
                 sender.sendMessage(Misc.getMessage("command_messages.success.item_received"));
             }
             return true;
         }
-        if (!OrbRPG.getInstance().getItemDatabase().contains(args[0])) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));
-            return false;
-        }
         @CheckForNull
-        ItemStack item = OrbRPG.getInstance().getItemDatabase().getItemStack(args[0]);
+        var item = OrbRPG.getInstance().getItemDatabase().getItemStack(args[0]);
+        assert item != null;
         item.setAmount(loop);
         player.getInventory().addItem(item);
         sender.sendMessage(Misc.getMessage("command_messages.success.item_received"));

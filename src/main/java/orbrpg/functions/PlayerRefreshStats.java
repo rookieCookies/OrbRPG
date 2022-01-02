@@ -80,15 +80,16 @@ public class PlayerRefreshStats {
         var mainHandSpeed = 0F;
         var mainHandTex = 0F;
         var mainHandLifeSteal = 0F;
-        var minWeaponDamage = 1F;
-        var maxWeaponDamage = 1F;
+        float minWeaponDamage;
+        float maxWeaponDamage;
         if (!"armor".equals(type)) {
             if ("weapon".equals(type)) {
                 minWeaponDamage = Item.getFloatFromItem(tool, "weapon_damage_1");
                 maxWeaponDamage = Item.getFloatFromItem(tool, "weapon_damage_2");
-            }
-            mainHandDamage = (OrbRPG.getInstance().getRand()
-                    .nextFloat() * (maxWeaponDamage - minWeaponDamage) + minWeaponDamage);
+                mainHandDamage = (OrbRPG.getInstance().getRand()
+                        .nextFloat() * (maxWeaponDamage - minWeaponDamage) + minWeaponDamage);
+            } else
+                mainHandDamage = Item.getFloatFromItem(tool, "damage");
             mainHandHealth = Item.getFloatFromItem(tool, "health");
             mainHandDefense = Item.getFloatFromItem(tool, "defense");
             mainHandTex = Item.getFloatFromItem(tool, "tex");

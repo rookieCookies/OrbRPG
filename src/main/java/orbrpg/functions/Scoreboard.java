@@ -22,7 +22,7 @@ public class Scoreboard {
     }
 
     public void run() {
-         var manager = Bukkit.getScoreboardManager();
+        var manager = Bukkit.getScoreboardManager();
         var board = manager.getNewScoreboard();
         var obj = board.registerNewObjective("Scoreboard", "dummy", "Loading...");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -65,12 +65,12 @@ public class Scoreboard {
                 var data = new PlayerData(p);
                 ConfigurationSection config = OrbRPG.getInstance().getConfig();
                 long time = p.getWorld().getTime();
-                balance.suffix(Component.text(String.valueOf(OrbRPG.getInstance().getEconomy().getBalance(p))));
+                balance.suffix(Component.text(Misc.formatNumber((float) OrbRPG.getInstance().getEconomy().getBalance(p))));
                 var levelInt = data.getLevel();
                 int levelNext = levelInt + 1;
                 level.suffix(Component.text(Misc.coloured("&a" + Misc.formatNumber(levelInt) +
                         " &7» &8" + Misc.formatNumber(levelNext) +
-                        " &7(" + Math.round(data.getCurrentExp() / data.getMaximumExp() * 10000) / 100 + "&7%)")));
+                        " &7(" + Misc.formatNumber(data.getCurrentExp() / data.getMaximumExp() * 100) + "&7%)")));
                 var line = "";
                 if (config.getInt("times.sun_rise.start") < time && time < config.getInt("times.sun_rise.end")) {
                     line = Misc.getMessage("scoreboard.time_based.separator.sun_rise");
@@ -88,16 +88,11 @@ public class Scoreboard {
                     line = Misc.getMessage("scoreboard.time_based.separator.night");
                     obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.night")));
                 } else
-                    // The time spans are editable in the config.yml file,
-                    // so when the night ends or an invalid time gets entered
-                    // there is not much we can do other than reset the time
                     p.getWorld().setFullTime(config.getInt("times.sun_rise.start"));
-
                 separator.suffix(Component.text(line));
             }
-        }.runTaskTimer(OrbRPG.getInstance(), 0, 10);
+        }.runTaskTimer(OrbRPG.getInstance(), 3, 10);
         p.setScoreboard(board);
-
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.functions.register_scoreboard"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,
