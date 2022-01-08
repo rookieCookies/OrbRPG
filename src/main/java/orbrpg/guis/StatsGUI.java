@@ -82,7 +82,7 @@ public class StatsGUI implements Listener {
         meta.displayName(Component.text(Misc.coloured("&a" + p.getName() + "'s Stats")));
         List<String> lore = new ArrayList<>();
         lore.add(Misc.coloured(""));
-        lore.add(Misc.getMessage("scoreboard.balance") + Misc.coloured("&6" + OrbRPG.getInstance().getEconomy().getBalance(p)));
+        lore.add(Misc.getMessage("scoreboard.balance") + Misc.coloured("&6" + Misc.formatNumber((float) OrbRPG.getInstance().getEconomy().getBalance(p))));
         lore.add(Misc.coloured(""));
         var data = new PlayerData(p);
         lore.add(Misc.coloured(Misc.getMessage("scoreboard.level") + "&a" + data.getLevel()));

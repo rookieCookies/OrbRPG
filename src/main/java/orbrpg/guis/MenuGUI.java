@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuGUI implements Listener {
-    private Inventory inv;
-    private ItemStack closeButton = GUI.getCloseItem();
-    private ItemStack enderChestButton = Item.createGuiItem(Material.ENDER_CHEST, "&aEnder Chest", "&eClick to view!");
-    private ItemStack craftingTableButton = Item.createGuiItem(Material.CRAFTING_TABLE, "&aCrafting Table", "&eClick to view!");
-    private ItemStack skillTreeButton = Item.createGuiItem(Material.DEAD_BUSH, "&aSkill Tree", "&eClick to view!");
-    private ItemStack statsButton = Item.createGuiItem(Material.PLAYER_HEAD, "&aPlayer Stats", "&eClick to view!");
+    private final Inventory inv;
+    private final ItemStack closeButton = GUI.getCloseItem();
+    private final ItemStack enderChestButton = Item.createGuiItem(Material.ENDER_CHEST, "&aEnder Chest", "&eClick to view!");
+    private final ItemStack craftingTableButton = Item.createGuiItem(Material.CRAFTING_TABLE, "&aCrafting Table", "&eClick to view!");
+    private final ItemStack upgradesButton = Item.createGuiItem(Material.DEAD_BUSH, "&aUpgrades", "&eClick to view!");
+    private final ItemStack statsButton = Item.createGuiItem(Material.PLAYER_HEAD, "&aPlayer Stats", "&eClick to view!");
 
 
     public MenuGUI() {
@@ -38,7 +38,7 @@ public class MenuGUI implements Listener {
         inv.setContents(GUI.createBorder(inv, Item.createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "")));
         inv.setItem(49, closeButton);
         inv.setItem(23, enderChestButton);
-        inv.setItem(21, skillTreeButton);
+        inv.setItem(21, upgradesButton);
         inv.setItem(13, statsButton);
         inv.setItem(22, craftingTableButton);
     }
@@ -70,7 +70,8 @@ public class MenuGUI implements Listener {
             p.closeInventory();
         else if (statsButton.equals(clickedItem))
             new StatsGUI().openInventory(p);
-            // TODO: Skill tree menu
+        else if (upgradesButton.equals(clickedItem))
+            new UpgradesGUI().openInventory(p);
         else if (enderChestButton.equals(clickedItem))
             p.openInventory(p.getEnderChest());
         else if (craftingTableButton.equals(clickedItem))

@@ -20,7 +20,9 @@ import orbrpg.events.*;
 import orbrpg.functions.RegisterMining;
 import orbrpg.functions.RegisterItems;
 import orbrpg.functions.RegisterRecipes;
+import orbrpg.guis.InventoryGUI;
 import orbrpg.items.MenuItem;
+import orbrpg.items.crystals.CrystalHandler;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -95,6 +97,8 @@ public final class OrbRPG extends JavaPlugin {
         manager.registerEvents(new PlayerEquipmentChangeEventListener(), this);
         manager.registerEvents(new PlayerInteractEventListener(), this);
         manager.registerEvents(new PlayerItemDropEventListener(), this);
+        manager.registerEvents(new InventoryGUI(), this);
+        manager.registerEvents(new CrystalHandler(), this);
 
         Objects.requireNonNull(this.getCommand("rpg")).setExecutor(new MainCommand());
         Objects.requireNonNull(this.getCommand("rpg")).setTabCompleter(new MainTabComplete());

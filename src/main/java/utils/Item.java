@@ -20,7 +20,11 @@ public class Item {
     public static ItemStack getItem(String str) {
         if (!OrbRPG.getInstance().getItemDatabase().contains(str))
             str = "default";
-        return OrbRPG.getInstance().getItemDatabase().getItemStack(str);
+        var i = OrbRPG.getInstance().getItemDatabase().getItemStack(str);
+        if (i == null)
+            return i;
+        i.setAmount(1);
+        return i;
     }
     public static ItemStack refreshItem(ItemStack item) {
         if (item == null || item.getType().isAir())

@@ -58,7 +58,7 @@ public class RegisterRecipes {
         item.setAmount(recipesFile.getInt(path + ".result_amount", 0));
         var recipe = new ShapedRecipe(key, item);
         recipe.shape("ABC", "DEF", "GHJ");
-        String str = "ABCDEFGHJ";
+        var str = "ABCDEFGHJ";
         for (var i = 1; i < 10; i++) {
             var ingItemID = recipesFile.getString(path + ".recipe." + i);
             var ingItem = Item.getItem(ingItemID);
@@ -74,13 +74,13 @@ public class RegisterRecipes {
         var key = new NamespacedKey(OrbRPG.getInstance(), path);
         var recipe = new ShapelessRecipe(key, item);
         for (var i = 1; i < 10; i++) {
-            if (recipe.getIngredientList().size() > 9)
-                return recipe;
             var ingItemID = recipesFile.getString(path + ".recipe." + i);
             if ("air".equals(ingItemID))
                 continue;
-            if (ingItemID == null)
-                OrbRPG.getInstance().getLogger().info(String.format("Item missing in recipes! %s > recipe > " + i, path));
+            if (ingItemID == null) {
+                var message = String.format("Item missing in recipes! %s > recipe > " + i, path);
+                OrbRPG.getInstance().getLogger().info(message);
+            }
             else {
                 var ingItem = Item.getItem(ingItemID);
                 recipe.addIngredient(ingItem);

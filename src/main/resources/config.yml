@@ -41,7 +41,10 @@ data_ids: # DO NOT EDIT UNLESS YOU KNOW WHAT YOU ARE DOING!!! A MISSING VALUE CA
     cooldowns:
       attack_cooldown: attack_cooldown
       bow_cooldown: bow_cooldown
+      crystal_one: crystal_one
+      crystal_two: crystal_two
     stats:
+      dark_quartz: dark_quartz
       maximum_health: maximum_health
       current_health: current_health
       maximum_tex: maximum_tex

@@ -48,4 +48,9 @@ public class GUI {
         item.getItemMeta().setCustomModelData(1000);
         return item;
     }
+    public static ItemStack getEmptyItem() {
+        ItemStack item = Item.createGuiItem(Material.BARRIER, "");
+        item.getItemMeta().setCustomModelData(1000);
+        return item;
+    }
 }

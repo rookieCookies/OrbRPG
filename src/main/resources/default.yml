@@ -1,6 +1,7 @@
 scoreboard:
   bottom_text: "&9 /discord to join our discord"
   balance: "&7Silver: "
+  balance: "&5Dark Quartz: "
   level: "&7Level: "
   time_based:
     separator:
@@ -47,8 +48,8 @@ rarities:
     lore: "&7&lDEFAULT"
     color_id: "&7"
   common:
-    lore: "&f&lCOMMON"
-    color_id: "&f"
+    lore: "&7&lCOMMON"
+    color_id: "&7"
   uncommon:
     lore: "&a&lUNCOMMON"
     color_id: "&a"

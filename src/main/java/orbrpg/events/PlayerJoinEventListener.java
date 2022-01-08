@@ -21,7 +21,7 @@ public class PlayerJoinEventListener implements Listener {
         new PlayerData(e.getPlayer()).setLevel(0);
         new PlayerData(e.getPlayer()).setCurrentExp(0);
         new PlayerData(e.getPlayer()).setMaximumExp(new LevelingSystem(e.getPlayer()).getEXPRequired(0));
-
+        new PlayerData(e.getPlayer()).resetCooldown();
         e.getPlayer().getInventory().setHeldItemSlot(8);
         e.getPlayer().getInventory().setItemInMainHand(Item.getItem("menu"));
         e.getPlayer().getInventory().setHeldItemSlot(0);

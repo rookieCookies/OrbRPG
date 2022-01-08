@@ -1,4 +1,4 @@
-package orbrpg.events.mining;
+package orbrpg.events;
 
 import orbrpg.OrbRPG;
 import org.bukkit.Bukkit;

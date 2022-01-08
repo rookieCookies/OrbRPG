@@ -6,6 +6,7 @@ import orbrpg.systems.LevelingSystem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -76,6 +77,10 @@ public class PlayerData {
         setCurrentHealth(getCurrentHealth() + amount);
         new PlayerRefreshUI(p);
     }
+    public void addDarkQuartz(float amount) {
+        setDarkQuartz(getDarkQuartz() + amount);
+        new PlayerRefreshUI(p);
+    }
 
     // Set data functions
     public void setDamage(float value) { setFloat(getDamageID(), value); }
@@ -90,6 +95,7 @@ public class PlayerData {
             value = getMaximumTex();
         setFloat(getCurrentTexID(), value);
     }
+    public void setDarkQuartz(float value) { setFloat(getDarkQuartzID(), value); }
     public void setMaximumTex(float value) { setFloat(getMaximumTexID(), value); }
     public void setDefense(float value) { setFloat(getDefenseID(), value); }
     public void setSpeed(float value) { setFloat(getSpeedID(), value); }
@@ -104,11 +110,16 @@ public class PlayerData {
     public void setAttackCooldownFalse() { setFalse(getAttackCooldownID()); }
     public void setBowCooldownTrue() { setTrue(getBowCooldownID()); }
     public void setBowCooldownFalse() { setFalse(getBowCooldownID()); }
+    public void setCrystalOneCooldownTrue() { setTrue(getCrystalOneCooldownID()); }
+    public void setCrystalOneCooldownFalse() { setFalse(getCrystalOneCooldownID()); }
+    public void setCrystalTwoCooldownTrue() { setTrue(getCrystalTwoCooldownID()); }
+    public void setCrystalTwoCooldownFalse() { setFalse(getCrystalTwoCooldownID()); }
 
     // Get data functions
     public float getDamage() { return getFloat(getDamageID()); }
     public float getCurrentHealth() { return getFloat(getCurrentHealthID()); }
     public float getMaximumHealth() { return getFloat(getMaximumHealthID()); }
+    public float getDarkQuartz() { return getFloat(getDarkQuartzID()); }
     public float getCurrentTex() { return getFloat(getCurrentTexID()); }
     public float getMaximumTex() { return getFloat(getMaximumTexID()); }
     public float getDefense() { return getFloat(getDefenseID()); }
@@ -119,14 +130,34 @@ public class PlayerData {
     public float getMaximumExp() { return getFloat(getMaximumExpID()); }
     public int getLevel() { return getInt(getLevelID()); }
 
+    public String getCrystalOneID() {
+        PersistentDataContainer data = Item.getDataOfItem(getCrystalOne());
+        String returnValue = data.get(new NamespacedKey(OrbRPG.getInstance(), "crystal_id"), PersistentDataType.STRING);
+        if (returnValue == null)
+            returnValue = "";
+        return returnValue;
+    }
+    public String getCrystalTwoID() {
+        PersistentDataContainer data = Item.getDataOfItem(getCrystalTwo());
+        String returnValue = data.get(new NamespacedKey(OrbRPG.getInstance(), "crystal_id"), PersistentDataType.STRING);
+        if (returnValue == null)
+            returnValue = "";
+        return returnValue;
+    }
+    public ItemStack getCrystalOne() { return p.getInventory().getItem(9); }
+    public ItemStack getCrystalTwo() { return p.getInventory().getItem(10); }
+
     // Is functions
     public boolean isAttackCooldownTrue() { return isTrue(getAttackCooldownID()); }
     public boolean isBowCooldownTrue() { return isTrue(getBowCooldownID()); }
+    public boolean isCrystalOneCooldownTrue() { return isTrue(getCrystalOneCooldownID()); }
+    public boolean isCrystalTwoCooldownTrue() { return isTrue(getCrystalTwoCooldownID()); }
 
     // Get data ID functions
     private String getDamageID() { return getDataID("data_ids.player.stats.damage"); }
     private String getCurrentHealthID() { return getDataID("data_ids.player.stats.maximum_health"); }
     private String getMaximumHealthID() { return getDataID("data_ids.player.stats.current_health"); }
+    private String getDarkQuartzID() { return getDataID("data_ids.player.stats.dark_quartz"); }
     private String getCurrentTexID() { return getDataID("data_ids.player.stats.maximum_tex"); }
     private String getMaximumTexID() { return getDataID("data_ids.player.stats.current_tex"); }
     private String getDefenseID() { return getDataID("data_ids.player.stats.defense"); }
@@ -139,6 +170,8 @@ public class PlayerData {
 
     private String getAttackCooldownID() { return getDataID("data_ids.player.cooldowns.attack_cooldown"); }
     private String getBowCooldownID() { return getDataID("data_ids.player.cooldowns.bow_cooldown"); }
+    private String getCrystalOneCooldownID() { return getDataID("data_ids.player.cooldowns.crystal_one"); }
+    private String getCrystalTwoCooldownID() { return getDataID("data_ids.player.cooldowns.crystal_two"); }
 
     // General functions
     private String getDataID(String path) {
@@ -150,5 +183,11 @@ public class PlayerData {
             return "";
         }
         return message;
+    }
+    public void resetCooldown() {
+        setCrystalOneCooldownFalse();
+        setCrystalTwoCooldownFalse();
+        setAttackCooldownFalse();
+        setBowCooldownFalse();
     }
 }

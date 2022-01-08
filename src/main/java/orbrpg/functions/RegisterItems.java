@@ -67,70 +67,42 @@ public class RegisterItems {
                 }
                 loreList.add(" ");
             }
-            var sectionOne = false;
-            float health = (float) itemsFile.getDouble(path + ".stats.health");
-            if (health != 0) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "health"), PersistentDataType.FLOAT, health);
-                loreList.add(Misc.coloured("&7Health: &a" + Misc.formatNumber(health)));
-                sectionOne = true;
-            }
-            float defense = (float) itemsFile.getDouble(path + ".stats.defense");
-            if (defense != 0) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "defense"), PersistentDataType.FLOAT, defense);
-                loreList.add(Misc.coloured("&7Defense: &a" + Misc.formatNumber(defense)));
-                sectionOne = true;
-            }
-            var efficiency = itemsFile.getInt(path + ".stats.efficiency");
-            if (efficiency != 0) {
-                item.addUnsafeEnchantment(Enchantment.DIG_SPEED, efficiency);
-                loreList.add(Misc.coloured("&7Break Power: &a" + Misc.formatNumber(efficiency)));
-                sectionOne = true;
-            }
-            float breakPower = (float) itemsFile.getDouble(path + ".stats.break_power");
-            if (breakPower != 0) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "break_power"), PersistentDataType.FLOAT, breakPower);
-                loreList.add(Misc.coloured("&7Break Power: &a" + Misc.formatNumber(breakPower)));
-                sectionOne = true;
-            }
-            if (sectionOne)
-                loreList.add(" ");
-            var sectionTwo = false;
-            float cooldown = (float) itemsFile.getDouble(path + ".stats.cooldown");
-            if (cooldown != 0 && "bow".equals(type)) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "bow_cooldown"), PersistentDataType.FLOAT, cooldown);
-                loreList.add(Misc.coloured("&7Cooldown: &a" + Misc.formatNumber(cooldown / 20) + "s"));
-                sectionTwo = true;
-            }
-            float speed = (float) itemsFile.getDouble(path + ".stats.speed");
-            if (speed != 0) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "speed"), PersistentDataType.FLOAT, speed);
-                loreList.add(Misc.coloured("&7Speed: &a" + Misc.formatNumber(speed)));
-                sectionTwo = true;
-            }
-            float lifeSteal = (float) itemsFile.getDouble(path + ".stats.life_steal");
-            if (lifeSteal != 0) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "life_steal"), PersistentDataType.FLOAT, lifeSteal);
-                loreList.add(Misc.coloured("&7Life Steal: &a" + Misc.formatNumber(lifeSteal)));
-                sectionTwo = true;
-            }
-            float tex = (float) itemsFile.getDouble(path + ".stats.tex");
-            if (tex != 0) {
-                data.set(new NamespacedKey(OrbRPG.getInstance(), "tex"), PersistentDataType.FLOAT, tex);
-                loreList.add(Misc.coloured("&7Tex: &a" + Misc.formatNumber(tex)));
-                sectionTwo = true;
-            }
-            if (sectionTwo)
-                loreList.add(" ");
+            item.setItemMeta(itemMeta);
+            item = firstSection(item, path, loreList);
+
+            // Adding lore
+            List<String> lore = itemsFile.getStringList(path + ".lore");
+            for (String str : lore)
+                loreList.add(Misc.coloured(str));
+            item = secondSection(item, path, loreList);
+            itemMeta = item.getItemMeta();
+            data = itemMeta.getPersistentDataContainer();
+
+            // Creator data
             var creator = itemsFile.getString(path + ".info.creator", "Server");
             data.set(new NamespacedKey(OrbRPG.getInstance(), "creator"), PersistentDataType.STRING, creator);
             var discordOfCreator = itemsFile.getString(path + ".info.discord", "Server");
             data.set(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"), PersistentDataType.STRING,
                     discordOfCreator);
+
+            // Adding crystal data
+            var crystalID = itemsFile.getString(path + ".crystal_id", "");
+            if ("crystal".equals(type))
+                data.set(new NamespacedKey(OrbRPG.getInstance(), "crystal_id"), PersistentDataType.STRING,
+                        crystalID);
+            var crystalCooldown = itemsFile.getLong(path + ".crystal_cooldown", itemsFile.getLong(path + ".cc", 1L));
+            if ("crystal".equals(type))
+                data.set(new NamespacedKey(OrbRPG.getInstance(), "crystal_cooldown"), PersistentDataType.LONG,
+                        crystalCooldown);
+
+            // Finishing touches
             loreList.add(rarityLore);
             data.set(new NamespacedKey(OrbRPG.getInstance(), "rarity"), PersistentDataType.STRING, itemRarity);
             itemMeta.setCustomModelData(itemsFile.getInt(path + ".custom_model_data", itemsFile.getInt(path + ".cmd", 0)));
             item.setItemMeta(itemMeta);
             item.setLore(loreList);
+
+            // Coloring leather items
             if (item.getType() == Material.LEATHER_HELMET ||
                     item.getType() == Material.LEATHER_CHESTPLATE ||
                     item.getType() == Material.LEATHER_LEGGINGS ||
@@ -148,5 +120,76 @@ public class RegisterItems {
             itemDataBase.set(path, item);
         }
         OrbRPG.getInstance().saveItemDatabase();
+    }
+    ItemStack firstSection(ItemStack item, String path, List<String> loreList) {
+        ConfigurationSection itemsFile = OrbRPG.getInstance().getItemsFile();
+        var itemMeta = item.getItemMeta();
+        var data = itemMeta.getPersistentDataContainer();
+        var sectionOne = false;
+        float health = (float) itemsFile.getDouble(path + ".stats.health");
+        if (health != 0) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "health"), PersistentDataType.FLOAT, health);
+            loreList.add(Misc.coloured("&7Health: &a" + Misc.formatNumber(health)));
+            sectionOne = true;
+        }
+        float defense = (float) itemsFile.getDouble(path + ".stats.defense");
+        if (defense != 0) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "defense"), PersistentDataType.FLOAT, defense);
+            loreList.add(Misc.coloured("&7Defense: &a" + Misc.formatNumber(defense)));
+            sectionOne = true;
+        }
+        var efficiency = itemsFile.getInt(path + ".stats.efficiency");
+        if (efficiency != 0) {
+            item.addUnsafeEnchantment(Enchantment.DIG_SPEED, efficiency);
+            loreList.add(Misc.coloured("&7Break Power: &a" + Misc.formatNumber(efficiency)));
+            sectionOne = true;
+        }
+        float breakPower = (float) itemsFile.getDouble(path + ".stats.break_power");
+        if (breakPower != 0) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "break_power"), PersistentDataType.FLOAT, breakPower);
+            loreList.add(Misc.coloured("&7Break Power: &a" + Misc.formatNumber(breakPower)));
+            sectionOne = true;
+        }
+        if (sectionOne)
+            loreList.add(" ");
+        itemMeta.setLore(loreList);
+        item.setItemMeta(itemMeta);
+        return item;
+    }
+    ItemStack secondSection(ItemStack item, String path, List<String> loreList) {
+        ConfigurationSection itemsFile = OrbRPG.getInstance().getItemsFile();
+        var itemMeta = item.getItemMeta();
+        var type = itemsFile.getString(path + ".type", "item");
+        var data = itemMeta.getPersistentDataContainer();
+        var sectionTwo = false;
+        float cooldown = (float) itemsFile.getDouble(path + ".stats.cooldown");
+        if (cooldown != 0 && "bow".equals(type)) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "bow_cooldown"), PersistentDataType.FLOAT, cooldown);
+            loreList.add(Misc.coloured("&7Cooldown: &a" + Misc.formatNumber(cooldown / 20) + "s"));
+            sectionTwo = true;
+        }
+        float speed = (float) itemsFile.getDouble(path + ".stats.speed");
+        if (speed != 0) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "speed"), PersistentDataType.FLOAT, speed);
+            loreList.add(Misc.coloured("&7Speed: &a" + Misc.formatNumber(speed)));
+            sectionTwo = true;
+        }
+        float lifeSteal = (float) itemsFile.getDouble(path + ".stats.life_steal");
+        if (lifeSteal != 0) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "life_steal"), PersistentDataType.FLOAT, lifeSteal);
+            loreList.add(Misc.coloured("&7Life Steal: &a" + Misc.formatNumber(lifeSteal)));
+            sectionTwo = true;
+        }
+        float tex = (float) itemsFile.getDouble(path + ".stats.tex");
+        if (tex != 0) {
+            data.set(new NamespacedKey(OrbRPG.getInstance(), "tex"), PersistentDataType.FLOAT, tex);
+            loreList.add(Misc.coloured("&7Tex: &a" + Misc.formatNumber(tex)));
+            sectionTwo = true;
+        }
+        if (sectionTwo)
+            loreList.add(" ");
+        itemMeta.setLore(loreList);
+        item.setItemMeta(itemMeta);
+        return item;
     }
 }
