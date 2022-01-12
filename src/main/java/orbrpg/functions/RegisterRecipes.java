@@ -16,10 +16,12 @@ import utils.Item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class RegisterRecipes {
     public RegisterRecipes() { run(); }
     public void run() {
+        final long start = System.currentTimeMillis();
         var instance = OrbRPG.getInstance();
         ConfigurationSection recipesFile = instance.getRecipesFile();
         Map<String, Object> sec = instance.getRecipesFile().getValues(false);
@@ -51,6 +53,10 @@ public class RegisterRecipes {
             // Finally, add the recipe to the bukkit recipes
             Bukkit.addRecipe(recipe);
         }
+
+        final long fin = System.currentTimeMillis() - start;
+        String logMessage = "All recipes has been registered without any critical errors! (" + fin + "ms)";
+        OrbRPG.getInstance().getLogger().log(Level.INFO, logMessage);
     }
     Recipe registerShapedRecipe(String path, @NotNull ItemStack item) {
         ConfigurationSection recipesFile = OrbRPG.getInstance().getRecipesFile();

@@ -2,6 +2,7 @@ package orbrpg.guis;
 
 import net.kyori.adventure.text.Component;
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,10 +13,11 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import utils.FileM;
 import utils.GUI;
 import utils.Item;
 import utils.Misc;
-import utils.PlayerData;
+import utils.i.StringM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class StatsGUI implements Listener {
     }
 
     public void initializeItems() {
-        inv.setContents(GUI.fillBackround(inv, Item.createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "")));
+        inv.setContents(GUI.fillBackground(inv, Item.createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "")));
         inv.setContents(GUI.createBorder(inv, Item.createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "")));
         inv.setItem(49, closeButton);
     }
@@ -82,13 +84,13 @@ public class StatsGUI implements Listener {
         meta.displayName(Component.text(Misc.coloured("&a" + p.getName() + "'s Stats")));
         List<String> lore = new ArrayList<>();
         lore.add(Misc.coloured(""));
-        lore.add(Misc.getMessage("scoreboard.balance") + Misc.coloured("&6" + Misc.formatNumber((float) OrbRPG.getInstance().getEconomy().getBalance(p))));
+        lore.add(FileM.getMessage("scoreboard.balance") + Misc.coloured("&6" + StringM.getFormattedNumber((float) OrbRPG.getInstance().getEconomy().getBalance(p))));
         lore.add(Misc.coloured(""));
         var data = new PlayerData(p);
-        lore.add(Misc.coloured(Misc.getMessage("scoreboard.level") + "&a" + data.getLevel()));
-        lore.add(Misc.coloured("&7Exp: &a" + Misc.formatNumber(data.getCurrentExp())));
-        lore.add(Misc.coloured("&7Exp Required: &a" + Misc.formatNumber(data.getMaximumExp())));
-        lore.add(Misc.coloured("&7Level Progress: &a" + Misc.formatNumber(data.getCurrentExp() / data.getMaximumExp() * 100) + "%"));
+        lore.add(Misc.coloured(FileM.getMessage("scoreboard.level") + "&a" + data.getLevel()));
+        lore.add(Misc.coloured("&7Exp: &a" + StringM.getFormattedNumber(data.getCurrentExp())));
+        lore.add(Misc.coloured("&7Exp Required: &a" + StringM.getFormattedNumber(data.getMaximumExp())));
+        lore.add(Misc.coloured("&7Level Progress: &a" + StringM.getFormattedNumber(data.getCurrentExp() / data.getMaximumExp() * 100) + "%"));
         lore.add(Misc.coloured(""));
         meta.setLore(lore);
         playerHead.setItemMeta(meta);
@@ -97,7 +99,7 @@ public class StatsGUI implements Listener {
         List<String> lore = new ArrayList<>();
         var meta = statHealth.getItemMeta();
         var data = new PlayerData(p);
-        meta.displayName(Component.text(Misc.coloured("&cHealth (" + Misc.formatNumber(data.getCurrentHealth()) +"/"+ Misc.formatNumber(data.getMaximumHealth()) + ")")));
+        meta.displayName(Component.text(Misc.coloured("&cHealth (" + StringM.getFormattedNumber(data.getCurrentHealth()) +"/"+ StringM.getFormattedNumber(data.getMaximumHealth()) + ")")));
 
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured("&7Health &c= &4&l0&c =&7 bad."));
@@ -110,7 +112,7 @@ public class StatsGUI implements Listener {
         List<String> lore = new ArrayList<>();
         var meta = statDefense.getItemMeta();
         var data = new PlayerData(p);
-        meta.displayName(Component.text(Misc.coloured("&aDefense (" + Misc.formatNumber(data.getDefense()) + ")")));
+        meta.displayName(Component.text(Misc.coloured("&aDefense (" + StringM.getFormattedNumber(data.getDefense()) + ")")));
 
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured("&7Every defense value you"));
@@ -124,7 +126,7 @@ public class StatsGUI implements Listener {
         List<String> lore = new ArrayList<>();
         var meta = statTex.getItemMeta();
         var data = new PlayerData(p);
-        meta.displayName(Component.text(Misc.coloured("&6Tex (" + Misc.formatNumber(data.getCurrentTex()) +"/"+ Misc.formatNumber(data.getMaximumTex()) + ")")));
+        meta.displayName(Component.text(Misc.coloured("&6Tex (" + StringM.getFormattedNumber(data.getCurrentTex()) +"/"+ StringM.getFormattedNumber(data.getMaximumTex()) + ")")));
 
         lore.add(Misc.coloured(""));
         lore.add(Misc.coloured("&7Tex is a custom stat that is almost"));

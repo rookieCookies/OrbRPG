@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import utils.Misc;
+import utils.FileM;
 
 import java.util.logging.Level;
 
@@ -17,13 +17,13 @@ public class SetWarpCommand implements CommandExecutor {
                              @NotNull String label, @NotNull String[] args) {
         var doReturn = false;
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
         } else if (args.length < 1) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.not_enough_arguments"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.not_enough_arguments"));
             doReturn = true;
         } else if (!sender.hasPermission("orbrpg.commands.setwarp")) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.no_permission"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.no_permission"));
             doReturn = true;
         }
         if (doReturn)
@@ -34,7 +34,7 @@ public class SetWarpCommand implements CommandExecutor {
         config.set("warps." + args[0] + ".y", loc.getY());
         config.set("warps." + args[0] + ".z", loc.getZ());
         config.set("warps." + args[0] + ".w", loc.getWorld().getName());
-        sender.sendMessage(Misc.getMessage("command_messages.success.warp_set").replace("%warp_name%", args[0]));
+        sender.sendMessage(FileM.getMessage("command_messages.success.warp_set").replace("%warp_name%", args[0]));
         OrbRPG.getInstance().saveConfig();
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.set_warp.command"))
             OrbRPG.getInstance().getLogger().log(

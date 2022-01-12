@@ -34,7 +34,7 @@ public class GetItemTabComplete implements TabCompleter {
             var path = a.toString();
             path = path.substring(path.indexOf("path='") + 6, path.indexOf("', root="));
             if (!itemDataBase.contains(path) ||
-                    (!"".equals(args[0]) && !path.startsWith(args[0])))
+                    (!"".equals(args[0]) && !path.contains(args[0])))
                 continue;
             list.add(path);
         }

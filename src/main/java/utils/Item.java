@@ -13,16 +13,15 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Item {
     Item() { throw new IllegalStateException("Utility class"); }
-    public static ItemStack getItem(String str) {
-        if (!OrbRPG.getInstance().getItemDatabase().contains(str))
-            str = "default";
-        var i = OrbRPG.getInstance().getItemDatabase().getItemStack(str);
+    public static ItemStack getItem(String itemId) {
+        if (!OrbRPG.getInstance().getItemDatabase().contains(itemId))
+            itemId = "default";
+        var i = OrbRPG.getInstance().getItemDatabase().getItemStack(itemId);
         if (i == null)
-            return i;
+            return OrbRPG.getInstance().getItemDatabase().getItemStack("default");
         i.setAmount(1);
         return i;
     }
@@ -86,43 +85,6 @@ public class Item {
         if (itemMeta == null)
             return null;
         return itemMeta.getPersistentDataContainer();
-    }
-    public static ItemStack setTypeOfItem(ItemStack item, String type) {
-        if (item == null)
-            return item;
-        var itemMeta = item.getItemMeta();
-        if (itemMeta == null)
-            return item;
-        var container = itemMeta.getPersistentDataContainer();
-        container.set(new NamespacedKey(OrbRPG.getInstance(), "item_type"), PersistentDataType.STRING, type);
-        item.setItemMeta(itemMeta);
-        return item;
-    }
-    public static List<String> getInfoFromItem(ItemStack item) {
-        List<String> list = new ArrayList<>();
-        list.add("Server");
-        list.add("Server");
-        if (item == null) {
-            return list;
-        }
-        var itemMeta = item.getItemMeta();
-        if (itemMeta == null) {
-            return list;
-        }
-        var container = itemMeta.getPersistentDataContainer();
-        list.set(0, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator"),
-                PersistentDataType.STRING));
-        list.set(1, container.get(new NamespacedKey(OrbRPG.getInstance(), "creator_discord"),
-                PersistentDataType.STRING));
-        return list;
-    }
-    public static boolean isCustomItem(ItemStack item) {
-        if (item == null)
-            return false;
-        String itemID = getIDOfItem(item);
-        if (itemID == null)
-            return false;
-        return OrbRPG.getInstance().getItemDatabase().contains(itemID);
     }
 
     public static ItemStack hideAttributes(ItemStack item) {

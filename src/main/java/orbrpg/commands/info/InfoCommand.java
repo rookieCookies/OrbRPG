@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+import utils.FileM;
 import utils.Item;
 import utils.Misc;
 
@@ -23,10 +24,10 @@ public class InfoCommand implements CommandExecutor {
                              @NotNull String label, @NotNull String[] args) {
         var doReturn = false;
         if (!(sender instanceof Player) && args.length < 1) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
         } else if (!sender.hasPermission("orbrpg.command.info")) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.no_permission"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.no_permission"));
             doReturn = true;
         }
         if (doReturn)
@@ -40,7 +41,7 @@ public class InfoCommand implements CommandExecutor {
                                     .getItemInMainHand()));
         else {
             if (!OrbRPG.getInstance().getItemDatabase().contains(args[0])) {
-                sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));
+                sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_item"));
                 return false;
             }
             item = OrbRPG.getInstance().getItemDatabase().getItemStack(args[0]);
@@ -48,7 +49,7 @@ public class InfoCommand implements CommandExecutor {
 
         var data = Item.getDataOfItem(item);
         var rarity = data.get(new NamespacedKey(OrbRPG.getInstance(), "rarity"), PersistentDataType.STRING);
-        sender.sendMessage(Misc.coloured(Misc.getMessage("rarities." + rarity + ".color_id")+ "╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍"));
+        sender.sendMessage(Misc.coloured(FileM.getMessage("rarities." + rarity + ".color_id")+ "╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍"));
         sender.sendMessage("");
         sender.sendMessage(" " + Misc.coloured(item.getItemMeta().getDisplayName() + ":"));
         sender.sendMessage(Misc.coloured(" &l↳ " + "&a&lCreator" + "&7 (Hover)"));
@@ -57,7 +58,7 @@ public class InfoCommand implements CommandExecutor {
         i.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Misc.coloured("&7 Custom Model Data: &a" + item.getItemMeta().getCustomModelData())).create()));
         sender.sendMessage(i);
         sender.sendMessage("");
-        sender.sendMessage(Misc.coloured(Misc.getMessage("rarities." + rarity + ".color_id")+ "╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍"));
+        sender.sendMessage(Misc.coloured(FileM.getMessage("rarities." + rarity + ".color_id")+ "╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍╍"));
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.info.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,

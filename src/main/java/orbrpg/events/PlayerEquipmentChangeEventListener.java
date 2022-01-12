@@ -3,7 +3,6 @@ package orbrpg.events;
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import orbrpg.OrbRPG;
 import orbrpg.functions.PlayerRefreshUI;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -26,7 +25,7 @@ public class PlayerEquipmentChangeEventListener implements Listener {
     }
     @EventHandler
     public void onEvent(PlayerArmorChangeEvent e) {
-        Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), () -> new PlayerRefreshUI(e.getPlayer()), 1);
+        new PlayerRefreshUI(e.getPlayer());
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.events.player.change_armor"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,

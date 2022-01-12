@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import utils.FileM;
 import utils.Misc;
 
 import java.util.logging.Level;
@@ -16,10 +17,10 @@ public class MainCommand implements CommandExecutor {
                              @NotNull String label, @NotNull String[] args) {
         var doReturn = false;
         if (!(sender instanceof Player) && args.length < 1) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
         } else if (!sender.hasPermission("orbrpg.command.main")) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.no_permission"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.no_permission"));
             doReturn = true;
         }
         if (doReturn)

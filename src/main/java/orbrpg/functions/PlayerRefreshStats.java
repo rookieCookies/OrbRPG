@@ -1,10 +1,10 @@
 package orbrpg.functions;
 
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import utils.Item;
-import utils.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;

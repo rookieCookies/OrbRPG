@@ -1,6 +1,7 @@
 package orbrpg.events;
 
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import orbrpg.functions.IncreaseStats;
 import orbrpg.functions.PlayerRefreshUI;
 import orbrpg.functions.Scoreboard;
@@ -11,17 +12,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import utils.Item;
-import utils.PlayerData;
 
 import java.util.logging.Level;
 
 public class PlayerJoinEventListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        new PlayerData(e.getPlayer()).setLevel(0);
-        new PlayerData(e.getPlayer()).setCurrentExp(0);
-        new PlayerData(e.getPlayer()).setMaximumExp(new LevelingSystem(e.getPlayer()).getEXPRequired(0));
-        new PlayerData(e.getPlayer()).resetCooldown();
+        var data = new PlayerData(e.getPlayer());
+        data.setLevel(0);
+        data.setCurrentExp(0);
+        data.setMaximumExp(new LevelingSystem(e.getPlayer()).getEXPRequired(0));
+        data.resetCooldown();
+        data.setRespawnableFalse();
         e.getPlayer().getInventory().setHeldItemSlot(8);
         e.getPlayer().getInventory().setItemInMainHand(Item.getItem("menu"));
         e.getPlayer().getInventory().setHeldItemSlot(0);

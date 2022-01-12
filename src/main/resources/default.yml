@@ -1,7 +1,7 @@
 scoreboard:
   bottom_text: "&9 /discord to join our discord"
   balance: "&7Silver: "
-  balance: "&5Dark Quartz: "
+  dark_quartz: "&5Dark Quartz: "
   level: "&7Level: "
   time_based:
     separator:
@@ -34,6 +34,8 @@ command_messages:
     incorrect_sender: "&7[&4&l!&7] You can't run this command!"
     incorrect_item: "&7[&4&l!&7] This item does not exist!"
     incorrect_argument: "&7[&4&l!&7] You need to enter a valid argument!"
+    not_enough_dark_quartz: "&7[&4&l!&7] You need at least &d%respawn_price% &5Dark Quartz &7to execute this action"
+    cant_respawn: "&7[&4&l!&7] There is no death location detected!"
   success:
     item_received: "&7[&a&l!&7] You received an item!"
     reload_complete: "&7[&a&l!&7] Reload complete!"

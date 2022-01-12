@@ -1,6 +1,7 @@
 package orbrpg.events;
 
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -12,7 +13,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import utils.Item;
-import utils.PlayerData;
 
 public class MiningWheat implements Listener {
     @EventHandler

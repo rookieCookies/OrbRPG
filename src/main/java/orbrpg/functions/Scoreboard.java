@@ -2,14 +2,16 @@ package orbrpg.functions;
 
 import net.kyori.adventure.text.Component;
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
+import utils.FileM;
 import utils.Misc;
-import utils.PlayerData;
+import utils.i.StringM;
 
 import java.util.logging.Level;
 
@@ -31,16 +33,16 @@ public class Scoreboard {
         var darkQuartz = board.registerNewTeam("dark_quartz");
         var level = board.registerNewTeam("level");
         var separatorText = "";
-        String balanceTxt = Misc.getMessage("scoreboard.balance");
-        String darkQuartzTxt = Misc.getMessage("scoreboard.dark_quartz");
-        String levelTxt = Misc.getMessage("scoreboard.level");
+        String balanceTxt = FileM.getMessage("scoreboard.balance");
+        String darkQuartzTxt = FileM.getMessage("scoreboard.dark_quartz");
+        String levelTxt = FileM.getMessage("scoreboard.level");
         separator.addEntry(separatorText);
         separator.addEntry(separatorText + ChatColor.WHITE);
         level.addEntry(levelTxt);
 
         var balanceText = obj.getScore(balanceTxt);
         var darkQuartzText = obj.getScore(darkQuartzTxt);
-        var discordServerMessage = obj.getScore(Misc.getMessage("scoreboard.bottom_text"));
+        var discordServerMessage = obj.getScore(FileM.getMessage("scoreboard.bottom_text"));
         var blankSpace1 = obj.getScore(" ");
         var blankSpace2 = obj.getScore("  ");
         var blankSpace3 = obj.getScore("   ");
@@ -70,29 +72,29 @@ public class Scoreboard {
                 var data = new PlayerData(p);
                 ConfigurationSection config = OrbRPG.getInstance().getConfig();
                 long time = p.getWorld().getTime();
-                balance.suffix(Component.text(Misc.formatNumber((float) OrbRPG.getInstance().getEconomy().getBalance(p))));
-                darkQuartz.suffix(Component.text(ChatColor.LIGHT_PURPLE + Misc.formatNumber(data.getDarkQuartz())));
+                balance.suffix(Component.text(StringM.getFormattedNumber((float) OrbRPG.getInstance().getEconomy().getBalance(p))));
+                darkQuartz.suffix(Component.text(ChatColor.LIGHT_PURPLE + StringM.getFormattedNumber(data.getDarkQuartz())));
                 var levelInt = data.getLevel();
                 int levelNext = levelInt + 1;
-                level.suffix(Component.text(Misc.coloured("&a" + Misc.formatNumber(levelInt) +
-                        " &7» &8" + Misc.formatNumber(levelNext) +
-                        " &7(" + Misc.formatNumber(data.getCurrentExp() / data.getMaximumExp() * 100) + "&7%)")));
+                level.suffix(Component.text(Misc.coloured("&a" + StringM.getFormattedNumber(levelInt) +
+                        " &7» &8" + StringM.getFormattedNumber(levelNext) +
+                        " &7(" + StringM.getFormattedNumber(data.getCurrentExp() / data.getMaximumExp() * 100) + "&7%)")));
                 var line = "";
                 if (config.getInt("times.sun_rise.start") < time && time < config.getInt("times.sun_rise.end")) {
-                    line = Misc.getMessage("scoreboard.time_based.separator.sun_rise");
-                    obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.sun_rise")));
+                    line = FileM.getMessage("scoreboard.time_based.separator.sun_rise");
+                    obj.displayName(Component.text(FileM.getMessage("scoreboard.time_based.title.sun_rise")));
                 }
                 else if (config.getInt("times.day.start") < time && time < config.getInt("times.day.end")) {
-                    line = Misc.getMessage("scoreboard.time_based.separator.day");
-                    obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.day")));
+                    line = FileM.getMessage("scoreboard.time_based.separator.day");
+                    obj.displayName(Component.text(FileM.getMessage("scoreboard.time_based.title.day")));
                 }
                 else if (config.getInt("times.sun_set.start") < time && time < config.getInt("times.sun_set.end")) {
-                    line = Misc.getMessage("scoreboard.time_based.separator.sun_set");
-                    obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.sun_set")));
+                    line = FileM.getMessage("scoreboard.time_based.separator.sun_set");
+                    obj.displayName(Component.text(FileM.getMessage("scoreboard.time_based.title.sun_set")));
                 }
                 else if (config.getInt("times.night.start") < time && time < config.getInt("times.night.end")) {
-                    line = Misc.getMessage("scoreboard.time_based.separator.night");
-                    obj.displayName(Component.text(Misc.getMessage("scoreboard.time_based.title.night")));
+                    line = FileM.getMessage("scoreboard.time_based.separator.night");
+                    obj.displayName(Component.text(FileM.getMessage("scoreboard.time_based.title.night")));
                 } else
                     p.getWorld().setFullTime(config.getInt("times.sun_rise.start"));
                 separator.suffix(Component.text(line));

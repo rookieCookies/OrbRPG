@@ -7,7 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import utils.Misc;
+import utils.FileM;
+import utils.PlayerM;
 
 import java.util.logging.Level;
 
@@ -18,21 +19,21 @@ public class WarpCommand implements CommandExecutor {
         var doReturn = false;
         ConfigurationSection config = OrbRPG.getInstance().getConfig();
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
         } else if (args.length < 1) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.not_enough_arguments"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.not_enough_arguments"));
             doReturn = true;
         } else if (!sender.hasPermission("orbrpg.warp." + args[0]) &&
                 !sender.hasPermission("orbrpg.warp.*")) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.no_permission"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.no_permission"));
             doReturn = true;
         } else if (config.get("warps." + args[0] + ".w") == null)
             doReturn = true;
         if (doReturn)
             return false;
         var player = (Player) sender;
-        Misc.warpPlayer(player, args[0]);
+        PlayerM.warpPlayer(player, args[0]);
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.warp.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,

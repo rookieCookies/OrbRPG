@@ -27,22 +27,19 @@ public class InventoryGUI implements Listener {
                 !e.getAction().equals(InventoryAction.PLACE_ONE) &&
                 !e.getAction().equals(InventoryAction.PLACE_SOME) &&
                 !e.getAction().equals(InventoryAction.SWAP_WITH_CURSOR)) {
-            e.getWhoClicked().sendMessage("Incorrect click type " + e.getAction());
             e.setCancelled(true);
             return;
         }
         if (Objects.requireNonNull(e.getCursor()).getType() == Material.AIR) {
-            e.getWhoClicked().sendMessage("Air");
             if (!((GUI.getEmptyItem()).equals(e.getWhoClicked().getInventory().getItem(e.getRawSlot()))))
                 Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), () -> e.getWhoClicked().getInventory().setItem(e.getRawSlot(), GUI.getEmptyItem()), 1L);
             else e.setCancelled(true);
         } else if ("crystal".equals(Item.getTypeOfItem(e.getCursor()))) {
-            e.getWhoClicked().sendMessage("Crystal");
-            e.getWhoClicked().getInventory().setItem(e.getRawSlot(), new ItemStack(Material.AIR));
+            if (GUI.getEmptyItem().equals(e.getCurrentItem()))
+                e.getWhoClicked().getInventory().setItem(e.getRawSlot(), new ItemStack(Material.AIR));
             Player p = (Player) e.getWhoClicked();
-            Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), p::updateInventory, 1L);
+            Bukkit.getScheduler().runTaskLater(OrbRPG.getInstance(), p::updateInventory, 2L);
         } else {
-            e.getWhoClicked().sendMessage("other");
             e.setCancelled(true);
         }
     }

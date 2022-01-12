@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class GUI {
     GUI() { throw new IllegalStateException("Utility class"); }
-    public static ItemStack[] fillBackround(Inventory inv, ItemStack backroundItem) {
+    public static ItemStack[] fillBackground(Inventory inv, ItemStack backroundItem) {
         backroundItem.getItemMeta().setCustomModelData(1000);
         for (var i = 0; i < 54; i++)
             inv.setItem(i, backroundItem);

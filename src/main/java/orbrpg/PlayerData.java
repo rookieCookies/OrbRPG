@@ -1,14 +1,16 @@
-package utils;
+package orbrpg;
 
-import orbrpg.OrbRPG;
 import orbrpg.functions.PlayerRefreshUI;
 import orbrpg.systems.LevelingSystem;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import utils.Item;
 
 import java.util.logging.Level;
 
@@ -36,6 +38,19 @@ public class PlayerData {
             returnValue = 0F;
         return returnValue;
     }
+    private void setDouble(String nameSpace, double value) {
+        PersistentDataContainer container = getPersistentDataStorage();
+        var nsk = new NamespacedKey(i, nameSpace);
+        container.set(nsk, PersistentDataType.DOUBLE, value);
+    }
+    private Double getDouble(String nameSpace) {
+        PersistentDataContainer container = getPersistentDataStorage();
+        var nsk = new NamespacedKey(i, nameSpace);
+        Double returnValue = container.get(nsk, PersistentDataType.DOUBLE);
+        if (returnValue == null)
+            returnValue = 0.0;
+        return returnValue;
+    }
     private void setInt(String nameSpace, int value) {
         PersistentDataContainer container = getPersistentDataStorage();
         var nsk = new NamespacedKey(i, nameSpace);
@@ -47,6 +62,19 @@ public class PlayerData {
         Integer returnValue = container.get(nsk, PersistentDataType.INTEGER);
         if (returnValue == null)
             returnValue = 0;
+        return returnValue;
+    }
+    private void setString(String nameSpace, String value) {
+        PersistentDataContainer container = getPersistentDataStorage();
+        var nsk = new NamespacedKey(i, nameSpace);
+        container.set(nsk, PersistentDataType.STRING, value);
+    }
+    private String getString(String nameSpace) {
+        PersistentDataContainer container = getPersistentDataStorage();
+        var nsk = new NamespacedKey(i, nameSpace);
+        String returnValue = container.get(nsk, PersistentDataType.STRING);
+        if (returnValue == null)
+            returnValue = "";
         return returnValue;
     }
     private void setTrue(String nameSpace) {
@@ -105,7 +133,18 @@ public class PlayerData {
     public void setLevel(int value) { setInt(getLevelID(), value); }
     public void setMaximumExp(float value) { setFloat(getMaximumExpID(), value); }
 
+    public void setDeathLocation(Location loc) {
+        setString("death_location.w", loc.getWorld().getName());
+        setDouble("death_location.x", loc.getX());
+        setDouble("death_location.y", loc.getY());
+        setDouble("death_location.z", loc.getZ());
+        setFloat("death_location.yaw", loc.getYaw());
+        setFloat("death_location.pitch", loc.getPitch());
+    }
+
     // Cooldown
+    public void setRespawnableTrue() { setTrue(getRespawnableID()); }
+    public void setRespawnableFalse() { setFalse(getRespawnableID()); }
     public void setAttackCooldownTrue() { setTrue(getAttackCooldownID()); }
     public void setAttackCooldownFalse() { setFalse(getAttackCooldownID()); }
     public void setBowCooldownTrue() { setTrue(getBowCooldownID()); }
@@ -130,6 +169,20 @@ public class PlayerData {
     public float getMaximumExp() { return getFloat(getMaximumExpID()); }
     public int getLevel() { return getInt(getLevelID()); }
 
+    public Location getDeathLocation() {
+        var w = Bukkit.getWorld(getString("death_location.w"));
+        if (w == null)
+            w = Bukkit.getWorlds().get(0);
+        return new Location(
+                w,
+                getDouble("death_location.x"),
+                getDouble("death_location.y"),
+                getDouble("death_location.z"),
+                getFloat("death_location.yaw"),
+                getFloat("death_location.pitch")
+        );
+    }
+
     public String getCrystalOneID() {
         PersistentDataContainer data = Item.getDataOfItem(getCrystalOne());
         String returnValue = data.get(new NamespacedKey(OrbRPG.getInstance(), "crystal_id"), PersistentDataType.STRING);
@@ -148,6 +201,7 @@ public class PlayerData {
     public ItemStack getCrystalTwo() { return p.getInventory().getItem(10); }
 
     // Is functions
+    public boolean canRespawn() { return isTrue(getRespawnableID()); }
     public boolean isAttackCooldownTrue() { return isTrue(getAttackCooldownID()); }
     public boolean isBowCooldownTrue() { return isTrue(getBowCooldownID()); }
     public boolean isCrystalOneCooldownTrue() { return isTrue(getCrystalOneCooldownID()); }
@@ -168,6 +222,7 @@ public class PlayerData {
     private String getCurrentExpID() { return getDataID("data_ids.player.stats.leveling.current_exp"); }
     private String getMaximumExpID() { return getDataID("data_ids.player.stats.leveling.maximum_exp"); }
 
+    private String getRespawnableID() { return getDataID("data_ids.player.stats.respawnable"); }
     private String getAttackCooldownID() { return getDataID("data_ids.player.cooldowns.attack_cooldown"); }
     private String getBowCooldownID() { return getDataID("data_ids.player.cooldowns.bow_cooldown"); }
     private String getCrystalOneCooldownID() { return getDataID("data_ids.player.cooldowns.crystal_one"); }

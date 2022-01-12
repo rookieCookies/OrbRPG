@@ -1,9 +1,9 @@
 package orbrpg.functions;
 
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import utils.PlayerData;
 
 import java.util.logging.Level;
 
@@ -21,8 +21,8 @@ public class IncreaseStats {
         float maximumTex = data.getMaximumTex();
         float currentHealth = data.getCurrentHealth();
         float currentTex = data.getCurrentTex();
-        currentHealth += maximumHealth * config.getDouble("regeneration.health") / 100;
-        currentTex += maximumTex * config.getDouble("regeneration.tex") / 100;
+        currentHealth += maximumHealth * config.getDouble("stats.regeneration.health") / 100;
+        currentTex += maximumTex * config.getDouble("stats.regeneration.tex") / 100;
         if (currentHealth > maximumHealth)
             currentHealth = maximumHealth;
         if (currentTex > maximumTex)

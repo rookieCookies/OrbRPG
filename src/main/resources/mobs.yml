@@ -1,0 +1,14 @@
+example_mob:
+    enabled: true
+    drop:
+        exp: 30
+        gold:
+            amount: 0
+            chance: 30
+        item:
+            id: default
+            amount: 1
+            chance: 30
+        dark_quartz:
+            amount: 1
+            chance: 50

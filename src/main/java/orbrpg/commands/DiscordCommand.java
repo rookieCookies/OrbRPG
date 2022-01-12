@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import utils.FileM;
 import utils.Misc;
 
 import java.util.logging.Level;
@@ -19,10 +20,10 @@ public class DiscordCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
                              @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_sender"));
             return false;
         } else if (!sender.hasPermission("orbrpg.command.discord")) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.no_permission"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.no_permission"));
             return false;
         }
         var bars = parse("&9------------------------------");
@@ -44,7 +45,7 @@ public class DiscordCommand implements CommandExecutor {
     TextComponent parse(String msg) {
         var i = new TextComponent(Misc.coloured(msg));
         i.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, OrbRPG.getInstance().getConfig().getString("discord_link")));
-        i.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Misc.getMessage("command_messages.other.discord_hover")).create()));
+        i.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(FileM.getMessage("command_messages.other.discord_hover")).create()));
         return i;
     }
 }

@@ -1,22 +1,27 @@
-language_file: "lang_default"
-items_file: "items"
-blocks_file: "blocks"
-blocks_file: "recipes"
-items_database_file: "items_database"
 discord_link: "https://discord.gg/Estv5zVAGT"
-attack_cooldown: 12
-damage_indicator:
-  enabled: true
-  format_number: true
-regeneration: # Percent
-  health: 3
-  tex: 5
-base_stats:
-  maximum_health: 10
-  maximum_tex: 5
-  defense: 5
-  speed: 5
-  exp: 30
+file_management:
+    language_file: "lang_default"
+    items_file: "items"
+    blocks_file: "blocks"
+    recipes_file: "recipes"
+    mobs_file: "mobs"
+    items_database_file: "items_database"
+combat:
+    respawn_price: 5
+    attack_cooldown: 12
+    damage_indicator:
+      enabled: true
+      format_number: true
+stats:
+    regeneration: # Percent
+      health: 3
+      tex: 5
+    base_stats:
+      maximum_health: 10
+      maximum_tex: 5
+      defense: 5
+      speed: 5
+      exp: 30
 warps:
   spawn:
     x: 0.0

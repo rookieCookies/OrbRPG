@@ -1,15 +1,15 @@
 package orbrpg.events;
 
 import orbrpg.OrbRPG;
+import orbrpg.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import utils.FileM;
 import utils.Item;
-import utils.Misc;
-import utils.PlayerData;
 
 import java.util.Locale;
 
@@ -24,7 +24,7 @@ public class BlockMining implements Listener {
         var data = new PlayerData(e.getPlayer());
         var levelRequirement = blocksFile.getInt(blockID + ".level_requirement", 0);
         if (levelRequirement > data.getLevel()) {
-            e.getPlayer().sendMessage(Misc.getMessage("messages.block_level_requirement").replace("%level%", String.valueOf(levelRequirement)));
+            e.getPlayer().sendMessage(FileM.getMessage("messages.block_level_requirement").replace("%level%", String.valueOf(levelRequirement)));
             return;
         }
         var dropItemID = blocksFile.getString(blockID + ".item_drop", "default");

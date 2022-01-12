@@ -8,8 +8,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import utils.FileM;
 import utils.Item;
-import utils.Misc;
 
 import javax.annotation.CheckForNull;
 import java.util.Map;
@@ -21,17 +21,17 @@ public class GetItemCommand implements CommandExecutor {
                              @NotNull String label, @NotNull String[] args) {
         var doReturn = false;
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_sender"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_sender"));
             doReturn = true;
         } else if (!sender.hasPermission("orbrpg.command.getitem")) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.no_permission"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.no_permission"));
             doReturn = true;
         } else if (args.length < 1) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.not_enough_arguments"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.not_enough_arguments"));
             doReturn = true;
         } else if (!OrbRPG.getInstance().getItemDatabase().contains(args[0]) &&
                 !"*".equals(args[0])) {
-            sender.sendMessage(Misc.getMessage("command_messages.errors.incorrect_item"));
+            sender.sendMessage(FileM.getMessage("command_messages.errors.incorrect_item"));
             doReturn = true;
         }
         if (doReturn)
@@ -51,7 +51,7 @@ public class GetItemCommand implements CommandExecutor {
                 assert item != null;
                 item.setAmount(loop);
                 player.getInventory().addItem(item);
-                sender.sendMessage(Misc.getMessage("command_messages.success.item_received"));
+                sender.sendMessage(FileM.getMessage("command_messages.success.item_received"));
             }
             return true;
         }
@@ -60,7 +60,7 @@ public class GetItemCommand implements CommandExecutor {
         assert item != null;
         item.setAmount(loop);
         player.getInventory().addItem(item);
-        sender.sendMessage(Misc.getMessage("command_messages.success.item_received"));
+        sender.sendMessage(FileM.getMessage("command_messages.success.item_received"));
         if (OrbRPG.getInstance().getConfig().getBoolean("debug.commands.getitem.command"))
             OrbRPG.getInstance().getLogger().log(
                     Level.INFO,

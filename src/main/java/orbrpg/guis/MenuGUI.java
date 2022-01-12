@@ -34,7 +34,7 @@ public class MenuGUI implements Listener {
     }
 
     public void initializeItems() {
-        inv.setContents(GUI.fillBackround(inv, Item.createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "")));
+        inv.setContents(GUI.fillBackground(inv, Item.createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "")));
         inv.setContents(GUI.createBorder(inv, Item.createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "")));
         inv.setItem(49, closeButton);
         inv.setItem(23, enderChestButton);

@@ -10,11 +10,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
+import utils.FileM;
 import utils.Item;
 import utils.Misc;
+import utils.i.StringM;
 
 import java.util.*;
-import java.util.List;
 
 public class RegisterItems {
     public RegisterItems() {
@@ -41,8 +42,8 @@ public class RegisterItems {
             var data = itemMeta.getPersistentDataContainer();
             var itemRarity = itemsFile.getString(path + ".rarity", "default");
             String itemRarityWithPath = "rarities." + itemRarity;
-            String rarityLore = Misc.getMessage(itemRarityWithPath + ".lore");
-            String rarityColor = Misc.getMessage(itemRarityWithPath + ".color_id");
+            String rarityLore = FileM.getMessage(itemRarityWithPath + ".lore");
+            String rarityColor = FileM.getMessage(itemRarityWithPath + ".color_id");
             String displayName = Misc.coloured(rarityColor + itemsFile.getString(path + ".display_name"));
             var type = itemsFile.getString(path + ".type", "item");
             data.set(new NamespacedKey(OrbRPG.getInstance(), "item_id"), PersistentDataType.STRING, path);
@@ -60,10 +61,10 @@ public class RegisterItems {
                     var weaponDamage2 = new NamespacedKey(instance, "weapon_damage_2");
                     data.set(weaponDamage1, PersistentDataType.FLOAT, damage1);
                     data.set(weaponDamage2, PersistentDataType.FLOAT, damage2);
-                    loreList.add(Misc.coloured("&7Damage: &c" + Misc.formatNumber(damage1) + "━" + Misc.formatNumber(damage2)));
+                    loreList.add(Misc.coloured("&7Damage: &c" + StringM.getFormattedNumber(damage1) + "━" + StringM.getFormattedNumber(damage2)));
                 } else {
                     data.set(new NamespacedKey(OrbRPG.getInstance(), "damage"), PersistentDataType.FLOAT, baseDamage);
-                    loreList.add(Misc.coloured("&7Damage: &c" + Misc.formatNumber(baseDamage)));
+                    loreList.add(Misc.coloured("&7Damage: &c" + StringM.getFormattedNumber(baseDamage)));
                 }
                 loreList.add(" ");
             }
@@ -91,9 +92,11 @@ public class RegisterItems {
                 data.set(new NamespacedKey(OrbRPG.getInstance(), "crystal_id"), PersistentDataType.STRING,
                         crystalID);
             var crystalCooldown = itemsFile.getLong(path + ".crystal_cooldown", itemsFile.getLong(path + ".cc", 1L));
-            if ("crystal".equals(type))
+            if ("crystal".equals(type)) {
                 data.set(new NamespacedKey(OrbRPG.getInstance(), "crystal_cooldown"), PersistentDataType.LONG,
                         crystalCooldown);
+                itemMeta.setDisplayName(Misc.coloured(itemMeta.getDisplayName() + String.format(" (%ss)", crystalCooldown / 20F)));
+            }
 
             // Finishing touches
             loreList.add(rarityLore);
@@ -129,25 +132,25 @@ public class RegisterItems {
         float health = (float) itemsFile.getDouble(path + ".stats.health");
         if (health != 0) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "health"), PersistentDataType.FLOAT, health);
-            loreList.add(Misc.coloured("&7Health: &a" + Misc.formatNumber(health)));
+            loreList.add(Misc.coloured("&7Health: &a" + StringM.getFormattedNumber(health)));
             sectionOne = true;
         }
         float defense = (float) itemsFile.getDouble(path + ".stats.defense");
         if (defense != 0) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "defense"), PersistentDataType.FLOAT, defense);
-            loreList.add(Misc.coloured("&7Defense: &a" + Misc.formatNumber(defense)));
+            loreList.add(Misc.coloured("&7Defense: &a" + StringM.getFormattedNumber(defense)));
             sectionOne = true;
         }
         var efficiency = itemsFile.getInt(path + ".stats.efficiency");
         if (efficiency != 0) {
             item.addUnsafeEnchantment(Enchantment.DIG_SPEED, efficiency);
-            loreList.add(Misc.coloured("&7Break Power: &a" + Misc.formatNumber(efficiency)));
+            loreList.add(Misc.coloured("&7Break Power: &a" + StringM.getFormattedNumber(efficiency)));
             sectionOne = true;
         }
         float breakPower = (float) itemsFile.getDouble(path + ".stats.break_power");
         if (breakPower != 0) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "break_power"), PersistentDataType.FLOAT, breakPower);
-            loreList.add(Misc.coloured("&7Break Power: &a" + Misc.formatNumber(breakPower)));
+            loreList.add(Misc.coloured("&7Break Power: &a" + StringM.getFormattedNumber(breakPower)));
             sectionOne = true;
         }
         if (sectionOne)
@@ -165,25 +168,25 @@ public class RegisterItems {
         float cooldown = (float) itemsFile.getDouble(path + ".stats.cooldown");
         if (cooldown != 0 && "bow".equals(type)) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "bow_cooldown"), PersistentDataType.FLOAT, cooldown);
-            loreList.add(Misc.coloured("&7Cooldown: &a" + Misc.formatNumber(cooldown / 20) + "s"));
+            loreList.add(Misc.coloured("&7Cooldown: &a" + StringM.getFormattedNumber(cooldown / 20) + "s"));
             sectionTwo = true;
         }
         float speed = (float) itemsFile.getDouble(path + ".stats.speed");
         if (speed != 0) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "speed"), PersistentDataType.FLOAT, speed);
-            loreList.add(Misc.coloured("&7Speed: &a" + Misc.formatNumber(speed)));
+            loreList.add(Misc.coloured("&7Speed: &a" + StringM.getFormattedNumber(speed)));
             sectionTwo = true;
         }
         float lifeSteal = (float) itemsFile.getDouble(path + ".stats.life_steal");
         if (lifeSteal != 0) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "life_steal"), PersistentDataType.FLOAT, lifeSteal);
-            loreList.add(Misc.coloured("&7Life Steal: &a" + Misc.formatNumber(lifeSteal)));
+            loreList.add(Misc.coloured("&7Life Steal: &a" + StringM.getFormattedNumber(lifeSteal)));
             sectionTwo = true;
         }
         float tex = (float) itemsFile.getDouble(path + ".stats.tex");
         if (tex != 0) {
             data.set(new NamespacedKey(OrbRPG.getInstance(), "tex"), PersistentDataType.FLOAT, tex);
-            loreList.add(Misc.coloured("&7Tex: &a" + Misc.formatNumber(tex)));
+            loreList.add(Misc.coloured("&7Tex: &a" + StringM.getFormattedNumber(tex)));
             sectionTwo = true;
         }
         if (sectionTwo)

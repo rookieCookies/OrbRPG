@@ -9,10 +9,13 @@ import com.comphenix.protocol.events.PacketEvent;
 import org.bukkit.Particle;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Level;
+
 public class ProtocolLib {
     private final Plugin plugin;
 
     public ProtocolLib(final Plugin plugin) {
+        final long start = System.currentTimeMillis();
         this.plugin = plugin;
         if (!OrbRPG.getInstance().getConfig().getBoolean("features.disable_damage_particles"))
             return;
@@ -26,5 +29,8 @@ public class ProtocolLib {
                 event.setCancelled(true);
             }
         });
+        final long fin = System.currentTimeMillis() - start;
+        String logMessage = "ProtocolLib has been registered successfully! (" + fin + "ms)";
+        OrbRPG.getInstance().getLogger().log(Level.INFO, logMessage);
     }
 }

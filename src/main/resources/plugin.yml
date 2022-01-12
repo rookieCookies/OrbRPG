@@ -38,6 +38,9 @@ commands:
     description: Display the discord server of this server
     permission: orbrpg.commands.discord
     aliases: dc
+  respawn:
+    description: Get teleported back to the location you died
+    permission: orbrpg.commands.respawn
   spawn:
     description: Warp to spawn
     permission: orbrpg.commands.spawn
